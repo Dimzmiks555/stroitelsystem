@@ -33,16 +33,16 @@ export default function UserNewForm({ isEdit = false, currentUser }) {
   const { enqueueSnackbar } = useSnackbar();
 
   const NewUserSchema = Yup.object().shape({
-    name: Yup.string().required('Name is required'),
-    email: Yup.string().required('Email is required').email(),
-    phoneNumber: Yup.string().required('Phone number is required'),
-    address: Yup.string().required('Address is required'),
-    country: Yup.string().required('country is required'),
-    company: Yup.string().required('Company is required'),
-    state: Yup.string().required('State is required'),
-    city: Yup.string().required('City is required'),
-    role: Yup.string().required('Role Number is required'),
-    avatarUrl: Yup.mixed().test('required', 'Avatar is required', (value) => value !== ''),
+    name: Yup.string().required('Это обязательное поле'),
+    email: Yup.string().required('Это обязательное поле').email(),
+    phoneNumber: Yup.string().required('Это обязательное поле'),
+    address: Yup.string().required('Это обязательное поле'),
+    country: Yup.string().required('Это обязательное поле'),
+    company: Yup.string().required('Это обязательное поле'),
+    state: Yup.string().required('Это обязательное поле'),
+    city: Yup.string().required('Это обязательное поле'),
+    role: Yup.string().required('Это обязательное поле'),
+    avatarUrl: Yup.mixed().test('required', 'Это обязательное поле', (value) => value !== ''),
   });
 
   const defaultValues = useMemo(
@@ -149,8 +149,8 @@ export default function UserNewForm({ isEdit = false, currentUser }) {
                       color: 'text.secondary',
                     }}
                   >
-                    Allowed *.jpeg, *.jpg, *.png, *.gif
-                    <br /> max size of {fData(3145728)}
+                    Разрешены *.jpeg, *.jpg, *.png, *.gif
+                    <br /> макс. размер {fData(3145728)}
                   </Typography>
                 }
               />
@@ -175,10 +175,10 @@ export default function UserNewForm({ isEdit = false, currentUser }) {
                 label={
                   <>
                     <Typography variant="subtitle2" sx={{ mb: 0.5 }}>
-                      Banned
+                      Заблокировать
                     </Typography>
                     <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                      Apply disable account
+                      Отключение аккаунта
                     </Typography>
                   </>
                 }
@@ -192,10 +192,10 @@ export default function UserNewForm({ isEdit = false, currentUser }) {
               label={
                 <>
                   <Typography variant="subtitle2" sx={{ mb: 0.5 }}>
-                    Email Verified
+                    Электронная почта подтверждена
                   </Typography>
                   <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                    Disabling this will automatically send the user a verification email
+                    Отключение автоматически отправляет письмо подтверждения на почту пользователя
                   </Typography>
                 </>
               }
@@ -214,11 +214,11 @@ export default function UserNewForm({ isEdit = false, currentUser }) {
                 gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
               }}
             >
-              <RHFTextField name="name" label="Full Name" />
-              <RHFTextField name="email" label="Email Address" />
-              <RHFTextField name="phoneNumber" label="Phone Number" />
+              <RHFTextField name="name" label="Полное имя" />
+              <RHFTextField name="email" label="Электронная почта" />
+              <RHFTextField name="phoneNumber" label="Номер телефона" />
 
-              <RHFSelect name="country" label="Country" placeholder="Country">
+              <RHFSelect name="country" label="Страна" placeholder="Страна">
                 <option value="" />
                 {countries.map((option) => (
                   <option key={option.code} value={option.label}>
@@ -227,17 +227,17 @@ export default function UserNewForm({ isEdit = false, currentUser }) {
                 ))}
               </RHFSelect>
 
-              <RHFTextField name="state" label="State/Region" />
-              <RHFTextField name="city" label="City" />
-              <RHFTextField name="address" label="Address" />
-              <RHFTextField name="zipCode" label="Zip/Code" />
-              <RHFTextField name="company" label="Company" />
-              <RHFTextField name="role" label="Role" />
+              <RHFTextField name="state" label="Регион" />
+              <RHFTextField name="city" label="Город" />
+              <RHFTextField name="address" label="Адрес" />
+              <RHFTextField name="zipCode" label="Индекс" />
+              <RHFTextField name="company" label="Компания" />
+              <RHFTextField name="role" label="Роль" />
             </Box>
 
             <Stack alignItems="flex-end" sx={{ mt: 3 }}>
               <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
-                {!isEdit ? 'Create User' : 'Save Changes'}
+                {!isEdit ? 'Создать' : 'Сохранить'}
               </LoadingButton>
             </Stack>
           </Card>

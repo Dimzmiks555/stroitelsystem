@@ -20,13 +20,13 @@ export default function PaymentSummary() {
   return (
     <RootStyle>
       <Typography variant="subtitle1" sx={{ mb: 5 }}>
-        Summary
+        Итого
       </Typography>
 
       <Stack spacing={2.5}>
         <Stack direction="row" justifyContent="space-between">
           <Typography variant="subtitle2" component="p" sx={{ color: 'text.secondary' }}>
-            Subscription
+            Подписка
           </Typography>
           <Label color="error" variant="filled">
             PREMIUM
@@ -35,13 +35,13 @@ export default function PaymentSummary() {
 
         <Stack direction="row" justifyContent="space-between">
           <Typography component="p" variant="subtitle2" sx={{ color: 'text.secondary' }}>
-            Billed Monthly
+            Автоплатеж
           </Typography>
           <Switch defaultChecked />
         </Stack>
 
         <Stack direction="row" justifyContent="flex-end">
-          <Typography sx={{ color: 'text.secondary' }}>$</Typography>
+          <Typography sx={{ color: 'text.secondary' }}>₽</Typography>
           <Typography variant="h2" sx={{ mx: 1 }}>
             9.99
           </Typography>
@@ -50,7 +50,7 @@ export default function PaymentSummary() {
             variant="body2"
             sx={{ mb: 1, alignSelf: 'flex-end', color: 'text.secondary' }}
           >
-            /mo
+            /мес
           </Typography>
         </Stack>
 
@@ -58,10 +58,10 @@ export default function PaymentSummary() {
 
         <Stack direction="row" alignItems="center" justifyContent="space-between">
           <Typography variant="h6" component="p">
-            Total Billed
+            Итого к оплате
           </Typography>
           <Typography variant="h6" component="p">
-            $9.99*
+          ₽ 9.99*
           </Typography>
         </Stack>
 
@@ -69,20 +69,20 @@ export default function PaymentSummary() {
       </Stack>
 
       <Typography variant="caption" sx={{ color: 'text.secondary', mt: 1 }}>
-        * Plus applicable taxes
+        * Включая НДС
       </Typography>
 
       <LoadingButton fullWidth size="large" type="submit" variant="contained" sx={{ mt: 5, mb: 3 }}>
-        Upgrade My Plan
+        Обновить мой план
       </LoadingButton>
 
       <Stack alignItems="center" spacing={1}>
         <Stack direction="row" alignItems="center" spacing={1.5}>
           <Iconify icon={'eva:shield-fill'} sx={{ width: 20, height: 20, color: 'primary.main' }} />
-          <Typography variant="subtitle2">Secure credit card payment</Typography>
+          <Typography variant="subtitle2">Безопасная оплата</Typography>
         </Stack>
         <Typography variant="caption" sx={{ color: 'text.secondary', textAlign: 'center' }}>
-          This is a secure 128-bit SSL encrypted payment
+          Это безопасная 128-бит SSL зашифрованная оплата
         </Typography>
       </Stack>
     </RootStyle>

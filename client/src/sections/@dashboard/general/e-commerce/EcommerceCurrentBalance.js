@@ -21,7 +21,7 @@ export default function EcommerceCurrentBalance() {
   return (
     <Card sx={{ p: 3 }}>
       <Typography variant="subtitle2" gutterBottom>
-        Your Current Balance
+        Ваш текущий баланс
       </Typography>
 
       <Stack spacing={2}>
@@ -29,31 +29,31 @@ export default function EcommerceCurrentBalance() {
 
         <RowStyle>
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            Your Current Balance
+          Ваш текущий баланс
           </Typography>
           <Typography variant="body2">{fCurrency(currentBalance)}</Typography>
         </RowStyle>
 
         <RowStyle>
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            Sent Amount
+            Налоги
           </Typography>
           <Typography variant="body2">- {fCurrency(sentAmount)}</Typography>
         </RowStyle>
 
         <RowStyle>
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            Total Amount
+            Итого
           </Typography>
           <Typography variant="subtitle1">{fCurrency(totalAmount)}</Typography>
         </RowStyle>
 
         <Stack direction="row" spacing={1.5}>
           <Button fullWidth variant="contained" color="warning">
-            Transfer
+            Перевести
           </Button>
           <Button fullWidth variant="contained">
-            Receive
+            Вывести
           </Button>
         </Stack>
       </Stack>

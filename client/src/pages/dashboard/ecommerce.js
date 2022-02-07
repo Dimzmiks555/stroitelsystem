@@ -33,7 +33,7 @@ export default function GeneralEcommerce() {
   const { themeStretch } = useSettings();
 
   return (
-    <Page title="General: E-commerce">
+    <Page title="Главная">
       <Container maxWidth={themeStretch ? false : 'xl'}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={8}>
@@ -46,7 +46,7 @@ export default function GeneralEcommerce() {
 
           <Grid item xs={12} md={4}>
             <EcommerceWidgetSummary
-              title="Product Sold"
+              title="Продано"
               percent={2.6}
               total={765}
               chartColor={theme.palette.primary.main}
@@ -56,7 +56,7 @@ export default function GeneralEcommerce() {
 
           <Grid item xs={12} md={4}>
             <EcommerceWidgetSummary
-              title="Total Balance"
+              title="Баланс"
               percent={-0.1}
               total={18765}
               chartColor={theme.palette.chart.green[0]}
@@ -66,7 +66,7 @@ export default function GeneralEcommerce() {
 
           <Grid item xs={12} md={4}>
             <EcommerceWidgetSummary
-              title="Sales Profit"
+              title="Конверсия"
               percent={0.6}
               total={4876}
               chartColor={theme.palette.chart.red[0]}

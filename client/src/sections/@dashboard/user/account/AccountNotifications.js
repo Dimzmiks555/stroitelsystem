@@ -96,7 +96,7 @@ export default function AccountNotifications() {
           </Stack>
 
           <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
-            Save Changes
+            Сохранить
           </LoadingButton>
         </Stack>
       </FormProvider>

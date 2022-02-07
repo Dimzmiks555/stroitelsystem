@@ -77,9 +77,9 @@ export default function Register() {
             <Logo />
             {smUp && (
               <Typography variant="body2" sx={{ mt: { md: -2 } }}>
-                Already have an account? {''}
+                Уже есть аккаунт? {''}
                 <NextLink href={PATH_AUTH.login} passHref>
-                  <Link variant="subtitle2">Login</Link>
+                  <Link variant="subtitle2">Войти</Link>
                 </NextLink>
               </Typography>
             )}
@@ -88,7 +88,7 @@ export default function Register() {
           {mdUp && (
             <SectionStyle>
               <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-                Manage the job more effectively with Minimal
+                Эффективно управляйте  Вашим рабочим процессом!
               </Typography>
               <Image
                 alt="register"
@@ -102,9 +102,9 @@ export default function Register() {
               <Box sx={{ mb: 5, display: 'flex', alignItems: 'center' }}>
                 <Box sx={{ flexGrow: 1 }}>
                   <Typography variant="h4" gutterBottom>
-                    Get started absolutely free.
+                    Регистрация.
                   </Typography>
-                  <Typography sx={{ color: 'text.secondary' }}>Free forever. No credit card needed.</Typography>
+                  <Typography sx={{ color: 'text.secondary' }}>Введите ваши данные ниже.</Typography>
                 </Box>
                 <Tooltip title={capitalCase(method)}>
                   <>
@@ -121,22 +121,22 @@ export default function Register() {
               <RegisterForm />
 
               <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
-                By registering, I agree to Minimal&nbsp;
+                Регистрируясь, я соглашаюсь с&nbsp;
                 <Link underline="always" color="text.primary" href="#">
-                  Terms of Service
+                  Правами пользования
                 </Link>
-                {''}and{''}
+                {''} и {''}
                 <Link underline="always" color="text.primary" href="#">
-                  Privacy Policy
+                  Политикой кондефициальности
                 </Link>
                 .
               </Typography>
 
               {!smUp && (
                 <Typography variant="body2" sx={{ mt: 3, textAlign: 'center' }}>
-                  Already have an account?{' '}
+                  Уже есть аккаунт?{' '}
                   <NextLink href={PATH_AUTH.login} passHref>
-                    <Link variant="subtitle2">Login</Link>
+                    <Link variant="subtitle2">Войти</Link>
                   </NextLink>
                 </Typography>
               )}

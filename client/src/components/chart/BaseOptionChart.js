@@ -8,7 +8,7 @@ export default function BaseOptionChart() {
 
   const LABEL_TOTAL = {
     show: true,
-    label: 'Total',
+    label: 'Итого',
     color: theme.palette.text.secondary,
     fontSize: theme.typography.subtitle2.fontSize,
     fontWeight: theme.typography.subtitle2.fontWeight,

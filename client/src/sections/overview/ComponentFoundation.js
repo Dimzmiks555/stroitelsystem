@@ -11,10 +11,10 @@ export default function ComponentFoundation() {
     <Grid container spacing={3} sx={{ my: 10 }}>
       <Grid item xs={12} sm={4}>
         <Typography variant="h5" paragraph>
-          Foundation
+          База
         </Typography>
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          Colors, Typography, Shadows…
+          Цвета, типография, тени.....
         </Typography>
       </Grid>
 

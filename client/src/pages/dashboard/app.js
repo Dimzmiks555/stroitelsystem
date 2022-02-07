@@ -36,7 +36,7 @@ export default function GeneralApp() {
   const { themeStretch } = useSettings();
 
   return (
-    <Page title="General: App">
+    <Page title="Главная">
       <Container maxWidth={themeStretch ? false : 'xl'}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={8}>
@@ -49,7 +49,7 @@ export default function GeneralApp() {
 
           <Grid item xs={12} md={4}>
             <AppWidgetSummary
-              title="Total Active Users"
+              title="Активные пользователи"
               percent={2.6}
               total={18765}
               chartColor={theme.palette.primary.main}
@@ -59,7 +59,7 @@ export default function GeneralApp() {
 
           <Grid item xs={12} md={4}>
             <AppWidgetSummary
-              title="Total Installed"
+              title="Установки"
               percent={0.2}
               total={4876}
               chartColor={theme.palette.chart.blue[0]}
@@ -69,7 +69,7 @@ export default function GeneralApp() {
 
           <Grid item xs={12} md={4}>
             <AppWidgetSummary
-              title="Total Downloads"
+              title="Загрузки"
               percent={-0.1}
               total={678}
               chartColor={theme.palette.chart.red[0]}
@@ -103,8 +103,8 @@ export default function GeneralApp() {
 
           <Grid item xs={12} md={6} lg={4}>
             <Stack spacing={3}>
-              <AppWidget title="Conversion" total={38566} icon={'eva:person-fill'} chartData={48} />
-              <AppWidget title="Applications" total={55566} icon={'eva:email-fill'} color="warning" chartData={75} />
+              <AppWidget title="Конверсия" total={38566} icon={'eva:person-fill'} chartData={48} />
+              <AppWidget title="Приложения" total={55566} icon={'eva:email-fill'} color="warning" chartData={75} />
             </Stack>
           </Grid>
         </Grid>

@@ -28,15 +28,15 @@ const RootStyle = styled(Card)(({ theme }) => ({
 
 const CHART_DATA = {
   labels: [
-    'Category 1',
-    'Category 2',
-    'Category 3',
-    'Category 4',
-    'Category 5',
-    'Category 6',
-    'Category 7',
-    'Category 8',
-    'Category 9',
+    'Категория 1',
+    'Категория 2',
+    'Категория 3',
+    'Категория 4',
+    'Категория 5',
+    'Категория 6',
+    'Категория 7',
+    'Категория 8',
+    'Категория 9',
   ],
   data: [14, 23, 21, 17, 15, 10, 12, 17, 21],
 };
@@ -85,7 +85,7 @@ export default function BankingExpensesCategories() {
 
   return (
     <RootStyle>
-      <CardHeader title="Expenses Categories" />
+      <CardHeader title="Категории расходов" />
 
       <Box sx={{ my: 5 }} dir="ltr">
         <ReactApexChart
@@ -101,16 +101,16 @@ export default function BankingExpensesCategories() {
       <Stack direction="row" divider={<Divider orientation="vertical" flexItem />}>
         <Box sx={{ py: 2, width: 1, textAlign: 'center' }}>
           <Typography sx={{ mb: 1, typography: 'body2', color: 'text.secondary' }}>
-            Categories
+            Категорий
           </Typography>
           <Typography sx={{ typography: 'h4' }}>9</Typography>
         </Box>
 
         <Box sx={{ py: 2, width: 1, textAlign: 'center' }}>
           <Typography sx={{ mb: 1, typography: 'body2', color: 'text.secondary' }}>
-            Categories
+          Категории
           </Typography>
-          <Typography sx={{ typography: 'h4' }}>$18,765</Typography>
+          <Typography sx={{ typography: 'h4' }}>18,765</Typography>
         </Box>
       </Stack>
     </RootStyle>

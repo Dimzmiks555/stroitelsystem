@@ -11,7 +11,7 @@ import { _analyticTraffic } from '../../../../_mock';
 export default function AnalyticsTrafficBySite() {
   return (
     <Card>
-      <CardHeader title="Traffic by Site" />
+      <CardHeader title="Трафик с сайтов" />
       <CardContent>
         <Grid container spacing={2}>
           {_analyticTraffic.map((site) => (

@@ -21,7 +21,7 @@ export default function NavbarDocs() {
 
       <div>
         <Typography gutterBottom variant="subtitle1">
-          Hi, {user?.displayName}
+          Привет, {user?.displayName}
         </Typography>
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
           Need help?

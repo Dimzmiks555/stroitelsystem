@@ -23,12 +23,12 @@ import PaymentNewCardForm from './PaymentNewCardForm';
 const PAYMENT_OPTIONS = [
   {
     value: 'paypal',
-    title: 'Pay with Paypal',
+    title: 'Оплатить через Paypal',
     icons: ['https://minimal-assets-api.vercel.app/assets/icons/ic_paypal.svg'],
   },
   {
     value: 'credit_card',
-    title: 'Credit / Debit Card',
+    title: 'Банковская карта',
     icons: [
       'https://minimal-assets-api.vercel.app/assets/icons/ic_mastercard.svg',
       'https://minimal-assets-api.vercel.app/assets/icons/ic_visa.svg',
@@ -89,7 +89,7 @@ export default function PaymentMethods() {
   return (
     <div>
       <Typography variant="subtitle1" sx={{ mb: 5 }}>
-        Payment Method
+        Способ оплаты
       </Typography>
 
       <RadioGroup value={method} onChange={handleChangeMethod}>
@@ -149,7 +149,7 @@ export default function PaymentMethods() {
                       onClick={handleCollapseIn}
                       sx={{ my: 3 }}
                     >
-                      Add new card
+                      Добавить 
                     </Button>
 
                     <Collapse in={show}>

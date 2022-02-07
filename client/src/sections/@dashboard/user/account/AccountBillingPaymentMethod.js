@@ -19,7 +19,7 @@ export default function AccountBillingPaymentMethod({ cards, isOpen, onOpen, onC
   return (
     <Card sx={{ p: 3 }}>
       <Typography variant="overline" sx={{ mb: 3, display: 'block', color: 'text.secondary' }}>
-        Payment Method
+        Способ оплаты
       </Typography>
 
       <Stack spacing={2} direction={{ xs: 'column', md: 'row' }}>
@@ -58,7 +58,7 @@ export default function AccountBillingPaymentMethod({ cards, isOpen, onOpen, onC
 
       <Box sx={{ mt: 3 }}>
         <Button size="small" startIcon={<Iconify icon={'eva:plus-fill'} />} onClick={onOpen}>
-          Add new card
+          Добавить новую карту
         </Button>
       </Box>
 

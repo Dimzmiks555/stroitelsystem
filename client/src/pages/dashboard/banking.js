@@ -36,14 +36,14 @@ export default function GeneralBanking() {
           <Grid item xs={12} md={7}>
             <Stack direction={{ xs: 'column', sm: 'row' }} spacing={3}>
               <BankingWidgetSummary
-                title="Income"
+                title="Приход"
                 icon={'eva:diagonal-arrow-left-down-fill'}
                 percent={2.6}
                 total={18765}
                 chartData={[111, 136, 76, 108, 74, 54, 57, 84]}
               />
               <BankingWidgetSummary
-                title="Expenses"
+                title="Расход"
                 color="warning"
                 icon={'eva:diagonal-arrow-right-up-fill'}
                 percent={-0.5}

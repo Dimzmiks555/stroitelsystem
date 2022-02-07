@@ -17,7 +17,7 @@ export default function AccountBillingInvoiceHistory({ invoices }) {
   return (
     <Stack spacing={3} alignItems="flex-end">
       <Typography variant="subtitle1" sx={{ width: 1 }}>
-        Invoice History
+        История
       </Typography>
 
       <Stack spacing={2} sx={{ width: 1 }}>
@@ -27,13 +27,13 @@ export default function AccountBillingInvoiceHistory({ invoices }) {
               {fDate(invoice.createdAt)}
             </Typography>
             <Typography variant="body2">{fCurrency(invoice.price)}</Typography>
-            <Link>PDF</Link>
+            <Link sx={{cursor: "pointer"}}>PDF</Link>
           </Stack>
         ))}
       </Stack>
 
       <Button size="small" endIcon={<Iconify icon={'eva:arrow-ios-forward-fill'} />}>
-        All invoices
+        Показать всё
       </Button>
     </Stack>
   );

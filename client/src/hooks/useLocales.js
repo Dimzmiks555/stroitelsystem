@@ -1,10 +1,16 @@
 import { useTranslation } from 'react-i18next';
 // @mui
-import { enUS, deDE, frFR } from '@mui/material/locale';
+import { enUS, deDE, frFR, ruRU } from '@mui/material/locale';
 
 // ----------------------------------------------------------------------
 
 const LANGS = [
+  {
+    label: 'Русский',
+    value: 'ru',
+    systemValue: ruRU,
+    icon: '/icons/ru.svg',
+  },
   {
     label: 'English',
     value: 'en',

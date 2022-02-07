@@ -17,7 +17,7 @@ import Scrollbar from '../../../../components/Scrollbar';
 export default function AppTopRelated() {
   return (
     <Card>
-      <CardHeader title="Top Related Applications" />
+      <CardHeader title="Похожие приложения" />
       <Scrollbar>
         <Stack spacing={3} sx={{ p: 3, pr: 0 }}>
           {_appRelated.map((app) => (
@@ -78,7 +78,7 @@ function ApplicationItem({ app }) {
             variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
             color={price === 0 ? 'success' : 'error'}
           >
-            {price === 0 ? 'Free' : fCurrency(price)}
+            {price === 0 ? 'Бесплатно' : fCurrency(price)}
           </Label>
         </Stack>
       </Box>
@@ -86,7 +86,7 @@ function ApplicationItem({ app }) {
       <Stack alignItems="flex-end" sx={{ pr: 3 }}>
         <Rating readOnly size="small" precision={0.5} name="reviews" value={rating} />
         <Typography variant="caption" sx={{ mt: 0.5, color: 'text.secondary' }}>
-          {fShortenNumber(review)}&nbsp;reviews
+          {fShortenNumber(review)}&nbsp;оценок
         </Typography>
       </Stack>
     </Stack>

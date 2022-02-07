@@ -39,11 +39,11 @@ import { UserListHead, UserListToolbar, UserMoreMenu } from '../../../sections/@
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'name', label: 'Name', alignRight: false },
-  { id: 'company', label: 'Company', alignRight: false },
-  { id: 'role', label: 'Role', alignRight: false },
-  { id: 'isVerified', label: 'Verified', alignRight: false },
-  { id: 'status', label: 'Status', alignRight: false },
+  { id: 'name', label: 'Имя', alignRight: false },
+  { id: 'company', label: 'Компания', alignRight: false },
+  { id: 'role', label: 'Роль', alignRight: false },
+  { id: 'isVerified', label: 'Подтвержден', alignRight: false },
+  { id: 'status', label: 'Статус', alignRight: false },
   { id: '' },
 ];
 
@@ -133,19 +133,19 @@ export default function UserList() {
   const isNotFound = !filteredUsers.length && Boolean(filterName);
 
   return (
-    <Page title="User: List">
+    <Page title="Список пользователей">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading="User List"
+          heading="Список пользователей"
           links={[
-            { name: 'Dashboard', href: PATH_DASHBOARD.root },
-            { name: 'User', href: PATH_DASHBOARD.user.root },
-            { name: 'List' },
+            // { name: 'Dashboard', href: PATH_DASHBOARD.root },
+            // { name: 'User', href: PATH_DASHBOARD.user.root },
+            { name: '' },
           ]}
           action={
             <NextLink href={PATH_DASHBOARD.user.newUser} passHref>
               <Button variant="contained" startIcon={<Iconify icon={'eva:plus-fill'} />}>
-                New User
+                Новый пользователь
               </Button>
             </NextLink>
           }

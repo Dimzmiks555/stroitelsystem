@@ -18,7 +18,7 @@ export default function AnalyticsOrderTimeline() {
         },
       }}
     >
-      <CardHeader title="Order Timeline" />
+      <CardHeader title="История заказов" />
       <CardContent>
         <Timeline>
           {_analyticOrderTimeline.map((item, index) => (

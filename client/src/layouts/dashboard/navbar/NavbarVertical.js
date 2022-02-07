@@ -77,9 +77,9 @@ export default function NavbarVertical({ isOpenSidebar, onCloseSidebar }) {
         <Stack direction="row" alignItems="center" justifyContent="space-between">
           <Logo />
 
-          {isDesktop && !isCollapse && (
+          {/* {isDesktop && !isCollapse && (
             <CollapseButton onToggleCollapse={onToggleCollapse} collapseClick={collapseClick} />
-          )}
+          )} */}
         </Stack>
 
         <NavbarAccount isCollapse={isCollapse} />
@@ -89,7 +89,7 @@ export default function NavbarVertical({ isOpenSidebar, onCloseSidebar }) {
 
       <Box sx={{ flexGrow: 1 }} />
 
-      {!isCollapse && <NavbarDocs />}
+      {/* {!isCollapse && <NavbarDocs />} */}
     </Scrollbar>
   );
 

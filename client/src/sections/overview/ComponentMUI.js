@@ -14,7 +14,7 @@ export default function ComponentMUI() {
           MUI
         </Typography>
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          Components from{' '}
+          Компоненты из{' '}
           <Link href="https://mui.com/components/" target="_blank" rel="noopener">
             MUI
           </Link>

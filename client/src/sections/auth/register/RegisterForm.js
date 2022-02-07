@@ -67,15 +67,15 @@ export default function RegisterForm() {
         {!!errors.afterSubmit && <Alert severity="error">{errors.afterSubmit.message}</Alert>}
 
         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-          <RHFTextField name="firstName" label="First name" />
-          <RHFTextField name="lastName" label="Last name" />
+          <RHFTextField name="firstName" label="Имя" />
+          <RHFTextField name="lastName" label="Фамилия" />
         </Stack>
 
-        <RHFTextField name="email" label="Email address" />
+        <RHFTextField name="email" label="Электронная почта" />
 
         <RHFTextField
           name="password"
-          label="Password"
+          label="Пароль"
           type={showPassword ? 'text' : 'password'}
           InputProps={{
             endAdornment: (
@@ -89,7 +89,7 @@ export default function RegisterForm() {
         />
 
         <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
-          Register
+          Зарегистрироваться
         </LoadingButton>
       </Stack>
     </FormProvider>

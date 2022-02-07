@@ -27,8 +27,8 @@ export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
 
   const LoginSchema = Yup.object().shape({
-    email: Yup.string().email('Email must be a valid email address').required('Email is required'),
-    password: Yup.string().required('Password is required'),
+    email: Yup.string().email('Некорректный логин').required('Логин не может отсутствовать'),
+    password: Yup.string().required('Пароль не может отсутствовать'),
   });
 
   const defaultValues = {
@@ -66,11 +66,11 @@ export default function LoginForm() {
       <Stack spacing={3}>
         {!!errors.afterSubmit && <Alert severity="error">{errors.afterSubmit.message}</Alert>}
 
-        <RHFTextField name="email" label="Email address" />
+        <RHFTextField name="email" label="Логин" />
 
         <RHFTextField
           name="password"
-          label="Password"
+          label="Пароль"
           type={showPassword ? 'text' : 'password'}
           InputProps={{
             endAdornment: (
@@ -85,14 +85,14 @@ export default function LoginForm() {
       </Stack>
 
       <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
-        <RHFCheckbox name="remember" label="Remember me" />
+        {/* <RHFCheckbox name="remember" label="Запомнить меня" /> */}
         <NextLink href={PATH_AUTH.resetPassword} passHref>
-          <Link variant="subtitle2">Forgot password?</Link>
+          <Link variant="subtitle2">Забыли пароль?</Link>
         </NextLink>
       </Stack>
 
       <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
-        Login
+        Войти
       </LoadingButton>
     </FormProvider>
   );

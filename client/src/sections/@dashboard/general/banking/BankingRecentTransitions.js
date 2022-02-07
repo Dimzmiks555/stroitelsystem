@@ -47,10 +47,10 @@ export default function BankingRecentTransitions() {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>Description</TableCell>
-                  <TableCell>Date</TableCell>
-                  <TableCell>Amount</TableCell>
-                  <TableCell>Status</TableCell>
+                  <TableCell>Описание</TableCell>
+                  <TableCell>Дата</TableCell>
+                  <TableCell>Сумма</TableCell>
+                  <TableCell>Статус</TableCell>
                   <TableCell />
                 </TableRow>
               </TableHead>
@@ -135,7 +135,7 @@ export default function BankingRecentTransitions() {
 
         <Box sx={{ p: 2, textAlign: 'right' }}>
           <Button size="small" color="inherit" endIcon={<Iconify icon={'eva:arrow-ios-forward-fill'} />}>
-            View All
+            Показать все
           </Button>
         </Box>
       </Card>
@@ -218,24 +218,24 @@ function MoreMenuButton() {
       >
         <MenuItem>
           <Iconify icon={'eva:download-fill'} sx={{ ...ICON }} />
-          Download
+          Скачать
         </MenuItem>
 
         <MenuItem>
           <Iconify icon={'eva:printer-fill'} sx={{ ...ICON }} />
-          Print
+          Печать
         </MenuItem>
 
         <MenuItem>
           <Iconify icon={'eva:share-fill'} sx={{ ...ICON }} />
-          Share
+          Поделиться
         </MenuItem>
 
         <Divider sx={{ borderStyle: 'dashed' }} />
 
         <MenuItem sx={{ color: 'error.main' }}>
           <Iconify icon={'eva:trash-2-outline'} sx={{ ...ICON }} />
-          Delete
+          Удалить
         </MenuItem>
       </MenuPopover>
     </>

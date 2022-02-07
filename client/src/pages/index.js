@@ -16,6 +16,7 @@ import {
   HomeCleanInterfaces,
   HomeHugePackElements,
 } from '../sections/home';
+import { useRouter } from 'next/router';
 
 // ----------------------------------------------------------------------
 
@@ -29,20 +30,30 @@ const ContentStyle = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
 }));
 
+
 // ----------------------------------------------------------------------
 
-HomePage.getLayout = function getLayout(page) {
-  return <Layout variant="main">{page}</Layout>;
-};
+// HomePage.getLayout = function getLayout(page) {
+//   return <Layout variant="main">{page}</Layout>;
+// };
 
 // ----------------------------------------------------------------------
 
 export default function HomePage() {
+
+  const router = useRouter()
+
+  if (typeof window !== 'undefined') {
+    
+    router.push('/auth/login')
+
+  }
+
   return (
-    <Page title="The starting point for your next project">
+    <Page title="Стартовая страница">
       <RootStyle>
-        <HomeHero />
-        <ContentStyle>
+        {/* <HomeHero /> */}
+        {/* <ContentStyle>
           <HomeMinimal />
 
           <HomeHugePackElements />
@@ -58,7 +69,7 @@ export default function HomePage() {
           <HomeLookingFor />
 
           <HomeAdvertisement />
-        </ContentStyle>
+        </ContentStyle> */}
       </RootStyle>
     </Page>
   );

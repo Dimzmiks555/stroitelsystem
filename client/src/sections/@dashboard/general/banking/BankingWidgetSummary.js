@@ -89,7 +89,7 @@ export default function BankingWidgetSummary({ title, total, icon, percent, colo
             {fPercent(percent)}
           </Typography>
           <Typography variant="body2" component="span" sx={{ opacity: 0.72 }}>
-            &nbsp;than last month
+            &nbsp; за этот месяц
           </Typography>
         </Stack>
       </Stack>

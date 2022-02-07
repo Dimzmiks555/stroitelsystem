@@ -48,10 +48,10 @@ import {
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'name', label: 'Product', alignRight: false },
-  { id: 'createdAt', label: 'Create at', alignRight: false },
-  { id: 'inventoryType', label: 'Status', alignRight: false },
-  { id: 'price', label: 'Price', alignRight: true },
+  { id: 'name', label: 'Продукт', alignRight: false },
+  { id: 'createdAt', label: 'Дата создания', alignRight: false },
+  { id: 'inventoryType', label: 'Статус', alignRight: false },
+  { id: 'price', label: 'Цена', alignRight: true },
   { id: '' },
 ];
 
@@ -157,19 +157,19 @@ export default function EcommerceProductList() {
     <Page title="Ecommerce: Product List">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading="Product List"
+          heading="Список продуктов"
           links={[
-            { name: 'Dashboard', href: PATH_DASHBOARD.root },
-            {
-              name: 'E-Commerce',
-              href: PATH_DASHBOARD.eCommerce.root,
-            },
-            { name: 'Product List' },
+            // { name: 'Dashboard', href: PATH_DASHBOARD.root },
+            // {
+            //   name: 'E-Commerce',
+            //   href: PATH_DASHBOARD.eCommerce.root,
+            // },
+            { name: '' },
           ]}
           action={
             <NextLink href={PATH_DASHBOARD.eCommerce.newProduct} passHref>
               <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
-                New Product
+                Новый продукт
               </Button>
             </NextLink>
           }

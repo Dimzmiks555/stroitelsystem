@@ -122,13 +122,13 @@ export default function BankingQuickTransfer() {
   return (
     <>
       <RootStyle>
-        <CardHeader title="Quick Transfer" />
+        <CardHeader title="Быстрый перевод" />
         <Box sx={{ p: 3 }}>
           <Stack direction="row" alignItems="center" justifyContent="space-between">
             <Typography variant="overline" sx={{ color: 'text.secondary' }}>
-              Recent
+              Недавние
             </Typography>
-            <Link sx={{ typography: 'button' }}>View All</Link>
+            <Link sx={{ typography: 'button' }}>Показать все</Link>
           </Stack>
 
           <Box sx={{ position: 'relative' }}>
@@ -174,7 +174,7 @@ export default function BankingQuickTransfer() {
 
           <Stack spacing={3}>
             <Typography variant="overline" sx={{ color: 'text.secondary' }}>
-              insert amount
+              сумма перевода
             </Typography>
 
             <InputAmount onBlur={handleBlur} onChange={handleInputChange} autoWidth={autoWidth} amount={amount} />
@@ -191,13 +191,13 @@ export default function BankingQuickTransfer() {
 
             <Stack direction="row" alignItems="center" justifyContent="space-between">
               <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
-                Your Balance
+                Ваш баланс
               </Typography>
               <Typography variant="subtitle1">{fCurrency(34212)}</Typography>
             </Stack>
 
             <Button variant="contained" size="large" disabled={amount === 0} onClick={handleOpenConfirm}>
-              Transfer Now
+              Перевести
             </Button>
           </Stack>
         </Box>
@@ -270,7 +270,7 @@ ConfirmTransferDialog.propTypes = {
 function ConfirmTransferDialog({ open, amount, autoWidth, contactInfo, onClose, onBlur, onChange }) {
   return (
     <Dialog open={open} fullWidth maxWidth="xs" onClose={onClose}>
-      <DialogTitle>Transfer to</DialogTitle>
+      <DialogTitle>Перевод</DialogTitle>
 
       <Stack spacing={3} sx={{ p: 3, pb: 0 }}>
         <Stack direction="row" alignItems="center" spacing={2}>
@@ -292,13 +292,13 @@ function ConfirmTransferDialog({ open, amount, autoWidth, contactInfo, onClose, 
           sx={{ justifyContent: 'flex-end' }}
         />
 
-        <TextField fullWidth multiline rows={2} placeholder="Write a message..." />
+        <TextField fullWidth multiline rows={2} placeholder="Комментарий..." />
       </Stack>
       <DialogActions>
         <Button variant="contained" disabled={amount === 0} onClick={onClose}>
-          Confirm & Transfer
+          Подтвердить
         </Button>
-        <Button onClick={onClose}>Cancel</Button>
+        <Button onClick={onClose}>Отменить</Button>
       </DialogActions>
     </Dialog>
   );

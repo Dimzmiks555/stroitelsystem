@@ -37,7 +37,7 @@ export default function ComponentHero() {
         <div>
           <m.div variants={varFade().inUp}>
             <Typography variant="h3" component="h1">
-              Components
+              Компоненты
             </Typography>
           </m.div>
 
@@ -65,7 +65,7 @@ export default function ComponentHero() {
                 alignItems="center"
                 sx={{ display: 'inline-flex' }}
               >
-                <Typography variant="button"> Fast preview</Typography>
+                <Typography variant="button">Быстрый обзор</Typography>
                 <Iconify icon={'ic:round-arrow-right-alt'} width={20} height={20} />
               </Stack>
             </Link>

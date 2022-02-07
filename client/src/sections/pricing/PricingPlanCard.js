@@ -42,7 +42,7 @@ export default function PricingPlanCard({ card, index }) {
             position: 'absolute',
           }}
         >
-          POPULAR
+          ПОПУЛЯРНО
         </Label>
       )}
 
@@ -53,13 +53,13 @@ export default function PricingPlanCard({ card, index }) {
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', my: 2 }}>
         {index === 1 || index === 2 ? (
           <Typography variant="subtitle1" sx={{ color: 'text.secondary' }}>
-            $
+            ₽
           </Typography>
         ) : (
           ''
         )}
         <Typography variant="h2" sx={{ mx: 1 }}>
-          {price === 0 ? 'Free' : price}
+          {price === 0 ? 'Бесплатно' : price}
         </Typography>
         {index === 1 || index === 2 ? (
           <Typography
@@ -71,7 +71,7 @@ export default function PricingPlanCard({ card, index }) {
               color: 'text.secondary',
             }}
           >
-            /mo
+            /мес
           </Typography>
         ) : (
           ''

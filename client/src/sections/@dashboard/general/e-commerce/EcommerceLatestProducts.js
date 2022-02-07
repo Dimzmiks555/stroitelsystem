@@ -15,7 +15,7 @@ import { ColorPreview } from '../../../../components/color-utils';
 export default function EcommerceLatestProducts() {
   return (
     <Card>
-      <CardHeader title="Latest Products" />
+      <CardHeader title="Последние товары" />
       <Scrollbar>
         <Stack spacing={3} sx={{ p: 3, pr: 0 }}>
           {_ecommerceLatestProducts.map((product) => (
@@ -48,7 +48,7 @@ function ProductItem({ product }) {
       <Image alt={name} src={image} sx={{ width: 48, height: 48, borderRadius: 1.5, flexShrink: 0 }} />
 
       <Box sx={{ flexGrow: 1, minWidth: 200 }}>
-        <Link sx={{ color: 'text.primary', typography: 'subtitle2' }}>{name}</Link>
+        <Link sx={{ color: 'text.primary', typography: 'subtitle2', cursor: 'pointer' }}>{name}</Link>
 
         <Stack direction="row">
           {hasSale && (

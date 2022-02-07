@@ -19,7 +19,7 @@ export const _appRelated = ['Chrome', 'Drive', 'Dropbox', 'Evernote', 'Github'].
 
 export const _appInstalled = ['de', 'en', 'fr', 'kr', 'us'].map((country, index) => ({
   id: _mock.id(index),
-  name: ['Germany', 'England', 'France', 'Korean', 'USA'][index],
+  name: ['Германия', 'Англия', 'Франция', 'Корея', 'США'][index],
   android: randomNumberRange(999, 99999),
   windows: randomNumberRange(999, 99999),
   apple: randomNumberRange(999, 99999),

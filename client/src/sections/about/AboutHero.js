@@ -35,11 +35,11 @@ export default function AboutHero() {
     <RootStyle>
       <Container component={MotionContainer} sx={{ position: 'relative', height: '100%' }}>
         <ContentStyle>
-          <TextAnimate text="Who" sx={{ color: 'primary.main' }} variants={varFade().inRight} />
+          <TextAnimate text="Кто" sx={{ color: 'primary.main' }} variants={varFade().inRight} />
           <br />
           <Box sx={{ display: 'inline-flex', color: 'common.white' }}>
-            <TextAnimate text="we" sx={{ mr: 2 }} />
-            <TextAnimate text="are?" />
+            <TextAnimate text="мы" sx={{ mr: 2 }} />
+            <TextAnimate text="такие?" />
           </Box>
 
           <m.div variants={varFade().inRight}>
@@ -51,8 +51,8 @@ export default function AboutHero() {
                 fontWeight: 'fontWeightMedium',
               }}
             >
-              Let's work together and
-              <br /> make awesome site easily
+              Давайте поработаем вместе и
+              <br /> сделаем потрясающие сайты легко
             </Typography>
           </m.div>
         </ContentStyle>

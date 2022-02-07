@@ -10,7 +10,7 @@ import { _bookingsOverview } from '../../../../_mock';
 export default function BookingBookedRoom() {
   return (
     <Card>
-      <CardHeader title="Booked Room" />
+      <CardHeader title="Бронированные комнаты" />
       <Stack spacing={3} sx={{ px: 3, my: 5 }}>
         {_bookingsOverview.map((progress) => (
           <LinearProgress
@@ -18,8 +18,8 @@ export default function BookingBookedRoom() {
             key={progress.status}
             value={progress.value}
             color={
-              (progress.status === 'Pending' && 'warning') ||
-              (progress.status === 'Cancel' && 'error') ||
+              (progress.status === 'Оформляется' && 'warning') ||
+              (progress.status === 'Отменен' && 'error') ||
               'success'
             }
             sx={{ height: 8, bgcolor: 'grey.50016' }}
@@ -37,8 +37,8 @@ export default function BookingBookedRoom() {
                   height: 12,
                   borderRadius: 0.5,
                   bgcolor: 'success.main',
-                  ...(progress.status === 'Pending' && { bgcolor: 'warning.main' }),
-                  ...(progress.status === 'Cancel' && { bgcolor: 'error.main' }),
+                  ...(progress.status === 'Оформляется' && { bgcolor: 'warning.main' }),
+                  ...(progress.status === 'Отменен' && { bgcolor: 'error.main' }),
                 }}
               />
               <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>

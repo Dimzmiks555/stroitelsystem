@@ -86,8 +86,8 @@ export default function HomeHero() {
           <ContentStyle>
             <m.div variants={varFade().inRight}>
               <Typography variant="h1" sx={{ color: 'common.white' }}>
-                Start a <br />
-                new project <br /> with
+                Начните <br />
+                новый проект <br /> с
                 <Typography component="span" variant="h1" sx={{ color: 'primary.main' }}>
                   &nbsp;Minimal
                 </Typography>
@@ -96,8 +96,7 @@ export default function HomeHero() {
 
             <m.div variants={varFade().inRight}>
               <Typography sx={{ color: 'common.white' }}>
-                The starting point for your next project based on easy-to-customize MUI helps you build apps faster and
-                better.
+                Стартовая точка для вашего следующего проекта, основанная на легко настраиваемых MUI компонентах поможет вам создавать приложения быстрее и лучше.
               </Typography>
             </m.div>
 
@@ -119,7 +118,7 @@ export default function HomeHero() {
                       color="common.white"
                       sx={{ typography: 'body2' }}
                     >
-                      Preview Sketch
+                      Превью Sketch
                     </Link>
                   }
                 />
@@ -142,7 +141,7 @@ export default function HomeHero() {
                       color="common.white"
                       sx={{ typography: 'body2' }}
                     >
-                      Preview Figma
+                      Превью Figma
                     </Link>
                   }
                 />
@@ -156,7 +155,7 @@ export default function HomeHero() {
                   variant="contained"
                   startIcon={<Iconify icon={'eva:flash-fill'} width={20} height={20} />}
                 >
-                  Live Preview
+                  Предпросмотр
                 </Button>
               </NextLink>
             </m.div>
@@ -164,7 +163,7 @@ export default function HomeHero() {
             <Stack spacing={2.5}>
               <m.div variants={varFade().inRight}>
                 <Typography variant="overline" sx={{ color: 'primary.light' }}>
-                  Available For
+                  Доступно для
                 </Typography>
               </m.div>
 

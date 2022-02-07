@@ -120,7 +120,7 @@ function CardItem({ card }) {
         </Box>
 
         <div>
-          <Typography sx={{ mb: 2, typography: 'subtitle2', opacity: 0.72 }}>Current Balance</Typography>
+          <Typography sx={{ mb: 2, typography: 'subtitle2', opacity: 0.72 }}>Текущий баланс</Typography>
           <Stack direction="row" alignItems="center" spacing={1}>
             <Typography sx={{ typography: 'h3' }}>{showCurrency ? '********' : fCurrency(balance)}</Typography>
             <IconButton color="inherit" onClick={onToggleShowCurrency} sx={{ opacity: 0.48 }}>
@@ -144,11 +144,11 @@ function CardItem({ card }) {
 
         <Stack direction="row" spacing={5}>
           <div>
-            <Typography sx={{ mb: 1, typography: 'caption', opacity: 0.48 }}>Card Holder</Typography>
+            <Typography sx={{ mb: 1, typography: 'caption', opacity: 0.48 }}>Держатель карты</Typography>
             <Typography sx={{ typography: 'subtitle1' }}>{cardHolder}</Typography>
           </div>
           <div>
-            <Typography sx={{ mb: 1, typography: 'caption', opacity: 0.48 }}>Valid Dates</Typography>
+            <Typography sx={{ mb: 1, typography: 'caption', opacity: 0.48 }}>Срок</Typography>
             <Typography sx={{ typography: 'subtitle1' }}>{cardValid}</Typography>
           </div>
         </Stack>
@@ -197,12 +197,12 @@ function MoreMenuButton() {
       >
         <MenuItem onClick={handleClose} sx={{ color: 'error.main' }}>
           <Iconify icon={'eva:trash-2-outline'} sx={{ ...ICON }} />
-          Delete card
+          Удалить карту
         </MenuItem>
 
         <MenuItem onClick={handleClose}>
           <Iconify icon={'eva:edit-fill'} sx={{ ...ICON }} />
-          Edit card
+          Изменить карту
         </MenuItem>
       </MenuPopover>
     </>

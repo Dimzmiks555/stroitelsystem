@@ -24,7 +24,7 @@ export default function AccountGeneral() {
   const { user } = useAuth();
 
   const UpdateUserSchema = Yup.object().shape({
-    displayName: Yup.string().required('Name is required'),
+    displayName: Yup.string().required('Имя обязательно'),
   });
 
   const defaultValues = {
@@ -98,13 +98,13 @@ export default function AccountGeneral() {
                     color: 'text.secondary',
                   }}
                 >
-                  Allowed *.jpeg, *.jpg, *.png, *.gif
-                  <br /> max size of {fData(3145728)}
+                  Разрешены *.jpeg, *.jpg, *.png, *.gif
+                  <br /> макс. размер {fData(3145728)}
                 </Typography>
               }
             />
 
-            <RHFSwitch name="isPublic" labelPlacement="start" label="Public Profile" sx={{ mt: 5 }} />
+            <RHFSwitch name="isPublic" labelPlacement="start" label="Публичный профиль" sx={{ mt: 5 }} />
           </Card>
         </Grid>
 
@@ -118,13 +118,13 @@ export default function AccountGeneral() {
                 gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
               }}
             >
-              <RHFTextField name="displayName" label="Name" />
-              <RHFTextField name="email" label="Email Address" />
+              <RHFTextField name="displayName" label="Имя" />
+              <RHFTextField name="email" label="Электронная почта" />
 
-              <RHFTextField name="phoneNumber" label="Phone Number" />
-              <RHFTextField name="address" label="Address" />
+              <RHFTextField name="phoneNumber" label="Номер телефона" />
+              <RHFTextField name="address" label="Адрес" />
 
-              <RHFSelect name="country" label="Country" placeholder="Country">
+              <RHFSelect name="country" label="Страна" placeholder="Страна">
                 <option value="" />
                 {countries.map((option) => (
                   <option key={option.code} value={option.label}>
@@ -133,17 +133,17 @@ export default function AccountGeneral() {
                 ))}
               </RHFSelect>
 
-              <RHFTextField name="state" label="State/Region" />
+              <RHFTextField name="state" label="Регион" />
 
-              <RHFTextField name="city" label="City" />
-              <RHFTextField name="zipCode" label="Zip/Code" />
+              <RHFTextField name="city" label="Город" />
+              <RHFTextField name="zipCode" label="Индекс" />
             </Box>
 
             <Stack spacing={3} alignItems="flex-end" sx={{ mt: 3 }}>
-              <RHFTextField name="about" multiline rows={4} label="About" />
+              <RHFTextField name="about" multiline rows={4} label="О себе" />
 
               <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
-                Save Changes
+               Сохранить
               </LoadingButton>
             </Stack>
           </Card>

@@ -11,7 +11,7 @@ import { _ecommerceSalesOverview } from '../../../../_mock';
 export default function EcommerceSalesOverview() {
   return (
     <Card>
-      <CardHeader title="Sales Overview" />
+      <CardHeader title="Обзор продаж" />
       <Stack spacing={4} sx={{ p: 3 }}>
         {_ecommerceSalesOverview.map((progress) => (
           <ProgressItem key={progress.label} progress={progress} />
@@ -48,8 +48,8 @@ function ProgressItem({ progress }) {
         variant="determinate"
         value={progress.value}
         color={
-          (progress.label === 'Total Income' && 'info') ||
-          (progress.label === 'Total Expenses' && 'warning') ||
+          (progress.label === 'Приход' && 'info') ||
+          (progress.label === 'Расход' && 'warning') ||
           'primary'
         }
       />

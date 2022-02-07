@@ -15,7 +15,7 @@ const PRODUCT_NAME = [
 ];
 
 export const _ecommerceSalesOverview = [...Array(3)].map((_, index) => ({
-  label: ['Total Profit', 'Total Income', 'Total Expenses'][index],
+  label: ['Маржевая прибыль', 'Приход', 'Расход'][index],
   amount: _mock.number.price(index) * 100,
   value: _mock.number.percent(index),
 }));
@@ -28,7 +28,7 @@ export const _ecommerceBestSalesman = [...Array(5)].map((_, index) => ({
   category: CATEGORY[index],
   flag: `https://minimal-assets-api.vercel.app/assets/icons/ic_flag_${COUNTRY[index]}.svg`,
   total: _mock.number.price(index),
-  rank: `Top ${index + 1}`,
+  rank: `Топ ${index + 1}`,
 }));
 
 export const _ecommerceLatestProducts = [...Array(5)].map((_, index) => ({

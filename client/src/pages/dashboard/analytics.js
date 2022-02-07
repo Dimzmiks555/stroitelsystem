@@ -34,21 +34,21 @@ export default function GeneralAnalytics() {
     <Page title="General: Analytics">
       <Container maxWidth={themeStretch ? false : 'xl'}>
         <Typography variant="h4" sx={{ mb: 5 }}>
-          Hi, Welcome back
+          Приветствуем тебя снова!
         </Typography>
 
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
-            <AnalyticsWidgetSummary title="Weekly Sales" total={714000} icon={'ant-design:android-filled'} />
+            <AnalyticsWidgetSummary title="Продажи за неделю" total={714000} icon={'ant-design:android-filled'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AnalyticsWidgetSummary title="New Users" total={1352831} color="info" icon={'ant-design:apple-filled'} />
+            <AnalyticsWidgetSummary title="Новые пользователи" total={1352831} color="info" icon={'ant-design:apple-filled'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
             <AnalyticsWidgetSummary
-              title="Item Orders"
+              title="Товаров заказано"
               total={1723315}
               color="warning"
               icon={'ant-design:windows-filled'}
@@ -56,7 +56,7 @@ export default function GeneralAnalytics() {
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AnalyticsWidgetSummary title="Bug Reports" total={234} color="error" icon={'ant-design:bug-filled'} />
+            <AnalyticsWidgetSummary title="Отчетов об ошибках" total={234} color="error" icon={'ant-design:bug-filled'} />
           </Grid>
 
           <Grid item xs={12} md={6} lg={8}>

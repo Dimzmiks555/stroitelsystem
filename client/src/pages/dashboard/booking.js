@@ -37,15 +37,15 @@ export default function GeneralBooking() {
       <Container maxWidth={themeStretch ? false : 'xl'}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={4}>
-            <BookingWidgetSummary title="Total Booking" total={714000} icon={<BookingIllustration />} />
+            <BookingWidgetSummary title="Всего бронирований" total={714000} icon={<BookingIllustration />} />
           </Grid>
 
           <Grid item xs={12} md={4}>
-            <BookingWidgetSummary title="Check In" total={311000} icon={<CheckInIllustration />} />
+            <BookingWidgetSummary title="Заехало" total={311000} icon={<CheckInIllustration />} />
           </Grid>
 
           <Grid item xs={12} md={4}>
-            <BookingWidgetSummary title="Check Out" total={124000} icon={<CheckOutIllustration />} />
+            <BookingWidgetSummary title="Уехало" total={124000} icon={<CheckOutIllustration />} />
           </Grid>
 
           <Grid item xs={12} md={8}>

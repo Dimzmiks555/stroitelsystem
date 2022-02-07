@@ -29,7 +29,7 @@ export default function AnalyticsTasks() {
 
   return (
     <Card>
-      <CardHeader title="Tasks" />
+      <CardHeader title="Задачи" />
 
       <Controller
         name="taskCompleted"
@@ -127,24 +127,24 @@ function MoreMenuButton() {
       >
         <MenuItem>
           <Iconify icon={'eva:checkmark-circle-2-fill'} sx={{ ...ICON }} />
-          Mark Complete
+          Пометить выполненной
         </MenuItem>
 
         <MenuItem>
           <Iconify icon={'eva:edit-fill'} sx={{ ...ICON }} />
-          Edit
+          Изменить
         </MenuItem>
 
         <MenuItem>
           <Iconify icon={'eva:share-fill'} sx={{ ...ICON }} />
-          Share
+          Поделиться
         </MenuItem>
 
         <Divider sx={{ borderStyle: 'dashed' }} />
 
         <MenuItem sx={{ color: 'error.main' }}>
           <Iconify icon={'eva:trash-2-outline'} sx={{ ...ICON }} />
-          Delete
+          Удалить
         </MenuItem>
       </MenuPopover>
     </>

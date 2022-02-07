@@ -104,7 +104,7 @@ export default function Editor({
           onChange={onChange}
           modules={modules}
           formats={formats}
-          placeholder="Write something awesome..."
+          placeholder="Напишите что-нибудь..."
           {...other}
         />
       </RootStyle>

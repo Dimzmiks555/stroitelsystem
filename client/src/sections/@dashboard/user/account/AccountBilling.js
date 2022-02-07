@@ -24,7 +24,7 @@ export default function AccountBilling({ cards, addressBook, invoices }) {
         <Stack spacing={3}>
           <Card sx={{ p: 3 }}>
             <Typography variant="overline" sx={{ mb: 3, display: 'block', color: 'text.secondary' }}>
-              Your Plan
+              Ваш план
             </Typography>
             <Typography variant="h4">Premium</Typography>
             <Box
@@ -36,10 +36,10 @@ export default function AccountBilling({ cards, addressBook, invoices }) {
               }}
             >
               <Button size="small" color="inherit" variant="outlined" sx={{ mr: 1 }}>
-                Cancel plan
+                Отменить
               </Button>
               <Button size="small" variant="outlined">
-                Upgrade plan
+                Обновить
               </Button>
             </Box>
           </Card>

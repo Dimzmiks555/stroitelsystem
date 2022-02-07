@@ -11,15 +11,15 @@ const CHART_DATA = [
   {
     year: 2019,
     data: [
-      { name: 'Total Income', data: [10, 41, 35, 151, 49, 62, 69, 91, 48] },
-      { name: 'Total Expenses', data: [10, 34, 13, 56, 77, 88, 99, 77, 45] },
+      { name: 'Приход', data: [10, 41, 35, 151, 49, 62, 69, 91, 48,10,20,30] },
+      { name: 'Расход', data: [10, 34, 13, 56, 77, 88, 99, 77, 45,20,0,40] },
     ],
   },
   {
     year: 2020,
     data: [
-      { name: 'Total Income', data: [148, 91, 69, 62, 49, 51, 35, 41, 10] },
-      { name: 'Total Expenses', data: [45, 77, 99, 88, 77, 56, 13, 34, 10] },
+      { name: 'Приход', data: [148, 91, 69, 62, 49, 51, 35, 41, 10,43,65,20] },
+      { name: 'Расход', data: [45, 77, 99, 88, 77, 56, 13, 34, 10,29,54,38] },
     ],
   },
 ];
@@ -34,15 +34,15 @@ export default function EcommerceYearlySales() {
   const chartOptions = merge(BaseOptionChart(), {
     legend: { position: 'top', horizontalAlign: 'right' },
     xaxis: {
-      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+      categories: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', "Окт",'Ноя','Дек'],
     },
   });
 
   return (
     <Card>
       <CardHeader
-        title="Yearly Sales"
-        subheader="(+43%) than last year"
+        title="Ранние продажи"
+        subheader="(+43%) чем в прошлом году"
         action={
           <TextField
             select

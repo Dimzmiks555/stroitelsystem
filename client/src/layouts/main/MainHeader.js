@@ -84,14 +84,6 @@ export default function MainHeader() {
 
           {isDesktop && <MenuDesktop isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
 
-          <Button
-            variant="contained"
-            target="_blank"
-            rel="noopener"
-            href="https://material-ui.com/store/items/minimal-dashboard/"
-          >
-            Purchase Now
-          </Button>
 
           {!isDesktop && <MenuMobile isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
         </Container>

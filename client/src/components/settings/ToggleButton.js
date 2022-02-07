@@ -48,7 +48,7 @@ export default function ToggleButton({ notDefault, open, onToggle }) {
     <RootStyle>
       {notDefault && !open && <DotStyle />}
 
-      <Tooltip title="Settings" placement="left">
+      <Tooltip title="Настройки" placement="left">
         <IconButtonAnimate
           color="inherit"
           onClick={onToggle}

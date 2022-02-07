@@ -52,7 +52,7 @@ export const _invoice = {
 export const _faqs = [...Array(8)].map((_, index) => ({
   id: _mock.id(index),
   value: `panel${index + 1}`,
-  heading: `Questions ${index + 1}`,
+  heading: `Вопросы ${index + 1}`,
   detail: _mock.text.description(index),
 }));
 
@@ -87,7 +87,7 @@ export const _accordions = [...Array(4)].map((_, index) => ({
 // ----------------------------------------------------------------------
 
 export const _dataGrid = [...Array(36)].map((_, index) => ({
-  id: _mock.id(index),
+  id: index + 1,
   name: _mock.name.fullName(index),
   email: _mock.email(index),
   lastLogin: _mock.time(index),

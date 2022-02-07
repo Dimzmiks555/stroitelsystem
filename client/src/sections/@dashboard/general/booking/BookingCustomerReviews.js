@@ -38,8 +38,8 @@ export default function BookingCustomerReviews() {
   return (
     <Card>
       <CardHeader
-        title="Customer Reviews"
-        subheader={`${_bookingReview.length} Reviews`}
+        title="Отзывы"
+        subheader={`${_bookingReview.length} отзывов`}
         action={
           <CarouselArrows
             customIcon={'ic:round-keyboard-arrow-right'}
@@ -87,7 +87,7 @@ function ReviewItem({ item }) {
         <div>
           <Typography variant="subtitle2">{name}</Typography>
           <Typography variant="caption" sx={{ color: 'text.secondary', mt: 0.5, display: 'block' }}>
-            Posted {fDateTime(postedAt)}
+            Отправлен {fDateTime(postedAt)}
           </Typography>
         </div>
       </Stack>
@@ -103,10 +103,10 @@ function ReviewItem({ item }) {
 
       <Stack direction="row" spacing={2} alignItems="flex-end" sx={{ flexGrow: 1 }}>
         <Button fullWidth variant="contained" endIcon={<Iconify icon={'eva:checkmark-circle-2-fill'} />}>
-          Accept
+          Принять
         </Button>
         <Button fullWidth variant="contained" color="error" endIcon={<Iconify icon={'eva:close-circle-fill'} />}>
-          Reject
+          Отклонить
         </Button>
       </Stack>
     </Stack>

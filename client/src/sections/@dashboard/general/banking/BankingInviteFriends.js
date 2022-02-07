@@ -38,7 +38,7 @@ export default function BankingInviteFriends() {
       <ContentStyle>
         <Stack direction="row" alignItems="center" justifyContent="space-between">
           <Typography variant="h4">
-            Invite friends <br /> and earn
+            Пригласи друзей <br /> и получи
           </Typography>
           <Typography variant="h2">$50</Typography>
         </Stack>
@@ -50,7 +50,7 @@ export default function BankingInviteFriends() {
         <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-between">
           <OutlinedInput
             size="small"
-            placeholder="Email"
+            placeholder="Электронная почта"
             sx={{
               width: 1,
               color: 'common.white',
@@ -63,7 +63,7 @@ export default function BankingInviteFriends() {
             }}
           />
           <Button color="warning" variant="contained">
-            Invite
+            Пригласить
           </Button>
         </Stack>
       </ContentStyle>

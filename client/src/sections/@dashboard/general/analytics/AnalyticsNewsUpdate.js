@@ -15,7 +15,7 @@ import Scrollbar from '../../../../components/Scrollbar';
 export default function AnalyticsNewsUpdate() {
   return (
     <Card>
-      <CardHeader title="News Update" />
+      <CardHeader title="Новости обновлений" />
 
       <Scrollbar>
         <Stack spacing={3} sx={{ p: 3, pr: 0 }}>
@@ -29,7 +29,7 @@ export default function AnalyticsNewsUpdate() {
 
       <Box sx={{ p: 2, textAlign: 'right' }}>
         <Button size="small" color="inherit" endIcon={<Iconify icon={'eva:arrow-ios-forward-fill'} />}>
-          View all
+          Показать все
         </Button>
       </Box>
     </Card>

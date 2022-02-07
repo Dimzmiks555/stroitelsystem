@@ -34,16 +34,16 @@ export default function AppNewInvoice() {
 
   return (
     <Card>
-      <CardHeader title="New Invoice" sx={{ mb: 3 }} />
+      <CardHeader title="Новые заказы" sx={{ mb: 3 }} />
       <Scrollbar>
         <TableContainer sx={{ minWidth: 720 }}>
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Invoice ID</TableCell>
-                <TableCell>Category</TableCell>
-                <TableCell>Price</TableCell>
-                <TableCell>Status</TableCell>
+                <TableCell>ID</TableCell>
+                <TableCell>Категория</TableCell>
+                <TableCell>Цена</TableCell>
+                <TableCell>Статус</TableCell>
                 <TableCell />
               </TableRow>
             </TableHead>
@@ -79,7 +79,7 @@ export default function AppNewInvoice() {
 
       <Box sx={{ p: 2, textAlign: 'right' }}>
         <Button size="small" color="inherit" endIcon={<Iconify icon={'eva:arrow-ios-forward-fill'} />}>
-          View All
+          Показать все
         </Button>
       </Box>
     </Card>
@@ -126,24 +126,24 @@ function MoreMenuButton() {
       >
         <MenuItem>
           <Iconify icon={'eva:download-fill'} sx={{ ...ICON }} />
-          Download
+          Скачать
         </MenuItem>
 
         <MenuItem>
           <Iconify icon={'eva:printer-fill'} sx={{ ...ICON }} />
-          Print
+          Печать
         </MenuItem>
 
         <MenuItem>
           <Iconify icon={'eva:share-fill'} sx={{ ...ICON }} />
-          Share
+          Поделиться
         </MenuItem>
 
         <Divider sx={{ borderStyle: 'dashed' }} />
 
         <MenuItem sx={{ color: 'error.main' }}>
           <Iconify icon={'eva:trash-2-outline'} sx={{ ...ICON }} />
-          Delete
+          Удалить
         </MenuItem>
       </MenuPopover>
     </>

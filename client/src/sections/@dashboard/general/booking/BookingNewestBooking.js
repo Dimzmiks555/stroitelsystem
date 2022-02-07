@@ -59,8 +59,8 @@ export default function BookingNewestBooking() {
   return (
     <Box sx={{ py: 2 }}>
       <CardHeader
-        title="Newest Booking"
-        subheader="12 Booking"
+        title="Свежие бронирования"
+        subheader="12 бронирований"
         action={
           <CarouselArrows
             customIcon={'ic:round-keyboard-arrow-right'}
@@ -118,12 +118,12 @@ function BookingItem({ item }) {
         <Stack direction="row" alignItems="center" spacing={3} sx={{ color: 'text.secondary' }}>
           <Stack direction="row" alignItems="center" spacing={1}>
             <Iconify icon={'ic:round-vpn-key'} width={16} height={16} />
-            <Typography variant="caption">Room {roomNumber}</Typography>
+            <Typography variant="caption">Комната {roomNumber}</Typography>
           </Stack>
 
           <Stack direction="row" alignItems="center" spacing={1}>
             <Iconify icon={'eva:people-fill'} width={16} height={16} />
-            <Typography variant="caption">{person} Person</Typography>
+            <Typography variant="caption">{person} чел.</Typography>
           </Stack>
         </Stack>
       </Stack>

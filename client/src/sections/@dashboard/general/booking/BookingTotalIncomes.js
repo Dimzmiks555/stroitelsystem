@@ -47,7 +47,7 @@ export default function BookingTotalIncomes() {
     <RootStyle>
       <Stack direction="row" justifyContent="space-between" sx={{ mb: 3 }}>
         <div>
-          <Typography sx={{ mb: 2, typography: 'subtitle2' }}>Total Incomes</Typography>
+          <Typography sx={{ mb: 2, typography: 'subtitle2' }}>Приход</Typography>
           <Typography sx={{ typography: 'h3' }}>{fCurrency(TOTAL)}</Typography>
         </div>
 
@@ -60,7 +60,7 @@ export default function BookingTotalIncomes() {
             </Typography>
           </Stack>
           <Typography variant="body2" component="span" sx={{ opacity: 0.72 }}>
-            &nbsp;than last month
+            &nbsp;за этот месяц
           </Typography>
         </div>
       </Stack>

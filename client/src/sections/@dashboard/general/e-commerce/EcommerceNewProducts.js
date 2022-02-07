@@ -73,12 +73,12 @@ function CarouselItem({ item }) {
         }}
       >
         <Typography variant="overline" sx={{ opacity: 0.48 }}>
-          New
+          Новинка
         </Typography>
         <Typography noWrap variant="h5" sx={{ mt: 1, mb: 3 }}>
           {name}
         </Typography>
-        <Button variant="contained">Buy Now</Button>
+        <Button variant="contained">Купить</Button>
       </CardContent>
       <OverlayStyle />
       <Image alt={name} src={image} sx={{ height: { xs: 280, xl: 320 } }} />

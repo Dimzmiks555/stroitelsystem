@@ -42,16 +42,15 @@ export default function VerifyCode() {
                 startIcon={<Iconify icon={'eva:arrow-ios-back-fill'} width={20} height={20} />}
                 sx={{ mb: 3 }}
               >
-                Back
+                Назад
               </Button>
             </NextLink>
 
             <Typography variant="h3" paragraph>
-              Please check your email!
+              Пожалуйста, проверьте вашу почту или СМС!
             </Typography>
             <Typography sx={{ color: 'text.secondary' }}>
-              We have emailed a 6-digit confirmation code to acb@domain, please enter the code in below box to verify
-              your email.
+              Мы отправили Вам 6-значный код подтверждения на acb@domain, пожалуйста, введите код в поле ниже.
             </Typography>
 
             <Box sx={{ mt: 5, mb: 3 }}>
@@ -59,9 +58,9 @@ export default function VerifyCode() {
             </Box>
 
             <Typography variant="body2" align="center">
-              Don’t have a code? &nbsp;
-              <Link variant="subtitle2" underline="none" onClick={() => {}}>
-                Resend code
+              Не пришел код? &nbsp;
+              <Link variant="subtitle2" underline="none" onClick={() => {}} sx={{cursor: 'pointer'}}>
+                Отправить повторно
               </Link>
             </Typography>
           </Box>

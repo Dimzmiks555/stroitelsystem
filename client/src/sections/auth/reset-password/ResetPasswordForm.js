@@ -50,10 +50,10 @@ export default function ResetPasswordForm({ onSent, onGetEmail }) {
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={3}>
-        <RHFTextField name="email" label="Email address" />
+        <RHFTextField name="email" label="Логин, электронная почта, номер телефона" />
 
         <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
-          Reset Password
+          Восстановить
         </LoadingButton>
       </Stack>
     </FormProvider>

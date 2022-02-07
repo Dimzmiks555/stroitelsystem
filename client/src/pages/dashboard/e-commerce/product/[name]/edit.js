@@ -48,14 +48,14 @@ export default function EcommerceProductEdit() {
     <Page title="Ecommerce: Edit product">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading="Edit product"
+          heading="Редактировать продукт"
           links={[
-            { name: 'Dashboard', href: PATH_DASHBOARD.root },
-            {
-              name: 'E-Commerce',
-              href: PATH_DASHBOARD.eCommerce.root,
-            },
-            { name: name },
+            { name: '', href: PATH_DASHBOARD.root },
+            // {
+            //   name: 'E-Commerce',
+            //   href: PATH_DASHBOARD.eCommerce.root,
+            // },
+            // { name: name },
           ]}
         />
 

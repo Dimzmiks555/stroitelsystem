@@ -77,7 +77,7 @@ export default function EcommerceWidgetSummary({ title, percent, total, chartCol
             {fPercent(percent)}
           </Typography>
           <Typography variant="body2" component="span" noWrap sx={{ color: 'text.secondary' }}>
-            &nbsp;than last week
+            &nbsp; за неделю
           </Typography>
         </Stack>
       </Box>

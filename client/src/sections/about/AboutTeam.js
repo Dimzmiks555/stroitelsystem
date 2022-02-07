@@ -54,13 +54,13 @@ export default function AboutTeam() {
     <Container component={MotionViewport} sx={{ pb: 10, textAlign: 'center' }}>
       <m.div variants={varFade().inDown}>
         <Typography component="p" variant="overline" sx={{ mb: 2, color: 'text.secondary' }}>
-          Dream team
+          Команда мечты
         </Typography>
       </m.div>
 
       <m.div variants={varFade().inUp}>
         <Typography variant="h2" sx={{ mb: 3 }}>
-          Great team is the key
+           Великая команда это ключ
         </Typography>
       </m.div>
 
@@ -95,7 +95,7 @@ export default function AboutTeam() {
         endIcon={<Iconify icon={'ic:round-arrow-right-alt'} width={24} height={24} />}
         sx={{ mx: 'auto' }}
       >
-        View all team members
+        Посмотреть всех участников
       </Button>
     </Container>
   );

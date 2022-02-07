@@ -40,14 +40,14 @@ export default function UserListToolbar({ numSelected, filterName, onFilterName,
     >
       {numSelected > 0 ? (
         <Typography component="div" variant="subtitle1">
-          {numSelected} selected
+          {numSelected} выбрано
         </Typography>
       ) : (
         <InputStyle
           stretchStart={240}
           value={filterName}
           onChange={(event) => onFilterName(event.target.value)}
-          placeholder="Search user..."
+          placeholder="Найти..."
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -59,13 +59,13 @@ export default function UserListToolbar({ numSelected, filterName, onFilterName,
       )}
 
       {numSelected > 0 ? (
-        <Tooltip title="Delete">
+        <Tooltip title="Удалить">
           <IconButton onClick={onDeleteUsers}>
             <Iconify icon={'eva:trash-2-outline'} />
           </IconButton>
         </Tooltip>
       ) : (
-        <Tooltip title="Filter list">
+        <Tooltip title="Фильтр">
           <IconButton>
             <Iconify icon={'ic:round-filter-list'} />
           </IconButton>

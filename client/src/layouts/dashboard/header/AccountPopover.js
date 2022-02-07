@@ -20,15 +20,15 @@ import { IconButtonAnimate } from '../../../components/animate';
 
 const MENU_OPTIONS = [
   {
-    label: 'Home',
+    label: 'Главная',
     linkTo: '/',
   },
   {
-    label: 'Profile',
+    label: 'Профиль',
     linkTo: PATH_DASHBOARD.user.profile,
   },
   {
-    label: 'Settings',
+    label: 'Настройки',
     linkTo: PATH_DASHBOARD.user.account,
   },
 ];
@@ -128,7 +128,7 @@ export default function AccountPopover() {
         <Divider sx={{ borderStyle: 'dashed' }} />
 
         <MenuItem onClick={handleLogout} sx={{ m: 1 }}>
-          Logout
+          Выйти
         </MenuItem>
       </MenuPopover>
     </>

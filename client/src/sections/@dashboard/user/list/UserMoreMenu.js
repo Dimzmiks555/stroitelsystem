@@ -56,13 +56,13 @@ export default function UserMoreMenu({ onDelete, userName }) {
       >
         <MenuItem onClick={onDelete} sx={{ color: 'error.main' }}>
           <Iconify icon={'eva:trash-2-outline'} sx={{ ...ICON }} />
-          Delete
+          Удалить
         </MenuItem>
 
         <NextLink href={`${PATH_DASHBOARD.user.root}/${paramCase(userName)}/edit`}>
           <MenuItem>
             <Iconify icon={'eva:edit-fill'} sx={{ mr: 2, width: 24, height: 24 }} />
-            Edit
+          Изменить
           </MenuItem>
         </NextLink>
       </MenuPopover>

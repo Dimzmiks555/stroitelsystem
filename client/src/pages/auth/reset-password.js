@@ -45,18 +45,17 @@ export default function ResetPassword() {
             {!sent ? (
               <>
                 <Typography variant="h3" paragraph>
-                  Forgot your password?
+                  Забыли пароль?
                 </Typography>
                 <Typography sx={{ color: 'text.secondary', mb: 5 }}>
-                  Please enter the email address associated with your account and We will email you a link to reset your
-                  password.
+                  Мы отправим вам СМС с кодом восстановления.
                 </Typography>
 
                 <ResetPasswordForm onSent={() => setSent(true)} onGetEmail={(value) => setEmail(value)} />
 
                 <NextLink href={PATH_AUTH.login} passHref>
                   <Button fullWidth size="large" sx={{ mt: 1 }}>
-                    Back
+                    Назад
                   </Button>
                 </NextLink>
               </>
@@ -65,18 +64,18 @@ export default function ResetPassword() {
                 <SentIcon sx={{ mb: 5, mx: 'auto', height: 160 }} />
 
                 <Typography variant="h3" gutterBottom>
-                  Request sent successfully
+                  Запрос успешно отправлен
                 </Typography>
                 <Typography>
-                  We have sent a confirmation email to &nbsp;
+                  Мы отправили вам новый пароль на&nbsp;
                   <strong>{email}</strong>
                   <br />
-                  Please check your email.
+                  Пожалуйста проверьте.
                 </Typography>
 
                 <NextLink href={PATH_AUTH.login} passHref>
                   <Button size="large" variant="contained" sx={{ mt: 5 }}>
-                    Back
+                    Назад
                   </Button>
                 </NextLink>
               </Box>

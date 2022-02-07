@@ -28,7 +28,7 @@ Overview.getLayout = function getLayout(page) {
 
 export default function Overview() {
   return (
-    <Page title="Components Overview">
+    <Page title="Компоненты">
       <RootStyle>
         <ComponentHero />
 

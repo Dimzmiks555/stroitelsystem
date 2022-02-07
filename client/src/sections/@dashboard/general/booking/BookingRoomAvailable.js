@@ -40,7 +40,7 @@ export default function BookingRoomAvailable() {
           name: { offsetY: -16 },
           value: { offsetY: 8 },
           total: {
-            label: 'Rooms',
+            label: 'Комнаты',
             formatter: () => fNumber(186),
           },
         },
@@ -50,12 +50,12 @@ export default function BookingRoomAvailable() {
 
   return (
     <Card>
-      <CardHeader title="Room Available" sx={{ mb: 8 }} />
+      <CardHeader title="Комнаты" sx={{ mb: 8 }} />
       <ReactApexChart type="radialBar" series={CHART_DATA} options={chartOptions} height={310} />
 
       <Stack spacing={2} sx={{ p: 5 }}>
-        <Legend label="Sold out" number={SOLD_OUT} />
-        <Legend label="Available" number={AVAILABLE} />
+        <Legend label="Сдано" number={SOLD_OUT} />
+        <Legend label="Доступно" number={AVAILABLE} />
       </Stack>
     </Card>
   );
@@ -78,7 +78,7 @@ function Legend({ label, number }) {
             height: 16,
             bgcolor: 'grey.50016',
             borderRadius: 0.75,
-            ...(label === 'Sold out' && {
+            ...(label === 'Сдано' && {
               bgcolor: 'primary.main',
             }),
           }}
@@ -87,7 +87,7 @@ function Legend({ label, number }) {
           {label}
         </Typography>
       </Stack>
-      <Typography variant="subtitle1">{number} Rooms</Typography>
+      <Typography variant="subtitle1">{number} комнат</Typography>
     </Stack>
   );
 }

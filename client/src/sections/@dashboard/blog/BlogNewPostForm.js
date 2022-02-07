@@ -20,19 +20,19 @@ import BlogNewPostPreview from './BlogNewPostPreview';
 // ----------------------------------------------------------------------
 
 const TAGS_OPTION = [
-  'Toy Story 3',
-  'Logan',
+  'История игрушек 3',
+  'Логан',
   'Full Metal Jacket',
   'Dangal',
   'The Sting',
-  '2001: A Space Odyssey',
+  '2001: Космическая одиссея',
   "Singin' in the Rain",
-  'Toy Story',
+  'История игрушек',
   'Bicycle Thieves',
-  'The Kid',
-  'Inglourious Basterds',
-  'Snatch',
-  '3 Idiots',
+  'Ребенок',
+  'Бесславные ублюдки',
+  'Большой куш',
+  '3 Идиота',
 ];
 
 const LabelStyle = styled(Typography)(({ theme }) => ({
@@ -59,9 +59,9 @@ export default function BlogNewPostForm() {
   };
 
   const NewBlogSchema = Yup.object().shape({
-    title: Yup.string().required('Title is required'),
-    description: Yup.string().required('Description is required'),
-    content: Yup.string().min(1000).required('Content is required'),
+    title: Yup.string().required('Название обязательно'),
+    description: Yup.string().required('Описание обязательно'),
+    content: Yup.string().min(1000).required('Содержание обязательно'),
     cover: Yup.mixed().required('Cover is required'),
   });
 
@@ -70,12 +70,12 @@ export default function BlogNewPostForm() {
     description: '',
     content: '',
     cover: null,
-    tags: ['Logan'],
+    tags: ['Логан'],
     publish: true,
     comments: true,
     metaTitle: '',
     metaDescription: '',
-    metaKeywords: ['Logan'],
+    metaKeywords: ['Логан'],
   };
 
   const methods = useForm({
@@ -130,17 +130,17 @@ export default function BlogNewPostForm() {
           <Grid item xs={12} md={8}>
             <Card sx={{ p: 3 }}>
               <Stack spacing={3}>
-                <RHFTextField name="title" label="Post Title" />
+                <RHFTextField name="title" label="Название" />
 
-                <RHFTextField name="description" label="Description" multiline rows={3} />
+                <RHFTextField name="description" label="Описание" multiline rows={3} />
 
                 <div>
-                  <LabelStyle>Content</LabelStyle>
+                  <LabelStyle>Содержание</LabelStyle>
                   <RHFEditor name="content" />
                 </div>
 
                 <div>
-                  <LabelStyle>Cover</LabelStyle>
+                  <LabelStyle>Шапка</LabelStyle>
                   <RHFUploadSingleFile name="cover" accept="image/*" maxSize={3145728} onDrop={handleDrop} />
                 </div>
               </Stack>
@@ -153,14 +153,14 @@ export default function BlogNewPostForm() {
                 <div>
                   <RHFSwitch
                     name="publish"
-                    label="Publish"
+                    label="Опубликовано"
                     labelPlacement="start"
                     sx={{ mb: 1, mx: 0, width: 1, justifyContent: 'space-between' }}
                   />
 
                   <RHFSwitch
                     name="comments"
-                    label="Enable comments"
+                    label="Включить комментарии"
                     labelPlacement="start"
                     sx={{ mx: 0, width: 1, justifyContent: 'space-between' }}
                   />
@@ -180,14 +180,14 @@ export default function BlogNewPostForm() {
                           <Chip {...getTagProps({ index })} key={option} size="small" label={option} />
                         ))
                       }
-                      renderInput={(params) => <TextField label="Tags" {...params} />}
+                      renderInput={(params) => <TextField label="Тэги" {...params} />}
                     />
                   )}
                 />
 
-                <RHFTextField name="metaTitle" label="Meta title" />
+                <RHFTextField name="metaTitle" label="Короткое название" />
 
-                <RHFTextField name="metaDescription" label="Meta description" fullWidth multiline rows={3} />
+                <RHFTextField name="metaDescription" label="Короткое описание" fullWidth multiline rows={3} />
 
                 <Controller
                   name="metaKeywords"
@@ -203,7 +203,7 @@ export default function BlogNewPostForm() {
                           <Chip {...getTagProps({ index })} key={option} size="small" label={option} />
                         ))
                       }
-                      renderInput={(params) => <TextField label="Meta keywords" {...params} />}
+                      renderInput={(params) => <TextField label="Ключевые слова" {...params} />}
                     />
                   )}
                 />
@@ -212,10 +212,10 @@ export default function BlogNewPostForm() {
 
             <Stack direction="row" spacing={1.5} sx={{ mt: 3 }}>
               <Button fullWidth color="inherit" variant="outlined" size="large" onClick={handleOpenPreview}>
-                Preview
+                Предпросмотр
               </Button>
               <LoadingButton fullWidth type="submit" variant="contained" size="large" loading={isSubmitting}>
-                Post
+                Сохранить
               </LoadingButton>
             </Stack>
           </Grid>

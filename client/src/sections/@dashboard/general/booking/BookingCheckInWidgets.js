@@ -82,7 +82,7 @@ export default function BookingCheckInWidgets() {
               {fNumber(TOTAL_CHECK_IN)}
             </Typography>
             <Typography variant="body2" sx={{ opacity: 0.72 }}>
-              Check In
+              Приехало
             </Typography>
           </div>
         </Stack>
@@ -105,7 +105,7 @@ export default function BookingCheckInWidgets() {
               {fNumber(TOTAL_CHECK_OUT)}
             </Typography>
             <Typography variant="body2" sx={{ opacity: 0.72 }}>
-              Check Out
+              Уехало
             </Typography>
           </div>
         </Stack>

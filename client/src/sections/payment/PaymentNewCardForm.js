@@ -24,10 +24,10 @@ export default function PaymentNewCardForm({ onCancel }) {
         }}
       >
         <Stack spacing={2}>
-          <Typography variant="subtitle1">Add new card</Typography>
-          <TextField fullWidth size="small" label="Name on card" />
+          <Typography variant="subtitle1">Добавить новую карту</Typography>
+          <TextField fullWidth size="small" label="Имя на карте" />
 
-          <TextField fullWidth size="small" label="Card number" />
+          <TextField fullWidth size="small" label="Номер карты" />
 
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
             <TextField size="small" label="MM/YY" />
@@ -48,11 +48,11 @@ export default function PaymentNewCardForm({ onCancel }) {
 
           <Stack direction="row" spacing={2}>
             <Button fullWidth onClick={onCancel}>
-              Cancel
+              Отменить
             </Button>
 
             <Button fullWidth variant="contained" onClick={onCancel}>
-              Create
+              Создать
             </Button>
           </Stack>
         </Stack>

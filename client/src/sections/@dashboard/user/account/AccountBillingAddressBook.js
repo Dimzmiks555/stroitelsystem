@@ -15,7 +15,7 @@ export default function AccountBillingAddressBook({ addressBook }) {
     <Card sx={{ p: 3 }}>
       <Stack spacing={3} alignItems="flex-start">
         <Typography variant="overline" sx={{ color: 'text.secondary' }}>
-          Billing Info
+          Информация
         </Typography>
 
         {addressBook.map((address) => (
@@ -33,14 +33,14 @@ export default function AccountBillingAddressBook({ addressBook }) {
 
             <Typography variant="body2" gutterBottom>
               <Typography variant="body2" component="span" sx={{ color: 'text.secondary' }}>
-                Address: &nbsp;
+                Адрес: &nbsp;
               </Typography>
               {`${address.street}, ${address.city}, ${address.state}, ${address.country} ${address.zipCode}`}
             </Typography>
 
             <Typography variant="body2" gutterBottom>
               <Typography variant="body2" component="span" sx={{ color: 'text.secondary' }}>
-                Phone: &nbsp;
+                Телефон: &nbsp;
               </Typography>
               {address.phone}
             </Typography>
@@ -53,17 +53,17 @@ export default function AccountBillingAddressBook({ addressBook }) {
                 onClick={() => {}}
                 sx={{ mr: 1 }}
               >
-                Delete
+                Удалить
               </Button>
               <Button size="small" startIcon={<Iconify icon={'eva:edit-fill'} />} onClick={() => {}}>
-                Edit
+                Изменить
               </Button>
             </Box>
           </Paper>
         ))}
 
         <Button size="small" startIcon={<Iconify icon={'eva:plus-fill'} />}>
-          Add new address
+          Добавить новый адрес
         </Button>
       </Stack>
     </Card>

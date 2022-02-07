@@ -21,10 +21,10 @@ export default function BankingContacts() {
   return (
     <Card>
       <CardHeader
-        title="Contacts"
-        subheader="You have 122 contacts"
+        title="Контакты"
+        subheader="У вас 122 контакта"
         action={
-          <Tooltip title="Add Contact">
+          <Tooltip title="Добавить контакт">
             <IconButton color="primary" size="large">
               <Iconify icon={'eva:plus-fill'} width={20} height={20} />
             </IconButton>
@@ -45,7 +45,7 @@ export default function BankingContacts() {
               </Typography>
             </Box>
 
-            <Tooltip title="Quick Transfer">
+            <Tooltip title="Быстрый перевод">
               <IconButton size="small">
                 <Iconify icon={'eva:flash-fill'} width={22} height={22} />
               </IconButton>
@@ -54,7 +54,7 @@ export default function BankingContacts() {
         ))}
 
         <Button variant="outlined" size="large" color="inherit">
-          View All
+          Показать все
         </Button>
       </Stack>
     </Card>

@@ -11,10 +11,10 @@ export default function ComponentExtra() {
     <Grid container spacing={3}>
       <Grid item xs={12} sm={4}>
         <Typography variant="h5" paragraph>
-          Extra Component
+          Экстра компоненты
         </Typography>
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          Chart, Map, Editor…
+          Графики, карты, редакторы....
         </Typography>
       </Grid>
 

@@ -102,7 +102,7 @@ export default function Settings() {
           <>
             <RootStyle {...varSidebar}>
               <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ py: 2, pr: 1, pl: 2.5 }}>
-                <Typography variant="subtitle1">Settings</Typography>
+                <Typography variant="subtitle1">Настройки</Typography>
                 <div>
                   <IconButtonAnimate onClick={onResetSetting}>
                     <Iconify icon={'ic:round-refresh'} width={20} height={20} />
@@ -118,27 +118,27 @@ export default function Settings() {
               <Scrollbar sx={{ flexGrow: 1 }}>
                 <Stack spacing={3} sx={{ p: 3 }}>
                   <Stack spacing={1.5}>
-                    <Typography variant="subtitle2">Mode</Typography>
+                    <Typography variant="subtitle2">Тема</Typography>
                     <SettingMode />
                   </Stack>
 
                   <Stack spacing={1.5}>
-                    <Typography variant="subtitle2">Direction</Typography>
+                    <Typography variant="subtitle2">Направление текста</Typography>
                     <SettingDirection />
                   </Stack>
 
                   <Stack spacing={1.5}>
-                    <Typography variant="subtitle2">Layout</Typography>
+                    <Typography variant="subtitle2">Стиль</Typography>
                     <SettingLayout />
                   </Stack>
 
                   <Stack spacing={1.5}>
-                    <Typography variant="subtitle2">Presets</Typography>
+                    <Typography variant="subtitle2">Цветовые схемы</Typography>
                     <SettingColorPresets />
                   </Stack>
 
                   <Stack spacing={1.5}>
-                    <Typography variant="subtitle2">Stretch</Typography>
+                    <Typography variant="subtitle2">Растяжка</Typography>
                     <SettingStretch />
                   </Stack>
 

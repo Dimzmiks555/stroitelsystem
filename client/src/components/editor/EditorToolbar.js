@@ -3,7 +3,7 @@ import EditorToolbarStyle from './EditorToolbarStyle';
 
 // ----------------------------------------------------------------------
 
-const HEADINGS = ['Heading 1', 'Heading 2', 'Heading 3', 'Heading 4', 'Heading 5', 'Heading 6'];
+const HEADINGS = ['Заголовок 1', 'Заголовок 2', 'Заголовок 3', 'Заголовок 4', 'Заголовок 5', 'Заголовок 6'];
 
 export const formats = [
   'align',
@@ -47,7 +47,7 @@ export default function EditorToolbar({ id, isSimple, ...other }) {
                 {heading}
               </option>
             ))}
-            <option value="">Normal</option>
+            <option value="">Обычный</option>
           </select>
         </div>
 

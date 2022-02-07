@@ -139,7 +139,7 @@ export default function VerifyCodeForm() {
         disabled={!isValid}
         sx={{ mt: 3 }}
       >
-        Verify
+        Отправить
       </LoadingButton>
     </form>
   );

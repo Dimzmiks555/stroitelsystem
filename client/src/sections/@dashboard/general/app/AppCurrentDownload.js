@@ -42,7 +42,7 @@ export default function AppCurrentDownload() {
       theme.palette.primary.main,
       theme.palette.primary.dark,
     ],
-    labels: ['Mac', 'Window', 'iOS', 'Android'],
+    labels: ['Mac', 'Windows', 'iOS', 'Android'],
     stroke: { colors: [theme.palette.background.paper] },
     legend: { floating: true, horizontalAlign: 'center' },
     tooltip: {
@@ -76,7 +76,7 @@ export default function AppCurrentDownload() {
 
   return (
     <Card>
-      <CardHeader title="Current Download" />
+      <CardHeader title="Загрузки" />
       <ChartWrapperStyle dir="ltr">
         <ReactApexChart type="donut" series={CHART_DATA} options={chartOptions} height={280} />
       </ChartWrapperStyle>

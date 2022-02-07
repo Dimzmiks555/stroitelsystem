@@ -29,17 +29,17 @@ export default function EcommerceBestSalesman() {
 
   return (
     <Card>
-      <CardHeader title="Best Salesman" sx={{ mb: 3 }} />
+      <CardHeader title="Лучший продавец" sx={{ mb: 3 }} />
       <Scrollbar>
         <TableContainer sx={{ minWidth: 720 }}>
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Seller</TableCell>
-                <TableCell>Product</TableCell>
-                <TableCell>Country</TableCell>
-                <TableCell>Total</TableCell>
-                <TableCell align="right">Rank</TableCell>
+                <TableCell>Продавец</TableCell>
+                <TableCell>Товар</TableCell>
+                <TableCell>Страна</TableCell>
+                <TableCell>Итого</TableCell>
+                <TableCell align="right">Оценка</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -65,10 +65,10 @@ export default function EcommerceBestSalesman() {
                     <Label
                       variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
                       color={
-                        (row.rank === 'Top 1' && 'primary') ||
-                        (row.rank === 'Top 2' && 'info') ||
-                        (row.rank === 'Top 3' && 'success') ||
-                        (row.rank === 'Top 4' && 'warning') ||
+                        (row.rank === 'Топ 1' && 'primary') ||
+                        (row.rank === 'Топ 2' && 'info') ||
+                        (row.rank === 'Топ 3' && 'success') ||
+                        (row.rank === 'Топ 4' && 'warning') ||
                         'error'
                       }
                     >

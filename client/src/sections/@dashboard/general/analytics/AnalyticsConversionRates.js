@@ -26,23 +26,23 @@ export default function AnalyticsConversionRates() {
     },
     xaxis: {
       categories: [
-        'Italy',
-        'Japan',
-        'China',
-        'Canada',
-        'France',
-        'Germany',
-        'South Korea',
-        'Netherlands',
-        'United States',
-        'United Kingdom',
+        'Италия',
+        'Япония',
+        'Китай',
+        'Канада',
+        'Франция',
+        'Германия',
+        'Южная Корея',
+        'Нидерланды',
+        'США',
+        'Великобритания',
       ],
     },
   });
 
   return (
     <Card>
-      <CardHeader title="Conversion Rates" subheader="(+43%) than last year" />
+      <CardHeader title="Оценка конверсии" subheader="(+43%) за прошлый год" />
       <Box sx={{ mx: 3 }} dir="ltr">
         <ReactApexChart type="bar" series={CHART_DATA} options={chartOptions} height={364} />
       </Box>

@@ -39,18 +39,18 @@ export default function BookingDetails() {
   return (
     <>
       <Card>
-        <CardHeader title="Booking Details" sx={{ mb: 3 }} />
+        <CardHeader title="Детали" sx={{ mb: 3 }} />
         <Scrollbar>
           <TableContainer sx={{ minWidth: 720 }}>
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell sx={{ minWidth: 240 }}>Booker</TableCell>
-                  <TableCell sx={{ minWidth: 160 }}>Check In</TableCell>
-                  <TableCell sx={{ minWidth: 160 }}>Check Out</TableCell>
-                  <TableCell sx={{ minWidth: 120 }}>Status</TableCell>
-                  <TableCell sx={{ minWidth: 200 }}>Phone</TableCell>
-                  <TableCell sx={{ minWidth: 120 }}>Room Type</TableCell>
+                  <TableCell sx={{ minWidth: 240 }}>Клиент</TableCell>
+                  <TableCell sx={{ minWidth: 160 }}>Заехал</TableCell>
+                  <TableCell sx={{ minWidth: 160 }}>Уехал</TableCell>
+                  <TableCell sx={{ minWidth: 120 }}>Статус</TableCell>
+                  <TableCell sx={{ minWidth: 200 }}>Номер</TableCell>
+                  <TableCell sx={{ minWidth: 120 }}>Тип комнаты</TableCell>
                   <TableCell />
                 </TableRow>
               </TableHead>
@@ -95,7 +95,7 @@ export default function BookingDetails() {
 
         <Box sx={{ p: 2, textAlign: 'right' }}>
           <Button size="small" color="inherit" endIcon={<Iconify icon={'eva:arrow-ios-forward-fill'} />}>
-            View All
+            Посмотреть все
           </Button>
         </Box>
       </Card>
@@ -143,24 +143,24 @@ function MoreMenuButton() {
       >
         <MenuItem>
           <Iconify icon={'eva:download-fill'} sx={{ ...ICON }} />
-          Download
+          Скачать
         </MenuItem>
 
         <MenuItem>
           <Iconify icon={'eva:printer-fill'} sx={{ ...ICON }} />
-          Print
+          Печать
         </MenuItem>
 
         <MenuItem>
           <Iconify icon={'eva:share-fill'} sx={{ ...ICON }} />
-          Share
+          Поделиться
         </MenuItem>
 
         <Divider sx={{ borderStyle: 'dashed' }} />
 
         <MenuItem sx={{ color: 'error.main' }}>
           <Iconify icon={'eva:trash-2-outline'} sx={{ ...ICON }} />
-          Delete
+          Удалить
         </MenuItem>
       </MenuPopover>
     </>

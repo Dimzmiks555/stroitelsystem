@@ -36,7 +36,7 @@ export default function AppWelcome({ displayName }) {
         }}
       >
         <Typography gutterBottom variant="h4">
-          Welcome back,
+          Добро пожаловать,
           <br /> {!displayName ? '...' : displayName}!
         </Typography>
 
@@ -44,7 +44,7 @@ export default function AppWelcome({ displayName }) {
           {`If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything`}
         </Typography>
 
-        <Button variant="contained">Go Now</Button>
+        <Button variant="contained">Начать</Button>
       </CardContent>
 
       <SeoIllustration
