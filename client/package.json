@@ -37,6 +37,7 @@
     "apexcharts": "^3.32.0",
     "autosuggest-highlight": "^3.2.0",
     "axios": "^0.24.0",
+    "base-64": "^1.0.0",
     "change-case": "^4.1.2",
     "cookie": "^0.4.1",
     "d3-array": "^3.1.1",

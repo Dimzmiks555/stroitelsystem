@@ -168,7 +168,7 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
                 <RHFEditor simple name="description" />
               </div>
 
-              <div>
+              {/* <div>
                 <LabelStyle>Изображения</LabelStyle>
                 <RHFUploadMultiFile
                   name="images"
@@ -179,15 +179,15 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
                   onRemove={handleRemove}
                   onRemoveAll={handleRemoveAll}
                 />
-              </div>
+              </div> */}
             </Stack>
           </Card>
         </Grid>
 
         <Grid item xs={12} md={4}>
           <Stack spacing={3}>
-            <Card sx={{ p: 3 }}>
-              <RHFSwitch name="inStock" label="В продаже" />
+            {/* <Card sx={{ p: 3 }}> */}
+              {/* <RHFSwitch name="inStock" label="В продаже" />
 
               <Stack spacing={3} mt={2}>
                 <RHFTextField name="code" label="Код товара" />
@@ -234,11 +234,11 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
                       renderInput={(params) => <TextField label="Тэги" {...params} />}
                     />
                   )}
-                />
-              </Stack>
-            </Card>
+                /> */}
+              {/* </Stack> */}
+            {/* </Card> */}
 
-            <Card sx={{ p: 3 }}>
+            {/* <Card sx={{ p: 3 }}>
               <Stack spacing={3} mb={2}>
                 <RHFTextField
                   name="price"
@@ -268,7 +268,7 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
               </Stack>
 
               <RHFSwitch name="taxes" label="Цена включает НДС" />
-            </Card>
+            </Card> */}
 
             <LoadingButton type="submit" variant="contained" size="large" loading={isSubmitting}>
               {!isEdit ? 'Сохранить' : 'Изменить'}
