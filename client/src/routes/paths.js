@@ -70,6 +70,15 @@ export const PATH_DASHBOARD = {
     editById: path(ROOTS_DASHBOARD, `/application/reece-chung/edit`),
     account: path(ROOTS_DASHBOARD, '/application/account'),
   },
+  orders: {
+    root: path(ROOTS_DASHBOARD, '/orders'),
+    profile: path(ROOTS_DASHBOARD, '/orders/profile'),
+    cards: path(ROOTS_DASHBOARD, '/orders/cards'),
+    list: path(ROOTS_DASHBOARD, '/orders/list'),
+    newOrder: path(ROOTS_DASHBOARD, '/orders/new'),
+    editById: path(ROOTS_DASHBOARD, `/orders/reece-chung/edit`),
+    account: path(ROOTS_DASHBOARD, '/orders/account'),
+  },
   contragents: {
     root: path(ROOTS_DASHBOARD, '/contragents'),
     profile: path(ROOTS_DASHBOARD, '/contragents/profile'),

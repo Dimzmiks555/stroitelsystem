@@ -9,10 +9,12 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 // @mui
 import { styled } from '@mui/material/styles';
-import { LoadingButton } from '@mui/lab';
-import { Card, Chip, Grid, Stack, TextField, Typography, Autocomplete, InputAdornment } from '@mui/material';
+import { LoadingButton, StaticDatePicker } from '@mui/lab';
+import { Card, Chip, Grid, Stack, TextField, Typography, Autocomplete, InputAdornment, Box } from '@mui/material';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
+
+import isWeekend from 'date-fns/isWeekend';
 // components
 import {
   FormProvider,
@@ -25,13 +27,12 @@ import {
 } from '../../../components/hook-form';
 
 
-import { AddressSuggestions } from 'react-dadata';
-import 'react-dadata/dist/react-dadata.css';
 
+import { PartySuggestions } from 'react-dadata';
+import 'react-dadata/dist/react-dadata.css';
 
 // ----------------------------------------------------------------------
 
-const GENDER_OPTION = ['Мужской', 'Женский', 'Дети'];
 
 const CATEGORY_OPTION = [
   { group: 'Clothing', classify: ['Shirts', 'T-shirts', 'Jeans', 'Leather'] },
@@ -69,6 +70,10 @@ ProductNewForm.propTypes = {
 };
 
 export default function ProductNewForm({ isEdit, currentProduct }) {
+
+
+  const [valueDate, setValueDate] = useState(new Date());
+
   const { push } = useRouter();
 
   const { enqueueSnackbar } = useSnackbar();
@@ -92,8 +97,8 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
       tags: currentProduct?.tags || [TAGS_OPTION[0]],
       inStock: true,
       taxes: true,
-      gender: currentProduct?.gender || GENDER_OPTION[2],
-      category: currentProduct?.category || CATEGORY_OPTION[0].classify[1],
+      gender: currentProduct?.gender ,
+      category: currentProduct?.category ,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [currentProduct]
@@ -114,11 +119,11 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
     formState: { isSubmitting },
   } = methods;
 
+  const values = watch();
 
-  
   const [address, setAddress] = useState();
 
-  const values = watch();
+
 
   useEffect(() => {
     if (isEdit && currentProduct) {
@@ -167,18 +172,23 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={3}>
-        <Grid item xs={12} md={8}>
+        <Grid item xs={12} md={6}>
           <Card sx={{ p: 3 }}>
             <Stack spacing={3}>
               <RHFTextField name="name" label="Название" />
+
+              <Box sx={{display: 'flex'}}>
+                <RHFTextField name="buyer" label="Покупатель" sx={{mr: 2}}/>
+                <RHFTextField name="seller" label="Продавец" />
+              </Box>
 
               <div>
                 <LabelStyle>Описание</LabelStyle>
                 <RHFEditor simple name="description" />
               </div>
 
-              {/* <div>
-                <LabelStyle>Изображения</LabelStyle>
+              <div>
+                <LabelStyle>Входящие документы</LabelStyle>
                 <RHFUploadMultiFile
                   name="images"
                   showPreview
@@ -188,15 +198,53 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
                   onRemove={handleRemove}
                   onRemoveAll={handleRemoveAll}
                 />
-              </div> */}
+              </div>
             </Stack>
           </Card>
         </Grid>
 
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={6}>
           <Stack spacing={3}>
+
+            <LabelStyle>Статус</LabelStyle>
+
+            <Box>
+              <Chip label="Создан" sx={{mr:2, mb: 1}}></Chip>
+              <Chip label="Ожидает оплаты" sx={{mr:2, mb: 1}}></Chip>
+              <Chip label="В пути" sx={{mr:2, mb: 1}}></Chip>
+              <Chip label="Завершен" sx={{mr:2, mb: 1}}></Chip>
+              <Chip label="Отменен" sx={{mr:2, mb: 1}}></Chip>
+            </Box>
             
-              {/* <RHFSwitch name="inStock" label="В продаже" />
+            <RHFTextField name="summ" label="Сумма" />
+            <LabelStyle>Способ оплаты</LabelStyle>
+
+            <div>
+              <RHFRadioGroup
+                name="payment_method"
+                options={['Безнал', 'Наличные']}
+                sx={{
+                  '& .MuiFormControlLabel-root': { mr: 4 },
+                }}
+              />
+            </div>
+
+
+            <LabelStyle>Доставка</LabelStyle>
+            
+            <StaticDatePicker
+                  orientation="landscape"
+                  openTo="day"
+                  value={valueDate}
+                  // shouldDisableDate={isWeekend}
+                  label="Ориентировочная дата"
+                  onChange={(newValue) => {
+                    setValueDate(newValue);
+                  }}
+                  renderInput={(params) => <TextField {...params} sx={{mb:4}} />}
+                />
+            {/* <Card sx={{ p: 3 }}>
+              <RHFSwitch name="inStock" label="В продаже" />
 
               <Stack spacing={3} mt={2}>
                 <RHFTextField name="code" label="Код товара" />
@@ -243,13 +291,11 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
                       renderInput={(params) => <TextField label="Тэги" {...params} />}
                     />
                   )}
-                /> */}
-              {/* </Stack> */}
-                
-              <LabelStyle>Автозаполнение</LabelStyle>
-              <AddressSuggestions token="cccd906b9f52be8f1ee449484885f4327766041c" value={address} onChange={setAddress} />
+                />
+              </Stack>
+            </Card>
 
-            {/* <Card sx={{ p: 3 }}>
+            <Card sx={{ p: 3 }}>
               <Stack spacing={3} mb={2}>
                 <RHFTextField
                   name="price"

@@ -81,19 +81,24 @@ const navConfig = [
       },
       {
         title: 'Заказы',
-        path: PATH_DASHBOARD.application.list,
+        path: PATH_DASHBOARD.orders.list,
         icon: ICONS.booking
       },
       {
-        title: 'Объекты',
-        path: PATH_DASHBOARD.objects.list,
-        icon: ICONS.banking
+        title: 'Сделки',
+        path: PATH_DASHBOARD.application.list,
+        icon: ICONS.ecommerce
       },
       {
-        title: 'Контрагенты',
-        path: PATH_DASHBOARD.contragents.list,
-        icon: ICONS.user
+        title: 'Документы',
+        path: PATH_DASHBOARD.tenders.list,
+        icon: ICONS.mail,
+          children: [
+            { title: 'Входящие', path: PATH_DASHBOARD.tenders.list },
+            { title: 'Исходящие', path: PATH_DASHBOARD.eCommerce.shop },
+          ],
       },
+    
 
       // MANAGEMENT : E-COMMERCE
       // {
@@ -125,6 +130,29 @@ const navConfig = [
     ],
   },
 
+  
+
+  {
+    subheader: 'Справочник',
+    items: [
+      
+      {
+        title: 'Объекты',
+        path: PATH_DASHBOARD.objects.list,
+        icon: ICONS.banking
+      },
+      {
+        title: 'Контрагенты',
+        path: PATH_DASHBOARD.contragents.list,
+        icon: ICONS.user
+      },
+      {
+        title: 'Номенклатура',
+        path: PATH_DASHBOARD.contragents.list,
+        icon: ICONS.kanban
+      },
+    ],
+  },
   // APP
   // ----------------------------------------------------------------------
   // {

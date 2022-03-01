@@ -133,17 +133,17 @@ export default function UserList() {
   const isNotFound = !filteredUsers.length && Boolean(filterName);
 
   return (
-    <Page title="Сделки">
+    <Page title="Заказы">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading="Сделки"
+          heading="Заказы"
           links={[
             // { name: 'Dashboard', href: PATH_DASHBOARD.root },
             // { name: 'User', href: PATH_DASHBOARD.user.root },
             { name: '' },
           ]}
           action={
-            <NextLink href={PATH_DASHBOARD.user.newUser} passHref>
+            <NextLink href={PATH_DASHBOARD.orders.newOrder} passHref>
               <Button variant="contained" startIcon={<Iconify icon={'eva:plus-fill'} />}>
                 Создать
               </Button>

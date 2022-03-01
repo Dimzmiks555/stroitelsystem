@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 import { useSnackbar } from 'notistack';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 // next
 import { useRouter } from 'next/router';
 // form
@@ -23,6 +23,11 @@ import {
   RHFRadioGroup,
   RHFUploadMultiFile,
 } from '../../../components/hook-form';
+
+
+
+import { PartySuggestions } from 'react-dadata';
+import 'react-dadata/dist/react-dadata.css';
 
 // ----------------------------------------------------------------------
 
@@ -111,6 +116,10 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
 
   const values = watch();
 
+  const [address, setAddress] = useState();
+
+
+
   useEffect(() => {
     if (isEdit && currentProduct) {
       reset(defaultValues);
@@ -189,6 +198,9 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
 
         <Grid item xs={12} md={4}>
           <Stack spacing={3}>
+            
+            <LabelStyle>Автозаполнение</LabelStyle>
+            <PartySuggestions token="cccd906b9f52be8f1ee449484885f4327766041c" value={address} onChange={setAddress} />
             {/* <Card sx={{ p: 3 }}>
               <RHFSwitch name="inStock" label="В продаже" />
 

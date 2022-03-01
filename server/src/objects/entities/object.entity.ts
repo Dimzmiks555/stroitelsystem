@@ -1,1 +1,1 @@
-export class Object {}
+export class ObjectModel {}
