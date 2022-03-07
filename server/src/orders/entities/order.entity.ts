@@ -1,16 +1,19 @@
-import { Column, DataType, Model, Table } from "sequelize-typescript";
+import { BelongsTo, Column, DataType, ForeignKey, HasOne, Model, Table } from "sequelize-typescript";
+import { Contragent } from "src/contragents/entities/contragent.entity";
 
 @Table
 export class Order extends Model {
     @Column
-    title: string;
+    name: string;
 
     @Column({type: DataType.TEXT})
     description: string;
 
+    @ForeignKey(() => Contragent)
     @Column({type: DataType.INTEGER})
     buyer_id: number;
 
+    @ForeignKey(() => Contragent)
     @Column({type: DataType.INTEGER})
     seller_id: number;
 
@@ -21,8 +24,14 @@ export class Order extends Model {
     payment_method: string;
 
     @Column({type: DataType.DATE})
-    shipping_date: string;
+    date: string;
 
     @Column({type: DataType.FLOAT})
     summ: number;
+
+    @BelongsTo(() => Contragent, 'buyer_id')
+    buyer: Contragent
+
+    @BelongsTo(() => Contragent, 'seller_id')
+    seller: Contragent
 }

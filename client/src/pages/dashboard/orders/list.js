@@ -1,5 +1,5 @@
 import { sentenceCase } from 'change-case';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 // next
 import NextLink from 'next/link';
 // @mui
@@ -39,11 +39,13 @@ import { UserListHead, UserListToolbar, UserMoreMenu } from '../../../sections/@
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'name', label: 'Имя', alignRight: false },
-  { id: 'company', label: 'Компания', alignRight: false },
-  { id: 'role', label: 'Роль', alignRight: false },
-  { id: 'isVerified', label: 'Подтвержден', alignRight: false },
+  { id: 'name', label: 'Название', alignRight: false },
+  { id: 'seller', label: 'Продавец', alignRight: false },
+  { id: 'buyer', label: 'Покупатель', alignRight: false },
+  { id: 'summ', label: 'Сумма', alignRight: false },
+  { id: 'isVerified', label: 'Дата доставки', alignRight: false },
   { id: 'status', label: 'Статус', alignRight: false },
+  { id: 'isVerified', label: 'Дата создания', alignRight: false },
   { id: '' },
 ];
 
@@ -60,7 +62,7 @@ export default function UserList() {
 
   const { themeStretch } = useSettings();
 
-  const [userList, setUserList] = useState(_userList);
+  const [userList, setUserList] = useState([]);
 
   const [page, setPage] = useState(0);
 
@@ -73,6 +75,18 @@ export default function UserList() {
   const [filterName, setFilterName] = useState('');
 
   const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  useEffect(()=> {
+
+    fetch('http://localhost:5000/orders')
+    .then(res => res.json())
+    .then(json => {
+      console.log(json)
+      setUserList(json)
+    })
+
+
+  }, [])
 
   const handleRequestSort = (property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -132,6 +146,8 @@ export default function UserList() {
 
   const isNotFound = !filteredUsers.length && Boolean(filterName);
 
+  
+
   return (
     <Page title="Заказы">
       <Container maxWidth={themeStretch ? false : 'lg'}>
@@ -173,7 +189,7 @@ export default function UserList() {
                 />
                 <TableBody>
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { id, name, role, status, company, avatarUrl, isVerified } = row;
+                    const { id, name, summ, status, company, avatarUrl, createdAt, seller, buyer, date } = row;
                     const isItemSelected = selected.indexOf(name) !== -1;
 
                     return (
@@ -188,23 +204,25 @@ export default function UserList() {
                         <TableCell padding="checkbox">
                           <Checkbox checked={isItemSelected} onClick={() => handleClick(name)} />
                         </TableCell>
-                        <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
-                          <Avatar alt={name} src={avatarUrl} sx={{ mr: 2 }} />
+                        <TableCell>
                           <Typography variant="subtitle2" noWrap>
-                            {name}
+                            <NextLink href={`/dashboard/orders/${id}/edit`}><a>{name}</a></NextLink>
                           </Typography>
                         </TableCell>
-                        <TableCell align="left">{company}</TableCell>
-                        <TableCell align="left">{role}</TableCell>
-                        <TableCell align="left">{isVerified ? 'Yes' : 'No'}</TableCell>
+                        <TableCell align="left">{seller?.name}</TableCell>
+                        <TableCell align="left">{buyer?.name}</TableCell>
+                        <TableCell align="left">{summ}</TableCell>
+                        <TableCell align="left">{new Date(date)?.toLocaleDateString()}</TableCell>
                         <TableCell align="left">
                           <Label
                             variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
-                            color={(status === 'banned' && 'error') || 'success'}
+                            color={(status === 'Создан' && 'default') || (status === 'В пути' && 'secondary') || (status === 'Ожидает оплаты' && 'warning') || (status === 'Отменен' && 'error') || 'success'}
                           >
-                            {sentenceCase(status)}
+                            {status}
                           </Label>
                         </TableCell>
+                        
+                        <TableCell align="left">{new Date(createdAt)?.toLocaleDateString()}</TableCell>
 
                         <TableCell align="right">
                           <UserMoreMenu onDelete={() => handleDeleteUser(id)} userName={name} />

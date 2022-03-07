@@ -15,7 +15,8 @@ import Layout from '../../../../layouts';
 import Page from '../../../../components/Page';
 import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';
 // sections
-import UserNewForm from '../../../../sections/@dashboard/user/UserNewForm';
+import NewForm from '../../../../sections/@dashboard/orders/OrderNewForm';
+import { useEffect, useState } from 'react';
 
 // ----------------------------------------------------------------------
 
@@ -28,17 +29,26 @@ UserEdit.getLayout = function getLayout(page) {
 export default function UserEdit() {
   const { themeStretch } = useSettings();
 
+  const [currentOrder, setCurrentOrder] = useState()
+
   const { query } = useRouter();
 
-  const { name } = query;
+  const { id } = query;
 
-  const currentUser = _userList.find((user) => paramCase(user.name) === name);
+  useEffect(() => {
+    fetch(`http://localhost:5000/orders/${id}`)
+    .then(res => res.json())
+    .then(json => {
+      console.log(json)
+      setCurrentOrder(json)
+    })
+  }, [])
 
   return (
-    <Page title="Изменение пользователя">
+    <Page title={`Заказ № ${id}`}>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading="Изменение пользователя"
+          heading={`Изменение заказа № ${id}`}
           links={[
             { name: '', href: PATH_DASHBOARD.root },
             // { name: 'User', href: PATH_DASHBOARD.user.list },
@@ -46,7 +56,7 @@ export default function UserEdit() {
           ]}
         />
 
-        <UserNewForm isEdit currentUser={currentUser} />
+        <NewForm isEdit currentUser={currentOrder} />
       </Container>
     </Page>
   );

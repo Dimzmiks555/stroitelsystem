@@ -84,7 +84,7 @@ export const PATH_DASHBOARD = {
     profile: path(ROOTS_DASHBOARD, '/contragents/profile'),
     cards: path(ROOTS_DASHBOARD, '/contragents/cards'),
     list: path(ROOTS_DASHBOARD, '/contragents/list'),
-    newUser: path(ROOTS_DASHBOARD, '/contragents/new'),
+    new: path(ROOTS_DASHBOARD, '/contragents/new'),
     editById: path(ROOTS_DASHBOARD, `/contragents/:id`),
     account: path(ROOTS_DASHBOARD, '/contragents/account'),
   },

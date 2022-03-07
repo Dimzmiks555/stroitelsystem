@@ -9,6 +9,7 @@ import { TendersModule } from './tenders/tenders.module';
 import { OrdersModule } from './orders/orders.module';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { Order } from './orders/entities/order.entity';
+import { Contragent } from './contragents/entities/contragent.entity';
 
 @Module({
   imports: [
@@ -29,7 +30,8 @@ import { Order } from './orders/entities/order.entity';
       synchronize: true,
       autoLoadModels: true,
       models: [
-        Order
+        Order,
+        Contragent
       ],
     }),
   ],

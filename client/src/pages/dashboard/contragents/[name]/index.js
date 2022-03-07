@@ -10,7 +10,7 @@ import Layout from '../../../../layouts';
 import Page from '../../../../components/Page';
 import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';
 // sections
-import ProductNewForm from '../../../../sections/@dashboard/contragents/ProductNewForm';
+import ProductNewForm from '../../../../sections/@dashboard/contragents/NewForm';
 
 // ----------------------------------------------------------------------
 

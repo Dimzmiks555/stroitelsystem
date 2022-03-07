@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 // form
 import { useFormContext, Controller } from 'react-hook-form';
 // @mui
-import { TextField } from '@mui/material';
+import { Autocomplete, TextField } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
@@ -18,18 +18,18 @@ export default function RHFSelect({ name, children, ...other }) {
     <Controller
       name={name}
       control={control}
-      render={({ field, fieldState: { error } }) => (
-        <TextField
+      onChange={([event, data]) => {
+        return data;
+      }}
+      render={({ field}) => (
+        <Autocomplete
+          getOptionLabel={option => option.label}
           {...field}
-          select
           fullWidth
-          SelectProps={{ native: true }}
-          error={!!error}
-          helperText={error?.message}
           {...other}
         >
           {children}
-        </TextField>
+        </Autocomplete>
       )}
     />
   );

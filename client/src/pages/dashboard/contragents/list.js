@@ -1,5 +1,5 @@
 import { sentenceCase } from 'change-case';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 // next
 import NextLink from 'next/link';
 // @mui
@@ -40,10 +40,8 @@ import { UserListHead, UserListToolbar, UserMoreMenu } from '../../../sections/@
 
 const TABLE_HEAD = [
   { id: 'name', label: 'Имя', alignRight: false },
-  { id: 'company', label: 'Компания', alignRight: false },
-  { id: 'role', label: 'Роль', alignRight: false },
-  { id: 'isVerified', label: 'Подтвержден', alignRight: false },
-  { id: 'status', label: 'Статус', alignRight: false },
+  { id: 'inn', label: 'ИНН', alignRight: false },
+  { id: 'status', label: 'Дата добавления', alignRight: false },
   { id: '' },
 ];
 
@@ -58,9 +56,13 @@ UserList.getLayout = function getLayout(page) {
 export default function UserList() {
   const theme = useTheme();
 
+
+  
+
+
   const { themeStretch } = useSettings();
 
-  const [userList, setUserList] = useState(_userList);
+  const [userList, setUserList] = useState([]);
 
   const [page, setPage] = useState(0);
 
@@ -126,6 +128,19 @@ export default function UserList() {
     setUserList(deleteUsers);
   };
 
+
+  useEffect(()=> {
+
+    fetch('http://localhost:5000/contragents')
+    .then(res => res.json())
+    .then(json => {
+      console.log(json)
+      setUserList(json)
+    })
+
+
+  }, [])
+
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - userList.length) : 0;
 
   const filteredUsers = applySortFilter(userList, getComparator(order, orderBy), filterName);
@@ -143,7 +158,7 @@ export default function UserList() {
             { name: '' },
           ]}
           action={
-            <NextLink href={PATH_DASHBOARD.user.newUser} passHref>
+            <NextLink href={PATH_DASHBOARD.contragents.new} passHref>
               <Button variant="contained" startIcon={<Iconify icon={'eva:plus-fill'} />}>
                 Создать
               </Button>
@@ -173,7 +188,7 @@ export default function UserList() {
                 />
                 <TableBody>
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { id, name, role, status, company, avatarUrl, isVerified } = row;
+                    const { id, name, role, status, inn, avatarUrl, isVerified, createdAt } = row;
                     const isItemSelected = selected.indexOf(name) !== -1;
 
                     return (
@@ -188,22 +203,12 @@ export default function UserList() {
                         <TableCell padding="checkbox">
                           <Checkbox checked={isItemSelected} onClick={() => handleClick(name)} />
                         </TableCell>
-                        <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
-                          <Avatar alt={name} src={avatarUrl} sx={{ mr: 2 }} />
-                          <Typography variant="subtitle2" noWrap>
+                        <TableCell >
                             {name}
-                          </Typography>
                         </TableCell>
-                        <TableCell align="left">{company}</TableCell>
-                        <TableCell align="left">{role}</TableCell>
-                        <TableCell align="left">{isVerified ? 'Yes' : 'No'}</TableCell>
+                        <TableCell align="left">{inn}</TableCell>
                         <TableCell align="left">
-                          <Label
-                            variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
-                            color={(status === 'banned' && 'error') || 'success'}
-                          >
-                            {sentenceCase(status)}
-                          </Label>
+                            {new Date(createdAt).toLocaleDateString()}
                         </TableCell>
 
                         <TableCell align="right">

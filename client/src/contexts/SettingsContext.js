@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import Cookies from 'js-cookie';
 import { createContext, useEffect, useState } from 'react';
 // utils
-import getColorPresets, { colorPresets, defaultPreset } from '../utils/getColorPresets';
+import getColorPresets, { colorPresets, bluePreset } from '../utils/getColorPresets';
 // config
 import { defaultSettings, cookiesKey, cookiesExpires } from '../config';
 
@@ -17,7 +17,7 @@ const initialState = {
   onToggleStretch: () => {},
   onChangeLayout: () => {},
   onResetSetting: () => {},
-  setColor: defaultPreset,
+  setColor: bluePreset,
   colorOption: [],
 };
 

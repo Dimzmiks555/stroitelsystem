@@ -1,22 +1,30 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/sequelize';
 import { CreateContragentDto } from './dto/create-contragent.dto';
 import { UpdateContragentDto } from './dto/update-contragent.dto';
+import { Contragent } from './entities/contragent.entity';
 
 @Injectable()
 export class ContragentsService {
-  create(createContragentDto: CreateContragentDto) {
-    return 'This action adds a new contragent';
+
+  constructor(
+    @InjectModel(Contragent)
+    private contragentModel: typeof Contragent
+  ){}
+
+  create(createContragentDto) {
+    return this.contragentModel.create(createContragentDto)
   }
 
   findAll() {
-    return `This action returns all contragents`;
+    return this.contragentModel.findAll()
   }
 
   findOne(id: number) {
     return `This action returns a #${id} contragent`;
   }
 
-  update(id: number, updateContragentDto: UpdateContragentDto) {
+  update(id: number, updateContragentDto) {
     return `This action updates a #${id} contragent`;
   }
 

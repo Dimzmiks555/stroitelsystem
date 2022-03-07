@@ -26,35 +26,10 @@ import {
   RHFUploadMultiFile,
 } from '../../../components/hook-form';
 
-
-
 import { PartySuggestions } from 'react-dadata';
 import 'react-dadata/dist/react-dadata.css';
 
 // ----------------------------------------------------------------------
-
-
-const CATEGORY_OPTION = [
-  { group: 'Clothing', classify: ['Shirts', 'T-shirts', 'Jeans', 'Leather'] },
-  { group: 'Tailored', classify: ['Suits', 'Blazers', 'Trousers', 'Waistcoats'] },
-  { group: 'Accessories', classify: ['Shoes', 'Backpacks and bags', 'Bracelets', 'Face masks'] },
-];
-
-const TAGS_OPTION = [
-  'Toy Story 3',
-  'Logan',
-  'Full Metal Jacket',
-  'Dangal',
-  'The Sting',
-  '2001: A Space Odyssey',
-  "Singin' in the Rain",
-  'Toy Story',
-  'Bicycle Thieves',
-  'The Kid',
-  'Inglourious Basterds',
-  'Snatch',
-  '3 Idiots',
-];
 
 const LabelStyle = styled(Typography)(({ theme }) => ({
   ...theme.typography.subtitle2,
@@ -69,39 +44,34 @@ ProductNewForm.propTypes = {
   currentProduct: PropTypes.object,
 };
 
-export default function ProductNewForm({ isEdit, currentProduct }) {
+export default function ProductNewForm({ isEdit, currentUser }) {
+  const [contragents, setContragents] = useState([]);
 
-
-  const [valueDate, setValueDate] = useState(new Date());
-
-  const { push } = useRouter();
+  const { push, query } = useRouter();
 
   const { enqueueSnackbar } = useSnackbar();
 
   const NewProductSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
-    description: Yup.string().required('Description is required'),
-    images: Yup.array().min(1, 'Images is required'),
+    // description: Yup.string().required('Description is required'),
+    // images: Yup.array().min(1, 'Images is required'),
     price: Yup.number().moreThan(0, 'Price should not be $0.00'),
   });
 
   const defaultValues = useMemo(
     () => ({
-      name: currentProduct?.name || '',
-      description: currentProduct?.description || '',
-      images: currentProduct?.images || [],
-      code: currentProduct?.code || '',
-      sku: currentProduct?.sku || '',
-      price: currentProduct?.price || 0,
-      priceSale: currentProduct?.priceSale || 0,
-      tags: currentProduct?.tags || [TAGS_OPTION[0]],
-      inStock: true,
-      taxes: true,
-      gender: currentProduct?.gender ,
-      category: currentProduct?.category ,
+      name: currentUser?.name || '',
+      description: currentUser?.description || '',
+      images: currentUser?.images || [],
+      buyer_id: currentUser?.buyer_id || '',
+      seller_id: currentUser?.seller_id || '',
+      status: currentUser?.status || 'Создан',
+      summ: currentUser?.summ || '0',
+      date: currentUser?.date || '',
+      payment_method: currentUser?.payment_method || '',
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [currentProduct]
+    [currentUser]
   );
 
   const methods = useForm({
@@ -123,24 +93,64 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
 
   const [address, setAddress] = useState();
 
-
-
   useEffect(() => {
-    if (isEdit && currentProduct) {
+    if (isEdit && currentUser) {
       reset(defaultValues);
     }
     if (!isEdit) {
       reset(defaultValues);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isEdit, currentProduct]);
+  }, [isEdit, currentUser]);
+
+  useEffect(() => {
+    fetch('http://localhost:5000/contragents')
+      .then((res) => res.json())
+      .then((json) => {
+        let list = json.map((item) => {
+          return { label: item.name, value: item.id };
+        });
+
+        setContragents(list);
+      });
+  }, []);
 
   const onSubmit = async () => {
+    console.log(values);
     try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      console.log(values);
+      
+      if (!isEdit) {
+        fetch(`http://localhost:5000/orders`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify(values),
+        })
+          .then((res) => res.json)
+          .then((json) => {
+            console.log(json);
+          });
+      } else {
+        fetch(`http://localhost:5000/orders/${query?.id}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify(values),
+        })
+          .then((res) => res.json)
+          .then((json) => {
+            console.log(json);
+          });
+      }
+
       reset();
-      enqueueSnackbar(!isEdit ? 'Create success!' : 'Update success!');
-      push(PATH_DASHBOARD.eCommerce.list);
+      enqueueSnackbar(!isEdit ? 'Успешно создано!' : 'Успешно сохранено!');
+      push(PATH_DASHBOARD.orders.list);
     } catch (error) {
       console.error(error);
     }
@@ -176,10 +186,33 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
           <Card sx={{ p: 3 }}>
             <Stack spacing={3}>
               <RHFTextField name="name" label="Название" />
-
-              <Box sx={{display: 'flex'}}>
-                <RHFTextField name="buyer" label="Покупатель" sx={{mr: 2}}/>
-                <RHFTextField name="seller" label="Продавец" />
+              {isEdit && (
+                <>
+                  <p>Покупатель: {currentUser?.buyer?.name}</p>
+                  <p>Продавец: {currentUser?.seller?.name}</p>
+                </>
+              )}
+              <Box sx={{ display: 'flex' }}>
+                <Autocomplete
+                  name="buyer_id"
+                  onChange={(e, val) => {
+                    setValue('buyer_id', val?.value);
+                  }}
+                  options={contragents}
+                  sx={{ mr: 2, width: '50%' }}
+                  renderInput={(params) => <TextField {...params} label="Покупатель" />}
+                  isOptionEqualToValue={(option, value) => option.value === value}
+                />
+                <Autocomplete
+                  name="seller_id"
+                  onChange={(e, val) => {
+                    setValue('seller_id', val?.value);
+                  }}
+                  sx={{ width: '50%' }}
+                  options={contragents}
+                  renderInput={(params) => <TextField {...params} label="Продавец" />}
+                  isOptionEqualToValue={(option, value) => option.value === value}
+                />
               </Box>
 
               <div>
@@ -205,17 +238,20 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
 
         <Grid item xs={12} md={6}>
           <Stack spacing={3}>
-
             <LabelStyle>Статус</LabelStyle>
 
-            <Box>
-              <Chip label="Создан" sx={{mr:2, mb: 1}}></Chip>
-              <Chip label="Ожидает оплаты" sx={{mr:2, mb: 1}}></Chip>
-              <Chip label="В пути" sx={{mr:2, mb: 1}}></Chip>
-              <Chip label="Завершен" sx={{mr:2, mb: 1}}></Chip>
-              <Chip label="Отменен" sx={{mr:2, mb: 1}}></Chip>
-            </Box>
-            
+
+
+            <div>
+              <RHFRadioGroup
+                name="status"
+                options={['Создан', 'Ожидает оплаты', 'В пути', 'Завершен', 'Отменен']}
+                sx={{
+                  '& .MuiFormControlLabel-root': { mr: 4 },
+                }}
+              />
+            </div>
+
             <RHFTextField name="summ" label="Сумма" />
             <LabelStyle>Способ оплаты</LabelStyle>
 
@@ -229,20 +265,20 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
               />
             </div>
 
-
             <LabelStyle>Доставка</LabelStyle>
-            
+
             <StaticDatePicker
-                  orientation="landscape"
-                  openTo="day"
-                  value={valueDate}
-                  // shouldDisableDate={isWeekend}
-                  label="Ориентировочная дата"
-                  onChange={(newValue) => {
-                    setValueDate(newValue);
-                  }}
-                  renderInput={(params) => <TextField {...params} sx={{mb:4}} />}
-                />
+              orientation="landscape"
+              openTo="day"
+              name="date"
+              value={values.date}
+              // shouldDisableDate={isWeekend}
+              label="Ориентировочная дата"
+              onChange={(newValue) => {
+                setValue('date', newValue);
+              }}
+              renderInput={(params) => <TextField {...params} sx={{ mb: 4 }} />}
+            />
             {/* <Card sx={{ p: 3 }}>
               <RHFSwitch name="inStock" label="В продаже" />
 

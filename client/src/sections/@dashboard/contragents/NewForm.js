@@ -28,6 +28,7 @@ import {
 
 import { PartySuggestions } from 'react-dadata';
 import 'react-dadata/dist/react-dadata.css';
+import { endOfWeekWithOptions } from 'date-fns/fp';
 
 // ----------------------------------------------------------------------
 
@@ -75,7 +76,6 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
 
   const NewProductSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
-    description: Yup.string().required('Description is required'),
     images: Yup.array().min(1, 'Images is required'),
     price: Yup.number().moreThan(0, 'Price should not be $0.00'),
   });
@@ -83,17 +83,15 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
   const defaultValues = useMemo(
     () => ({
       name: currentProduct?.name || '',
-      description: currentProduct?.description || '',
-      images: currentProduct?.images || [],
-      code: currentProduct?.code || '',
-      sku: currentProduct?.sku || '',
-      price: currentProduct?.price || 0,
-      priceSale: currentProduct?.priceSale || 0,
-      tags: currentProduct?.tags || [TAGS_OPTION[0]],
-      inStock: true,
-      taxes: true,
-      gender: currentProduct?.gender || GENDER_OPTION[2],
-      category: currentProduct?.category || CATEGORY_OPTION[0].classify[1],
+      inn: currentProduct?.inn || '',
+      kpp: currentProduct?.kpp || '',
+      address: currentProduct?.address || '',
+      manager: currentProduct?.address || '',
+      ogrn: currentProduct?.address || '',
+      okato: currentProduct?.address || '',
+      oktmo: currentProduct?.address || '',
+      okpo: currentProduct?.address || '',
+      opf: currentProduct?.address || '',
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [currentProduct]
@@ -116,7 +114,7 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
 
   const values = watch();
 
-  const [address, setAddress] = useState();
+  const [reg_info, setRegInfo] = useState({data: {}});
 
 
 
@@ -130,12 +128,53 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEdit, currentProduct]);
 
+
+  useEffect(() => {
+      console.log(reg_info)
+
+
+      let { address = {}, inn, kpp, name, ogrn, okato, opf, management, okpo, oktmo, fio } = reg_info?.data
+
+
+      setValue('name', name?.short_with_opf)
+      setValue('inn', inn)
+      setValue('address', address?.unrestricted_value)
+      setValue('ogrn', ogrn)
+      setValue('opf', opf?.short)
+      setValue('manager', management?.name)
+      setValue('okato', okato)
+      setValue('okpo', okpo)
+      setValue('oktmo', oktmo)
+
+      if (opf?.short !== 'ИП') {
+        setValue('kpp', kpp)
+        setValue('manager', management?.name)
+      } else {
+        setValue('kpp', '')
+        setValue('manager', `${fio?.surname} ${fio?.name} ${fio?.patronymic}`)
+      }
+     
+      console.log(values)
+
+  }, [reg_info]);
+
   const onSubmit = async () => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      fetch(`http://localhost:5000/contragents`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(values)
+      })
+      .then(res => res.json)
+      .then(json => {
+        console.log(json)
+      })
       reset();
-      enqueueSnackbar(!isEdit ? 'Create success!' : 'Update success!');
-      push(PATH_DASHBOARD.eCommerce.list);
+      enqueueSnackbar(!isEdit ? 'Успешно сохранено!' : 'Update success!');
+      push(PATH_DASHBOARD.contragents.list);
     } catch (error) {
       console.error(error);
     }
@@ -169,16 +208,19 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
       <Grid container spacing={3}>
         <Grid item xs={12} md={8}>
           <Card sx={{ p: 3 }}>
-            <Stack spacing={3}>
-              <RHFTextField name="name" label="Название" />
-              <RHFTextField name="inn" label="ИНН" />
-              <RHFTextField name="inn" label="Адрес" />
-              <RHFTextField name="inn" label="Номер телефона" />
+            <Stack spacing={3} sx={{display: 'flex', flexWrap: 'wrap', width: '100%', flexDirection: 'row', justifyContent: 'space-between'}}>
+              <RHFTextField name="name" label="Название" sx={{width: '47%', display: 'block'}} />
+              <RHFTextField name="opf" label="ОПФ" sx={{width: '47%', display: 'block'}} />
+              <RHFTextField name="address" label="Адрес" sx={{width: '47%'}} />
+              <RHFTextField name="inn" label="ИНН" sx={{width: '47%'}} />
+              <RHFTextField name="kpp" label="КПП" sx={{width: '47%'}} />
+              <RHFTextField name="ogrn" label="ОГРН" sx={{width: '47%'}} />
+              <RHFTextField name="okato" label="ОКАТО" sx={{width: '47%'}} />
+              <RHFTextField name="okpo" label="ОКПО" sx={{width: '47%'}} />
+              <RHFTextField name="oktmo" label="ОКТМО" sx={{width: '47%'}} />
+              <RHFTextField name="phone" label="Номер телефона" sx={{width: '47%'}} />
+              <RHFTextField name="manager" label="Управляющий" sx={{width: '47%'}} />
 
-              <div>
-                <LabelStyle>Описание</LabelStyle>
-                <RHFEditor simple name="description" />
-              </div>
 
               {/* <div>
                 <LabelStyle>Изображения</LabelStyle>
@@ -200,7 +242,12 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
           <Stack spacing={3}>
             
             <LabelStyle>Автозаполнение</LabelStyle>
-            <PartySuggestions token="cccd906b9f52be8f1ee449484885f4327766041c" value={address} onChange={setAddress} />
+            <PartySuggestions token="cccd906b9f52be8f1ee449484885f4327766041c" value={reg_info} onChange={setRegInfo} />
+            
+            <div>
+              <LabelStyle>Описание</LabelStyle>
+              <RHFEditor simple name="description" />
+            </div>
             {/* <Card sx={{ p: 3 }}>
               <RHFSwitch name="inStock" label="В продаже" />
 
