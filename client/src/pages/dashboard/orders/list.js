@@ -34,7 +34,7 @@ import Scrollbar from '../../../components/Scrollbar';
 import SearchNotFound from '../../../components/SearchNotFound';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 // sections
-import { UserListHead, UserListToolbar, UserMoreMenu } from '../../../sections/@dashboard/user/list';
+import { UserListHead as OrderListHead, UserListToolbar as OrderListToolbar, UserMoreMenu as OrderMoreMenu } from '../../../sections/@dashboard/orders/list';
 
 // ----------------------------------------------------------------------
 
@@ -45,7 +45,7 @@ const TABLE_HEAD = [
   { id: 'summ', label: 'Сумма', alignRight: false },
   { id: 'isVerified', label: 'Дата доставки', alignRight: false },
   { id: 'status', label: 'Статус', alignRight: false },
-  { id: 'isVerified', label: 'Дата создания', alignRight: false },
+  { id: 'createdAt', label: 'Дата создания', alignRight: false },
   { id: '' },
 ];
 
@@ -62,31 +62,42 @@ export default function UserList() {
 
   const { themeStretch } = useSettings();
 
-  const [userList, setUserList] = useState([]);
+  const [orderList, setOrderList] = useState([]);
 
   const [page, setPage] = useState(0);
 
-  const [order, setOrder] = useState('asc');
+  const [order, setOrder] = useState('desc');
 
   const [selected, setSelected] = useState([]);
+  
+  const [tab, setTab] = useState(0);
 
-  const [orderBy, setOrderBy] = useState('name');
+  const [orderBy, setOrderBy] = useState('createdAt');
 
   const [filterName, setFilterName] = useState('');
 
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(25);
 
   useEffect(()=> {
 
-    fetch('http://localhost:5000/orders')
-    .then(res => res.json())
-    .then(json => {
-      console.log(json)
-      setUserList(json)
-    })
+    if (tab === 0) {
+      fetch('http://localhost:5000/orders?status=new')
+      .then(res => res.json())
+      .then(json => {
+        console.log(json)
+        setOrderList(json)
+      })
+    } else {
+      fetch('http://localhost:5000/orders?status=all')
+      .then(res => res.json())
+      .then(json => {
+        console.log(json)
+        setOrderList(json)
+      })
+    }
 
 
-  }, [])
+  }, [tab])
 
   const handleRequestSort = (property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -96,7 +107,7 @@ export default function UserList() {
 
   const handleSelectAllClick = (checked) => {
     if (checked) {
-      const newSelecteds = userList.map((n) => n.name);
+      const newSelecteds = orderList.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -129,20 +140,26 @@ export default function UserList() {
   };
 
   const handleDeleteUser = (userId) => {
-    const deleteUser = userList.filter((user) => user.id !== userId);
+    const deleteUser = orderList.filter((user) => user.id !== userId);
     setSelected([]);
-    setUserList(deleteUser);
+    setOrderList(deleteUser);
   };
 
   const handleDeleteMultiUser = (selected) => {
-    const deleteUsers = userList.filter((user) => !selected.includes(user.name));
+    const deleteUsers = orderList.filter((user) => !selected.includes(user.name));
     setSelected([]);
-    setUserList(deleteUsers);
+    setOrderList(deleteUsers);
   };
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - userList.length) : 0;
 
-  const filteredUsers = applySortFilter(userList, getComparator(order, orderBy), filterName);
+  const handleTab = (event, newValue) => {
+    setTab(newValue);
+  };
+
+
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - orderList.length) : 0;
+
+  const filteredUsers = applySortFilter(orderList, getComparator(order, orderBy), filterName);
 
   const isNotFound = !filteredUsers.length && Boolean(filterName);
 
@@ -168,21 +185,23 @@ export default function UserList() {
         />
 
         <Card>
-          <UserListToolbar
+          <OrderListToolbar
             numSelected={selected.length}
             filterName={filterName}
             onFilterName={handleFilterByName}
+            value={tab}
+            handleChange={handleTab}
             onDeleteUsers={() => handleDeleteMultiUser(selected)}
           />
 
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
               <Table>
-                <UserListHead
+                <OrderListHead
                   order={order}
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
-                  rowCount={userList.length}
+                  rowCount={orderList.length}
                   numSelected={selected.length}
                   onRequestSort={handleRequestSort}
                   onSelectAllClick={handleSelectAllClick}
@@ -225,7 +244,7 @@ export default function UserList() {
                         <TableCell align="left">{new Date(createdAt)?.toLocaleDateString()}</TableCell>
 
                         <TableCell align="right">
-                          <UserMoreMenu onDelete={() => handleDeleteUser(id)} userName={name} />
+                          <OrderMoreMenu onDelete={() => handleDeleteUser(id)} userName={name} />
                         </TableCell>
                       </TableRow>
                     );
@@ -252,7 +271,7 @@ export default function UserList() {
           <TablePagination
             rowsPerPageOptions={[10, 25]}
             component="div"
-            count={userList.length}
+            count={orderList.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={(e, page) => setPage(page)}

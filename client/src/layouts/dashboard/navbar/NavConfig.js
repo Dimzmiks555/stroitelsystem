@@ -67,7 +67,7 @@ const navConfig = [
         children: [
           { title: 'Записи', path: PATH_DASHBOARD.note.list },
           { title: 'Отчёты', path: PATH_DASHBOARD.eCommerce.shop },
-          { title: 'Реализации', path: PATH_DASHBOARD.eCommerce.shop },
+          { title: 'Списания', path: PATH_DASHBOARD.checkouts.list },
         ],
       },
       {
@@ -148,8 +148,11 @@ const navConfig = [
       },
       {
         title: 'Номенклатура',
-        path: PATH_DASHBOARD.contragents.list,
+        path: PATH_DASHBOARD.nomenklatura.list,
         icon: ICONS.kanban
+      },
+      { title: 'Реализации', 
+        path: PATH_DASHBOARD.realisations.list 
       },
     ],
   },

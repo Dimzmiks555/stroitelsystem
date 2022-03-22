@@ -10,15 +10,13 @@ import { OrdersModule } from './orders/orders.module';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { Order } from './orders/entities/order.entity';
 import { Contragent } from './contragents/entities/contragent.entity';
+import { NomenklaturaModule } from './nomenklatura/nomenklatura.module';
+import { Nomenklatura } from './nomenklatura/entities/nomenklatura.entity';
+import { ObjectsModel } from './objects/entities/object.entity';
+import { RealisationsModule } from './realisations/realisations.module';
 
 @Module({
   imports: [
-    ObjectsModule, 
-    NotesModule, 
-    ApplicationsModule, 
-    ContragentsModule, 
-    TendersModule, 
-    OrdersModule,
     SequelizeModule.forRoot({
       dialect: 'mysql',
       host: 'localhost',
@@ -26,14 +24,24 @@ import { Contragent } from './contragents/entities/contragent.entity';
       username: 'root',
       password: 'root',
       database: 'stroitel_system',
-      sync: {alter: true},
-      synchronize: true,
-      autoLoadModels: true,
+      // sync: {alter: true},
+      // synchronize: true,
+      // autoLoadModels: true,
       models: [
         Order,
-        Contragent
+        Contragent,
+        Nomenklatura,
+        ObjectsModel
       ],
     }),
+    ObjectsModule, 
+    NotesModule, 
+    ApplicationsModule, 
+    ContragentsModule, 
+    TendersModule, 
+    OrdersModule,
+    NomenklaturaModule,
+    RealisationsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

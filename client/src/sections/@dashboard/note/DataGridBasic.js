@@ -1,12 +1,122 @@
 // @mui
 import { DataGrid } from '@mui/x-data-grid';
-import { IconButton } from '@mui/material';
+import { Autocomplete, Box, IconButton, Rating, TextField } from '@mui/material';
 // _mock_
 import { _dataGrid } from '../../../_mock';
 // components
 import Iconify from '../../../components/Iconify';
+import { useCallback, useEffect, useState } from 'react';
 
 // ----------------------------------------------------------------------
+
+
+
+
+function RatingEditInputCell(props) {
+
+
+  const [list, setList] = useState([])
+
+  useEffect(()=> {
+
+    fetch('http://localhost:5000/nomenklatura')
+    .then(res => res.json())
+    .then(json => {
+      console.log(json)
+      let list = json.map((item) => {
+        return { label: item.name, value: item.id, edizm: item?.edizm };
+      });
+
+      setList(list)
+    })
+
+
+  }, [])
+
+
+
+  const { id, value, api, field } = props;
+
+  const handleChange = async (event, newValue) => {
+    api.setEditCellValue({ id, field, value: newValue?.label }, event);
+    api.setEditCellValue({ id, field: 'edizm', value: newValue?.edizm }, event);
+    // Check if the event is not from the keyboard
+    // https://github.com/facebook/react/issues/7407
+    if (event.nativeEvent.clientX !== 0 && event.nativeEvent.clientY !== 0) {
+      // Wait for the validation to run
+      const isValid = await api.commitCellChange({ id, field });
+      const isValidED = await api.commitCellChange({ id, field: 'edizm' });
+      if (isValid) {
+        api.setCellMode(id, field, 'view');
+        api.setCellMode(id, 'edizm', 'view');
+      }
+    }
+  };
+
+  const handleRef = (element) => {
+    if (element) {
+      element.querySelector(`input`).focus();
+    }
+  };
+
+  return (
+    <Box sx={{ display: 'flex', alignItems: 'stretch', background: '#fff'}}>
+      <Autocomplete
+        options={list}
+        ref={handleRef}
+        name="rating"
+        value={value}
+        onChange={handleChange}
+        renderInput={(params) => <TextField {...params} size="small" variant="standard" sx={{width: '418px', p: '12px'}} />}
+      />
+    </Box>
+  );
+}
+
+function SummEditInputCell(props) {
+
+  const { id, value, api, field } = props;
+
+  const handleChange = async (event) => {
+
+
+    let amount = +api.getCellValue(id, 'amount')
+
+    console.log(event.target.value)
+
+    api.setEditCellValue({ id, field, value: event.target.value }, event);
+    api.setEditCellValue({ id, field: 'price', value: +event.target.value / amount }, event);
+    // Check if the event is not from the keyboard
+    // https://github.com/facebook/react/issues/7407
+    if (event.nativeEvent.clientX !== 0 && event.nativeEvent.clientY !== 0) {
+      // Wait for the validation to run
+      const isValid = await api.commitCellChange({ id, field }) && await api.commitCellChange({ id, field: 'price' });
+      if (isValid) {
+        api.setCellMode(id, 'price', 'view');
+      }
+      
+    }
+  };
+
+  const handleRef = (element) => {
+    if (element) {
+      element.querySelector(`input`).focus();
+    }
+  };
+
+  return (
+    <Box sx={{ display: 'flex', alignItems: 'stretch', background: '#fff'}}>
+      <TextField name="summ" onChange={handleChange} ref={handleRef} value={value} size="small" variant="standard" sx={{width: '120px', p: '12px'}} />
+    </Box>
+  );
+}
+
+function renderRatingEditInputCell(params) {
+  return <RatingEditInputCell {...params} />;
+}
+function renderSummEditInputCell(params) {
+  return <SummEditInputCell {...params} />;
+}
 
 const columns = [
   {
@@ -17,19 +127,20 @@ const columns = [
   {
     field: 'firstName',
     headerName: 'Наименование',
-    width: 160,
+    width: 420,
     editable: true,
+    renderEditCell: renderRatingEditInputCell,
   },
   {
-    field: 'lastName',
+    field: 'amount',
     headerName: 'Количество',
     width: 160,
     editable: true,
   },
   {
-    field: 'age',
+    field: 'edizm',
     headerName: 'Ед. изм.',
-    type: 'number',
+    type: 'string',
     width: 120,
     editable: true,
     align: 'center',
@@ -52,13 +163,14 @@ const columns = [
     editable: true,
     align: 'center',
     headerAlign: 'center',
+    renderEditCell: renderSummEditInputCell,
   },
   {
     field: 'fullName',
     headerName: 'Объект',
+    editable: true,
     description: 'This column has a value getter and is not sortable.',
     flex: 1,
-    valueGetter: (params) => `${params.row.firstName || ''} ${params.row.lastName || ''}`,
   },
   // {
   //   field: 'action',
@@ -75,22 +187,22 @@ const columns = [
   // },
 ];
 
-const rows = [
-  {
-    id: '_mock.id(index)',
-    name: '_mock.name.fullName(index)',
-    email: '_mock.email(index)',
-    lastLogin: '_mock.time(index)',
-    performance: '_mock.number.percent(index)',
-    rating: '_mock.number.rating(index)',
-    status: 'randomInArray(',
-    isAdmin: false,
-    lastName: '_mock.name.lastName(index)',
-    firstName: '_mock.name.firstName(index)',
-    age: 2,
-  }
-]
 
-export default function DataGridBasic() {
-  return <DataGrid columns={columns} rows={_dataGrid} checkboxSelection disableSelectionOnClick />;
+function renderRating(params) {
+  return <Rating readOnly value={params.value} />;
+}
+
+export default function DataGridBasic({rows}) {
+
+  
+
+  return <DataGrid 
+    columns={columns} 
+    rows={rows} 
+    checkboxSelection 
+    disableSelectionOnClick 
+    getCellClassName={(params) => {
+      return 'open';
+    }}
+  />;
 }

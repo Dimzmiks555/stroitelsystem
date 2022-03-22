@@ -1,23 +1,36 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/sequelize';
 import { CreateObjectDto } from './dto/create-object.dto';
 import { UpdateObjectDto } from './dto/update-object.dto';
+import { ObjectsModel } from './entities/object.entity';
 
 @Injectable()
 export class ObjectsService {
-  create(createObjectDto: CreateObjectDto) {
-    return 'This action adds a new object';
+
+  constructor(
+    @InjectModel(ObjectsModel)
+    private objectsModel: typeof ObjectsModel,
+
+  ) {}
+
+  create(createObjectDto: any) {
+    return this.objectsModel.create(createObjectDto)
   }
 
   findAll() {
-    return `This action returns all objects`;
+    return this.objectsModel.findAll()
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} object`;
+    return this.objectsModel.findOne({
+      where: {id}
+    })
   }
 
-  update(id: number, updateObjectDto: UpdateObjectDto) {
-    return `This action updates a #${id} object`;
+  update(id: number, updateObjectDto: any) {
+    return this.objectsModel.update(updateObjectDto, {
+      where: {id}
+    });
   }
 
   remove(id: number) {

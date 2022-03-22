@@ -86,7 +86,7 @@ export const _accordions = [...Array(4)].map((_, index) => ({
 
 // ----------------------------------------------------------------------
 
-export const _dataGrid = [...Array(36)].map((_, index) => ({
+export const _dataGrid = [].map((_, index) => ({
   id: index + 1,
   name: _mock.name.fullName(index),
   email: _mock.email(index),

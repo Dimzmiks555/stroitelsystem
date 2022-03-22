@@ -10,7 +10,7 @@ import Layout from '../../../layouts';
 import Page from '../../../components/Page';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 // sections
-import UserNewForm from '../../../sections/@dashboard/user/UserNewForm';
+import NewForm from '../../../sections/@dashboard/objects/NewForm';
 
 // ----------------------------------------------------------------------
 
@@ -24,17 +24,17 @@ export default function UserCreate() {
   const { themeStretch } = useSettings();
 
   return (
-    <Page title="Создание нового пользователя">
+    <Page title="Создание нового объекта">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading="Создание нового пользователя"
+          heading="Создание нового объекта"
           links={[
             // { name: 'Dashboard', href: PATH_DASHBOARD.root },
             // { name: 'User', href: PATH_DASHBOARD.user.list },
             { name: '' },
           ]}
         />
-        <UserNewForm />
+        <NewForm />
       </Container>
     </Page>
   );

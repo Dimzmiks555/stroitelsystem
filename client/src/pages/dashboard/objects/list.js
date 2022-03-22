@@ -1,5 +1,5 @@
 import { sentenceCase } from 'change-case';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 // next
 import NextLink from 'next/link';
 // @mui
@@ -34,16 +34,13 @@ import Scrollbar from '../../../components/Scrollbar';
 import SearchNotFound from '../../../components/SearchNotFound';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 // sections
-import { UserListHead, UserListToolbar, UserMoreMenu } from '../../../sections/@dashboard/user/list';
+import { UserListHead, UserListToolbar, UserMoreMenu } from '../../../sections/@dashboard/objects/list';
 
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'name', label: 'Имя', alignRight: false },
-  { id: 'company', label: 'Компания', alignRight: false },
-  { id: 'role', label: 'Роль', alignRight: false },
-  { id: 'isVerified', label: 'Подтвержден', alignRight: false },
-  { id: 'status', label: 'Статус', alignRight: false },
+  { id: 'name', label: 'Название', alignRight: false },
+  { id: 'createdAt', label: 'Дата добавления', alignRight: false },
   { id: '' },
 ];
 
@@ -60,7 +57,9 @@ export default function UserList() {
 
   const { themeStretch } = useSettings();
 
-  const [userList, setUserList] = useState(_userList);
+  
+
+  const [userList, setList] = useState([]);
 
   const [page, setPage] = useState(0);
 
@@ -88,6 +87,18 @@ export default function UserList() {
     }
     setSelected([]);
   };
+
+  useEffect(()=> {
+
+    fetch('http://localhost:5000/objects')
+    .then(res => res.json())
+    .then(json => {
+      console.log(json)
+      setList(json)
+    })
+
+
+  }, [])
 
   const handleClick = (name) => {
     const selectedIndex = selected.indexOf(name);
@@ -143,7 +154,7 @@ export default function UserList() {
             { name: '' },
           ]}
           action={
-            <NextLink href={PATH_DASHBOARD.user.newUser} passHref>
+            <NextLink href={PATH_DASHBOARD.objects.new} passHref>
               <Button variant="contained" startIcon={<Iconify icon={'eva:plus-fill'} />}>
                 Добавить
               </Button>
@@ -173,7 +184,7 @@ export default function UserList() {
                 />
                 <TableBody>
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { id, name, role, status, company, avatarUrl, isVerified } = row;
+                    const { id, name, role, status, company, avatarUrl, createdAt } = row;
                     const isItemSelected = selected.indexOf(name) !== -1;
 
                     return (
@@ -190,25 +201,19 @@ export default function UserList() {
                         </TableCell>
                         <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
                           <Avatar alt={name} src={avatarUrl} sx={{ mr: 2 }} />
-                          <Typography variant="subtitle2" noWrap>
-                            {name}
-                          </Typography>
+                          <NextLink href={`/dashboard/objects/${id}`}>
+                              {name}
+                          </NextLink>
                         </TableCell>
-                        <TableCell align="left">{company}</TableCell>
-                        <TableCell align="left">{role}</TableCell>
-                        <TableCell align="left">{isVerified ? 'Yes' : 'No'}</TableCell>
                         <TableCell align="left">
                           <Label
                             variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
                             color={(status === 'banned' && 'error') || 'success'}
                           >
-                            {sentenceCase(status)}
+                            {new Date(createdAt).toLocaleDateString()}
                           </Label>
                         </TableCell>
 
-                        <TableCell align="right">
-                          <UserMoreMenu onDelete={() => handleDeleteUser(id)} userName={name} />
-                        </TableCell>
                       </TableRow>
                     );
                   })}

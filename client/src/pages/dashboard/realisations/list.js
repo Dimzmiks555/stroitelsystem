@@ -1,8 +1,12 @@
 import { sentenceCase } from 'change-case';
 import { useEffect, useState } from 'react';
-import base64 from 'base-64';
 // next
 import NextLink from 'next/link';
+
+import TreeView from '@mui/lab/TreeView';
+// import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+// import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import TreeItem from '@mui/lab/TreeItem';
 // @mui
 import { useTheme } from '@mui/material/styles';
 import {
@@ -18,6 +22,10 @@ import {
   Typography,
   TableContainer,
   TablePagination,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
 } from '@mui/material';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
@@ -35,17 +43,17 @@ import Scrollbar from '../../../components/Scrollbar';
 import SearchNotFound from '../../../components/SearchNotFound';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 // sections
-import { UserListHead, UserListToolbar, UserMoreMenu } from '../../../sections/@dashboard/user/list';
+import { RealisationsListHead, RealisationsListToolbar, RealisationsMoreMenu } from '../../../sections/@dashboard/realisations/list';
 
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'name', label: 'Имя', alignRight: false },
-  { id: 'company', label: 'Компания', alignRight: false },
-  { id: 'role', label: 'Роль', alignRight: false },
-  { id: 'isVerified', label: 'Подтвержден', alignRight: false },
-  { id: 'status', label: 'Статус', alignRight: false },
-  { id: '' },
+  { id: 'Number', label: 'Номер', alignRight: false },
+  { id: 'seller', label: 'Продавец', alignRight: false },
+  { id: 'buyer', label: 'Покупатель', alignRight: false },
+  { id: 'summ', label: 'Сумма', alignRight: false },
+  { id: 'sklad', label: 'Склад', alignRight: false },
+  { id: 'createdAt', label: 'Дата создания', alignRight: false },
 ];
 
 // ----------------------------------------------------------------------
@@ -57,43 +65,37 @@ UserList.getLayout = function getLayout(page) {
 // ----------------------------------------------------------------------
 
 export default function UserList() {
-
-  const [data, setData] = useState([])
-
-  useEffect(() => {
-    fetch('http://server/1CBase/odata/standard.odata/Document_%D0%A0%D0%B5%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%D0%A2%D0%BE%D0%B2%D0%B0%D1%80%D0%BE%D0%B2?$format=json&$top=10',{
-      headers: {
-        'Authorization': 'Basic 0JDQtNC80LjQvdC40YHRgtGA0LDRgtC+0YA6MjAxMw==',
-        // 'Content-Type': 'application/json',
-        // 'Accept': 'application/json',
-        'Origin': 'server',
-      },
-    })
-    // .then(res => res.json())
-    .then(json => {
-      setData(json)
-      console.log(json)
-    })
-  }, [])
-
-
   const theme = useTheme();
 
   const { themeStretch } = useSettings();
 
-  const [userList, setUserList] = useState(_userList);
+  const [realisationsList, setList] = useState([]);
 
   const [page, setPage] = useState(0);
 
-  const [order, setOrder] = useState('asc');
+  const [order, setOrder] = useState('desc');
 
   const [selected, setSelected] = useState([]);
+  
+  const [tab, setTab] = useState(0);
 
-  const [orderBy, setOrderBy] = useState('name');
+  const [orderBy, setOrderBy] = useState('createdAt');
 
   const [filterName, setFilterName] = useState('');
 
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(25);
+
+  useEffect(()=> {
+
+    fetch('http://localhost:5000/realisations')
+    .then(res => res.json())
+    .then(json => {
+      console.log(json)
+      setList(json)
+    })
+
+
+  }, [])
 
   const handleRequestSort = (property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -103,7 +105,7 @@ export default function UserList() {
 
   const handleSelectAllClick = (checked) => {
     if (checked) {
-      const newSelecteds = userList.map((n) => n.name);
+      const newSelecteds = realisationsList.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -136,46 +138,49 @@ export default function UserList() {
   };
 
   const handleDeleteUser = (userId) => {
-    const deleteUser = userList.filter((user) => user.id !== userId);
+    const deleteUser = realisationsList.filter((user) => user.id !== userId);
     setSelected([]);
-    setUserList(deleteUser);
+    setList(deleteUser);
   };
 
   const handleDeleteMultiUser = (selected) => {
-    const deleteUsers = userList.filter((user) => !selected.includes(user.name));
+    const deleteUsers = realisationsList.filter((user) => !selected.includes(user.name));
     setSelected([]);
-    setUserList(deleteUsers);
+    setList(deleteUsers);
   };
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - userList.length) : 0;
 
-  const filteredUsers = applySortFilter(userList, getComparator(order, orderBy), filterName);
+  const handleTab = (event, newValue) => {
+    setTab(newValue);
+  };
+
+
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - realisationsList.length) : 0;
+
+  const filteredUsers = applySortFilter(realisationsList, getComparator(order, orderBy), filterName);
 
   const isNotFound = !filteredUsers.length && Boolean(filterName);
 
+  
+
   return (
-    <Page title="Учёт">
+    <Page title="Реализации">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading="Учёт"
+          heading="Реализации"
           links={[
             // { name: 'Dashboard', href: PATH_DASHBOARD.root },
             // { name: 'User', href: PATH_DASHBOARD.user.root },
             { name: '' },
           ]}
-          action={
-            <NextLink href={PATH_DASHBOARD.user.newUser} passHref>
-              <Button variant="contained" startIcon={<Iconify icon={'eva:plus-fill'} />}>
-                Создать
-              </Button>
-            </NextLink>
-          }
         />
 
         <Card>
-          <UserListToolbar
+          <RealisationsListToolbar
             numSelected={selected.length}
             filterName={filterName}
+            value={tab}
+            handleChange={handleTab}
             onFilterName={handleFilterByName}
             onDeleteUsers={() => handleDeleteMultiUser(selected)}
           />
@@ -183,18 +188,18 @@ export default function UserList() {
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
               <Table>
-                <UserListHead
+                <RealisationsListHead
                   order={order}
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
-                  rowCount={userList.length}
+                  rowCount={realisationsList.length}
                   numSelected={selected.length}
                   onRequestSort={handleRequestSort}
                   onSelectAllClick={handleSelectAllClick}
                 />
                 <TableBody>
-                  {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { id, name, role, status, company, avatarUrl, isVerified } = row;
+                  {realisationsList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                    const { id, Number, role, status, company, Date: createdAt, Ref_Key } = row;
                     const isItemSelected = selected.indexOf(name) !== -1;
 
                     return (
@@ -210,26 +215,15 @@ export default function UserList() {
                           <Checkbox checked={isItemSelected} onClick={() => handleClick(name)} />
                         </TableCell>
                         <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
-                          <Avatar alt={name} src={avatarUrl} sx={{ mr: 2 }} />
-                          <Typography variant="subtitle2" noWrap>
-                            {name}
-                          </Typography>
+                          <NextLink href={`/dashboard/realisations/${Ref_Key}/edit`}>
+                            {Number}
+                          </NextLink>
                         </TableCell>
-                        <TableCell align="left">{company}</TableCell>
-                        <TableCell align="left">{role}</TableCell>
-                        <TableCell align="left">{isVerified ? 'Yes' : 'No'}</TableCell>
-                        <TableCell align="left">
-                          <Label
-                            variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
-                            color={(status === 'banned' && 'error') || 'success'}
-                          >
-                            {sentenceCase(status)}
-                          </Label>
-                        </TableCell>
-
-                        <TableCell align="right">
-                          <UserMoreMenu onDelete={() => handleDeleteUser(id)} userName={name} />
-                        </TableCell>
+                        <TableCell align="left">{row['Ответственный']?.['Description']}</TableCell>
+                        <TableCell align="left">{row['Контрагент']?.['Description']}</TableCell>
+                        <TableCell align="left">{row['СуммаДокумента'] } руб.</TableCell>
+                        <TableCell align="left">{row['Склад']?.['Description']}</TableCell>
+                        <TableCell align="left">{new Date(createdAt).toLocaleDateString()}</TableCell>
                       </TableRow>
                     );
                   })}
@@ -255,7 +249,7 @@ export default function UserList() {
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={userList.length}
+            count={realisationsList.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={(e, page) => setPage(page)}

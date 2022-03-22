@@ -11,7 +11,7 @@ import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 // @mui
 import { styled } from '@mui/material/styles';
 import { LoadingButton } from '@mui/lab';
-import { Card, Chip, Grid, Stack, TextField, Typography, Autocomplete, InputAdornment, Box } from '@mui/material';
+import { Card, Chip, Grid, Stack, TextField, Typography, Autocomplete, InputAdornment, Box, Switch, FormControlLabel } from '@mui/material';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // components
@@ -29,6 +29,13 @@ import {
 import isWeekend from 'date-fns/isWeekend';
 // @mui
 import { Masonry, DatePicker, StaticDatePicker, MobileDatePicker, DesktopDatePicker } from '@mui/lab';
+
+import ButtonGroup from '@mui/material/ButtonGroup';
+import Button from '@mui/material/Button';
+import CreateTable from './CreateTable';
+import TableStore from './TableStore';
+import { observer } from 'mobx-react';
+import NewNomenklatura from './NewNomenklatura';
 
 // ----------------------------------------------------------------------
 
@@ -64,13 +71,18 @@ const LabelStyle = styled(Typography)(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-ProductNewForm.propTypes = {
-  isEdit: PropTypes.bool,
-  currentProduct: PropTypes.object,
-};
 
-export default function ProductNewForm({ isEdit, currentProduct }) {
+ const ProductNewForm = observer(({ isEdit, currentProduct }) => {
+
+  const [contragents, setContragents] = useState([]);
+  
+  const [objects, setObjects] = useState([]);
+  
+  const [objectModel, setObjectModel] = useState();
+
   const { push } = useRouter();
+  
+  const [open, setOpen] = useState(false);
   
   const [valueDate, setValueDate] = useState(new Date());
 
@@ -120,6 +132,29 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
   const values = watch();
 
   useEffect(() => {
+    fetch('http://localhost:5000/contragents')
+      .then((res) => res.json())
+      .then((json) => {
+        let list = json.map((item) => {
+          return { label: item.name, value: item.id };
+        });
+
+        setContragents(list);
+      });
+
+    fetch('http://localhost:5000/objects')
+    .then((res) => res.json())
+    .then((json) => {
+      let list = json.map((item) => {
+        return { label: item.name, value: item.id };
+      });
+
+      setObjects(list);
+    });
+
+  }, []);
+
+  useEffect(() => {
     if (isEdit && currentProduct) {
       reset(defaultValues);
     }
@@ -140,28 +175,30 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
     }
   };
 
-  const handleDrop = useCallback(
-    (acceptedFiles) => {
-      setValue(
-        'images',
-        acceptedFiles.map((file) =>
-          Object.assign(file, {
-            preview: URL.createObjectURL(file),
-          })
-        )
-      );
-    },
-    [setValue]
-  );
 
-  const handleRemoveAll = () => {
-    setValue('images', []);
+  const handleClickOpen = () => {
+    setOpen(true);
   };
 
-  const handleRemove = (file) => {
-    const filteredItems = values.images?.filter((_file) => _file !== file);
-    setValue('images', filteredItems);
+  const handleClose = () => {
+    setOpen(false);
   };
+
+  const handleAddPosition = (e) => {
+
+    TableStore.addPosition()
+    
+  }
+
+
+  const handleChangeObject = (e, newValue) => {
+    setObjectModel(newValue)
+  }
+
+
+
+  
+    
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
@@ -170,16 +207,21 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
           <Card sx={{ p: 3 }}>
             <Stack spacing={3}>
               <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
-                <StaticDatePicker
-                  orientation="landscape"
-                  openTo="day"
-                  value={valueDate}
-                  shouldDisableDate={isWeekend}
-                  onChange={(newValue) => {
-                    setValueDate(newValue);
-                  }}
-                  renderInput={(params) => <TextField {...params} sx={{mb:4}} />}
-                />
+                <Box sx={{display: 'flex', flexDirection: 'column', m: 4}}>
+                  <DatePicker
+                    orientation="landscape"
+                    disableOpenPicker
+                    openTo="day"
+                    label="Дата"
+                    value={valueDate}
+                    onChange={(newValue) => {
+                      setValueDate(newValue);
+                    }}
+                    renderInput={(params) => <TextField  {...params} sx={{mb:4}} />}
+                  />
+                  <NewNomenklatura open={open} handleClose={handleClose}></NewNomenklatura>
+                </Box>
+
                 
                 <div>
                   <LabelStyle>Описание</LabelStyle>
@@ -216,7 +258,7 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
                   <Card sx={{ p: 3 }}>
                     <Stack spacing={3} mb={2}>
                     <Controller
-                    name="tags"
+                    name="buyer"
                     control={control}
                     render={({ field }) => (
                           <Autocomplete
@@ -224,19 +266,19 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
                             freeSolo
                             sx={{my:4}}
                             onChange={(event, newValue) => field.onChange(newValue)}
-                            options={TAGS_OPTION.map((option) => option)}
+                            options={contragents}
                             renderTags={(value, getTagProps) =>
                               value.map((option, index) => (
                                 <Chip {...getTagProps({ index })} key={option} size="small" label={option} />
                               ))
                             }
-                            renderInput={(params) => <TextField label="Организация" {...params} sx={{width: '400px'}} />}
+                            renderInput={(params) => <TextField label="Покупатель" {...params} sx={{width: '400px'}} />}
                           />
                         )}
                       />
 
                     <Controller
-                        name="tags"
+                        name="seller"
                         control={control}
                         render={({ field }) => (
                           <Autocomplete
@@ -244,40 +286,34 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
                             freeSolo
                             sx={{mb:2}}
                             onChange={(event, newValue) => field.onChange(newValue)}
-                            options={TAGS_OPTION.map((option) => option)}
+                            options={contragents}
                             renderTags={(value, getTagProps) =>
                               value.map((option, index) => (
                                 <Chip {...getTagProps({ index })} key={option} size="small" label={option} />
                               ))
                             }
-                            renderInput={(params) => <TextField label="Контрагент" {...params} />}
+                            renderInput={(params) => <TextField label="Продавец" {...params} />}
                           />
                         )}
                       />
                       
-                      <Controller
-                      name="tags"
-                      control={control}
-                      render={({ field }) => (
-                        <Autocomplete
-                          {...field}
-                          freeSolo
-                          sx={{mb:2}}
-                          onChange={(event, newValue) => field.onChange(newValue)}
-                          options={TAGS_OPTION.map((option) => option)}
-                          renderTags={(value, getTagProps) =>
-                            value.map((option, index) => (
-                              <Chip {...getTagProps({ index })} key={option} size="small" label={option} />
-                            ))
-                          }
-                          renderInput={(params) => <TextField label="Объект" {...params} />}
-                        />
-                      )}
-                    />
+                      <Autocomplete
+                        freeSolo
+                        sx={{mb:2}}
+                        onChange={handleChangeObject}
+                        options={objects}
+                        value={objectModel}
+                        renderInput={(params) => <TextField label="Объект" {...params} />}
+                      />
 
                     </Stack>
-
-                    <RHFSwitch name="taxes" label="Запись относится только к одному объекту" />
+                    {/* <FormControlLabel
+                      control={
+                        <Switch name="taxes" onChange={handleAloneObject} />
+                      }
+                      label="Запись относится к нескольким объектам"
+                    /> */}
+                    
                   </Card>
 
                   <LoadingButton type="submit" variant="contained" size="large" loading={isSubmitting}>
@@ -287,8 +323,21 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
                 </div>
               </Box>
 
-              <Box sx={{height: 1000}}>
-                <DataGridBasic></DataGridBasic>
+              <Box>
+                {/* <DataGridBasic rows={rows}></DataGridBasic> */}
+
+                <ButtonGroup sx={{mt:2}}>
+                    <Button onClick={handleClickOpen}>
+                        Новая номенклатура
+                    </Button>
+                    <Button onClick={handleAddPosition}>
+                        Добавить позицию
+                    </Button>
+                  </ButtonGroup>
+                <CreateTable  rows={TableStore.rows} objects={objects}>
+
+                </CreateTable>
+
               </Box>
               {/* <div>
                 <LabelStyle>Изображения</LabelStyle>
@@ -311,4 +360,6 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
       </Grid>
     </FormProvider>
   );
-}
+})
+
+export default ProductNewForm
