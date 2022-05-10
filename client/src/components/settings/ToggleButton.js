@@ -45,7 +45,7 @@ ToggleButton.propTypes = {
 
 export default function ToggleButton({ notDefault, open, onToggle }) {
   return (
-    <RootStyle>
+    <RootStyle sx={{displayPrint: 'none', display: 'none'}}>
       {notDefault && !open && <DotStyle />}
 
       <Tooltip title="Настройки" placement="left">

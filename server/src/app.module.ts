@@ -14,9 +14,31 @@ import { NomenklaturaModule } from './nomenklatura/nomenklatura.module';
 import { Nomenklatura } from './nomenklatura/entities/nomenklatura.entity';
 import { ObjectsModel } from './objects/entities/object.entity';
 import { RealisationsModule } from './realisations/realisations.module';
+import { CheckoutsModule } from './checkouts/checkouts.module';
+import { CheckoutsProductsModule } from './checkouts-products/checkouts-products.module';
+import { Checkout } from './checkouts/entities/checkout.entity';
+import { CheckoutsProduct } from './checkouts-products/entities/checkouts-product.entity';
+import { Note } from './notes/entities/note.entity';
+import { NoteProductsModule } from './note-products/note-products.module';
+import { NoteProduct } from './note-products/entities/note-product.entity';
+import { ReportsModule } from './reports/reports.module';
+import { PeopleModule } from './people/people.module';
+import { Person } from './people/entities/person.entity';
+import { DocumentModule } from './document/document.module';
+import { Document } from './document/entities/document.entity';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
+import { ContractsModule } from './contracts/contracts.module';
+import { Contract } from './contracts/entities/contract.entity';
+import { DealsModule } from './deals/deals.module';
+import { Deal } from './deals/entities/deal.entity';
 
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      serveRoot: '/public',
+      rootPath: join(__dirname, '..', 'uploads'),
+    }),
     SequelizeModule.forRoot({
       dialect: 'mysql',
       host: 'localhost',
@@ -31,7 +53,15 @@ import { RealisationsModule } from './realisations/realisations.module';
         Order,
         Contragent,
         Nomenklatura,
-        ObjectsModel
+        ObjectsModel,
+        Checkout,
+        CheckoutsProduct,
+        Note,
+        NoteProduct,
+        Person,
+        Document,
+        Contract,
+        Deal
       ],
     }),
     ObjectsModule, 
@@ -42,6 +72,14 @@ import { RealisationsModule } from './realisations/realisations.module';
     OrdersModule,
     NomenklaturaModule,
     RealisationsModule,
+    CheckoutsModule,
+    CheckoutsProductsModule,
+    NoteProductsModule,
+    ReportsModule,
+    PeopleModule,
+    DocumentModule,
+    ContractsModule,
+    DealsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

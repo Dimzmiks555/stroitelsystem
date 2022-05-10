@@ -57,12 +57,12 @@ export default function RealisationsListToolbar({ numSelected, filterName, onFil
             ),
           }}
         />
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        {/* <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
             <Tab label="Добавленные" />
             <Tab label="Каталог"/>
           </Tabs>
-        </Box>
+        </Box> */}
         </>
       )}
 

@@ -12,7 +12,7 @@ import MultiFilePreview from './MultiFilePreview';
 
 const DropZoneStyle = styled('div')(({ theme }) => ({
   outline: 'none',
-  padding: theme.spacing(5, 1),
+  padding: theme.spacing(2, 2),
   borderRadius: theme.shape.borderRadius,
   backgroundColor: theme.palette.background.neutral,
   border: `1px dashed ${theme.palette.grey[500_32]}`,
@@ -37,7 +37,9 @@ export default function UploadMultiFile({
   files,
   onRemove,
   onRemoveAll,
+  onSubmitFile,
   helperText,
+  isLoading,
   sx,
   ...other
 }) {
@@ -65,7 +67,7 @@ export default function UploadMultiFile({
 
       {fileRejections.length > 0 && <RejectionFiles fileRejections={fileRejections} />}
 
-      <MultiFilePreview files={files} showPreview={showPreview} onRemove={onRemove} onRemoveAll={onRemoveAll} />
+      <MultiFilePreview isLoading={isLoading} files={files} showPreview={showPreview} onRemove={onRemove} onRemoveAll={onRemoveAll} onSubmitFile={onSubmitFile}/>
 
       {helperText && helperText}
     </Box>

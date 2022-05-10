@@ -15,7 +15,7 @@ import Layout from '../../../../layouts';
 import Page from '../../../../components/Page';
 import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';
 // sections
-import NewForm from '../../../../sections/@dashboard/nomenklatura/NewForm';
+import NewForm from '../../../../sections/@dashboard/checkouts/NewForm';
 import { useEffect, useState } from 'react';
 
 // ----------------------------------------------------------------------
@@ -36,7 +36,7 @@ export default function UserEdit() {
   const { id } = query;
 
   useEffect(() => {
-    fetch(`http://localhost:5000/nomenklatura/${id}`)
+    fetch(`http://localhost:5000/checkouts/${id}`)
     .then(res => res.json())
     .then(json => {
       console.log(json)
@@ -45,10 +45,10 @@ export default function UserEdit() {
   }, [])
 
   return (
-    <Page title={`Изменение номенклатуры № ${id}`}>
+    <Page title={`Списание № ${id}`}>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading={`Изменение номенклатуры № ${id}`}
+          heading={`Списание № ${id}`}
           links={[
             { name: '', href: PATH_DASHBOARD.root },
             // { name: 'User', href: PATH_DASHBOARD.user.list },

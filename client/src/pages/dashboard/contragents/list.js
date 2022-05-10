@@ -204,7 +204,9 @@ export default function UserList() {
                           <Checkbox checked={isItemSelected} onClick={() => handleClick(name)} />
                         </TableCell>
                         <TableCell >
+                            <NextLink href={`/dashboard/contragents/${id}`}>
                             {name}
+                            </NextLink>
                         </TableCell>
                         <TableCell align="left">{inn}</TableCell>
                         <TableCell align="left">

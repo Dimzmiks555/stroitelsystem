@@ -26,20 +26,20 @@ const ICONS = {
 const navConfig = [
   // GENERAL
   // ----------------------------------------------------------------------
-  {
-    subheader: 'Основное',
-    items: [
-      {
-        title: 'Главная',
-        path: PATH_DASHBOARD.general.app,
-        icon: ICONS.dashboard,
-      },
-      // { title: 'Интернет-магазин', path: PATH_DASHBOARD.general.ecommerce, icon: ICONS.ecommerce },
-      // { title: 'Аналитика', path: PATH_DASHBOARD.general.analytics, icon: ICONS.analytics },
-      // { title: 'Банк', path: PATH_DASHBOARD.general.banking, icon: ICONS.banking },
-      // { title: 'Бронирование', path: PATH_DASHBOARD.general.booking, icon: ICONS.booking },
-    ],
-  },
+  // {
+  //   subheader: 'Основное',
+  //   items: [
+  //     {
+  //       title: 'Главная',
+  //       path: PATH_DASHBOARD.general.app,
+  //       icon: ICONS.dashboard,
+  //     },
+  //     // { title: 'Интернет-магазин', path: PATH_DASHBOARD.general.ecommerce, icon: ICONS.ecommerce },
+  //     // { title: 'Аналитика', path: PATH_DASHBOARD.general.analytics, icon: ICONS.analytics },
+  //     // { title: 'Банк', path: PATH_DASHBOARD.general.banking, icon: ICONS.banking },
+  //     // { title: 'Бронирование', path: PATH_DASHBOARD.general.booking, icon: ICONS.booking },
+  //   ],
+  // },
 
   // MANAGEMENT
   // ----------------------------------------------------------------------
@@ -66,7 +66,7 @@ const navConfig = [
         icon: ICONS.analytics,
         children: [
           { title: 'Записи', path: PATH_DASHBOARD.note.list },
-          { title: 'Отчёты', path: PATH_DASHBOARD.eCommerce.shop },
+          { title: 'Отчёты', path: PATH_DASHBOARD.reports.list },
           { title: 'Списания', path: PATH_DASHBOARD.checkouts.list },
         ],
       },
@@ -86,18 +86,23 @@ const navConfig = [
       },
       {
         title: 'Сделки',
-        path: PATH_DASHBOARD.application.list,
-        icon: ICONS.ecommerce
+        path: PATH_DASHBOARD.deals.list,
+        icon: ICONS.chat
       },
       {
-        title: 'Документы',
-        path: PATH_DASHBOARD.tenders.list,
-        icon: ICONS.mail,
-          children: [
-            { title: 'Входящие', path: PATH_DASHBOARD.tenders.list },
-            { title: 'Исходящие', path: PATH_DASHBOARD.eCommerce.shop },
-          ],
+        title: 'Прочее',
+        path: PATH_DASHBOARD.other_expenses.list,
+        icon: ICONS.ecommerce
       },
+      // {
+      //   title: 'Документы',
+      //   path: PATH_DASHBOARD.tenders.list,
+      //   icon: ICONS.mail,
+      //     children: [
+      //       { title: 'Входящие', path: PATH_DASHBOARD.tenders.list },
+      //       { title: 'Исходящие', path: PATH_DASHBOARD.eCommerce.shop },
+      //     ],
+      // },
     
 
       // MANAGEMENT : E-COMMERCE
@@ -147,9 +152,19 @@ const navConfig = [
         icon: ICONS.user
       },
       {
+        title: 'Люди',
+        path: PATH_DASHBOARD.people.list,
+        icon: ICONS.user
+      },
+      {
         title: 'Номенклатура',
         path: PATH_DASHBOARD.nomenklatura.list,
         icon: ICONS.kanban
+      },
+      {
+        title: 'Договоры',
+        path: PATH_DASHBOARD.contracts.list,
+        icon: ICONS.chat
       },
       { title: 'Реализации', 
         path: PATH_DASHBOARD.realisations.list 

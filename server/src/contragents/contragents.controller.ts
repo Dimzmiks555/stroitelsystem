@@ -19,7 +19,7 @@ export class ContragentsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.contragentsService.findOne(+id);
+    return this.contragentsService.findOne(id);
   }
 
   @Patch(':id')

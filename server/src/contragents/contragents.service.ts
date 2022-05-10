@@ -20,8 +20,10 @@ export class ContragentsService {
     return this.contragentModel.findAll()
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} contragent`;
+  findOne(id: string) {
+    return this.contragentModel.findOne({
+      where: {id}
+    });
   }
 
   update(id: number, updateContragentDto) {

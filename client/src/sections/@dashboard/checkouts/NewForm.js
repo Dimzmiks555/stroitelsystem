@@ -10,7 +10,7 @@ import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 // @mui
 import { styled } from '@mui/material/styles';
 import { LoadingButton, StaticDatePicker } from '@mui/lab';
-import { Card, Chip, Grid, Stack, TextField, Typography, Autocomplete, InputAdornment, Box, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
+import { Card, Chip, Grid, Stack, TextField, Typography, Autocomplete, InputAdornment, Box, List, ListItem, ListItemButton, ListItemText, TableHead, TableBody, Table, TableRow, TableCell } from '@mui/material';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
 
@@ -49,14 +49,16 @@ export default function NewForm({ isEdit, currentUser }) {
   const [realisationsList, setRealisations] = useState([]);
   const [filteredList, setFiltered] = useState([]);
   const [objectsList, setObjects] = useState([]);
+  const [objectModel, setObject] = useState();
   const [selected, setSelected] = useState({});
+  const [checkout, setCheckout] = useState({});
 
   const { push, query } = useRouter();
 
   const { enqueueSnackbar } = useSnackbar();
 
   const NewProductSchema = Yup.object().shape({
-    name: Yup.string().required('Name is required'),
+    // name: Yup.string().required('Name is required'),
     // description: Yup.string().required('Description is required'),
     // images: Yup.array().min(1, 'Images is required'),
     price: Yup.number().moreThan(0, 'Price should not be $0.00'),
@@ -124,34 +126,59 @@ export default function NewForm({ isEdit, currentUser }) {
 
       setObjects(list);
     });
+
+    if (isEdit) {
+      fetch(`http://localhost:5000/checkouts/${query.id}`)
+      .then((res) => res.json())
+      .then((json) => {
+        setCheckout(json)
+      });
+    }
+
   }, []);
 
   const onSubmit = async () => {
     console.log(values);
+
+
+    let data = {
+      description: values?.description,
+      Number: selected.item?.['Number'],
+      Ref_Key: selected.item?.['Ref_Key'],
+      object_id: objectModel?.value,
+      Date: selected.item?.['Date'],
+      summ: selected.item?.['СуммаДокумента'],
+      buyer: selected.item?.['Контрагент']?.['Description'],
+      seller: selected.item?.['Ответственный']?.['Description'],
+      sklad: selected.item?.['Склад']?.['Description'],
+    }
+
+    console.log(data)
+
     try {
       console.log(values);
       
       if (!isEdit) {
-        fetch(`http://localhost:5000/orders`, {
+        fetch(`http://localhost:5000/checkouts`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             Accept: 'application/json',
           },
-          body: JSON.stringify(values),
+          body: JSON.stringify(data),
         })
           .then((res) => res.json)
           .then((json) => {
             console.log(json);
           });
       } else {
-        fetch(`http://localhost:5000/orders/${query?.id}`, {
+        fetch(`http://localhost:5000/checkouts/${query?.id}`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
             Accept: 'application/json',
           },
-          body: JSON.stringify(values),
+          body: JSON.stringify(data),
         })
           .then((res) => res.json)
           .then((json) => {
@@ -161,7 +188,7 @@ export default function NewForm({ isEdit, currentUser }) {
 
       reset();
       enqueueSnackbar(!isEdit ? 'Успешно создано!' : 'Успешно сохранено!');
-      push(PATH_DASHBOARD.orders.list);
+      push(PATH_DASHBOARD.checkouts.list);
     } catch (error) {
       console.error(error);
     }
@@ -186,8 +213,12 @@ export default function NewForm({ isEdit, currentUser }) {
     setFiltered(realisationsList.filter(item => item['Number'].search(e.target.value) !== -1))
   };
 
-  const handleSelect = (e, value, index) => {
-    setSelected({value, index});
+  const handleSelect = (e, item, index) => {
+    setSelected({item, index});
+  };
+
+  const handleChangeObject = (e, newValue) => {
+    setObject(newValue);
   };
 
   return (
@@ -196,60 +227,31 @@ export default function NewForm({ isEdit, currentUser }) {
         <Grid item xs={12} md={6}>
           <Card sx={{ p: 3 }}>
             <Stack spacing={3}>
-            <Autocomplete
-                freeSolo
-                sx={{mb:2}}
-                // onChange={handleChangeObject}
-                options={objectsList}
-                // value={objectModel}
-                renderInput={(params) => <TextField label="Объект" {...params} />}
-              />
-              {isEdit && (
-                <>
-                  <p>Покупатель: {currentUser?.buyer?.name}</p>
-                  <p>Продавец: {currentUser?.seller?.name}</p>
-                </>
-              )}
-              <Box sx={{ display: 'flex' }}>
-                <Autocomplete
-                  name="buyer_id"
-                  onChange={(e, val) => {
-                    setValue('buyer_id', val?.value);
-                  }}
-                  options={objectsList}
-                  sx={{ mr: 2, width: '50%' }}
-                  renderInput={(params) => <TextField {...params} label="Ответственный" />}
-                  isOptionEqualToValue={(option, value) => option.value === value}
-                />
-                {/* <Autocomplete
-                  name="seller_id"
-                  onChange={(e, val) => {
-                    setValue('seller_id', val?.value);
-                  }}
-                  sx={{ width: '50%' }}
-                  options={realisationsList}
-                  renderInput={(params) => <TextField {...params} label="Продавец" />}
-                  isOptionEqualToValue={(option, value) => option.value === value}
-                /> */}
-              </Box>
-
+              {
+                isEdit ? (
+                  <>
+                   <p>Объект: {checkout?.object?.name}</p>
+                   <p>Покупатель: {checkout?.buyer}</p>
+                   <p>Продавец: {checkout?.seller}</p>
+                   <p>Склад: {checkout?.sklad}</p>
+                   <p>Сумма: {checkout?.summ} руб.</p>
+                   <p>Дата: {new Date(checkout?.['Date']).toLocaleDateString()}</p>
+                  </>
+                ) : (
+                  <Autocomplete
+                    freeSolo
+                    sx={{mb:2}}
+                    onChange={handleChangeObject}
+                    options={objectsList}
+                    value={objectModel}
+                    renderInput={(params) => <TextField label="Объект" {...params} />}
+                  />
+                )
+              }
               <div>
                 <LabelStyle>Описание</LabelStyle>
                 <RHFEditor simple name="description" />
               </div>
-
-              {/* <div>
-                <LabelStyle>Входящие документы</LabelStyle>
-                <RHFUploadMultiFile
-                  name="images"
-                  showPreview
-                  accept="image/*"
-                  maxSize={3145728}
-                  onDrop={handleDrop}
-                  onRemove={handleRemove}
-                  onRemoveAll={handleRemoveAll}
-                />
-              </div> */}
 
               <LoadingButton type="submit" variant="contained" size="large" loading={isSubmitting}>
                 {!isEdit ? 'Сохранить' : 'Изменить'}
@@ -259,23 +261,63 @@ export default function NewForm({ isEdit, currentUser }) {
         </Grid>
 
         <Grid item xs={12} md={6}>
-          <Stack spacing={3}>
-            <LabelStyle>Реализации</LabelStyle>
+            {isEdit ? (
+            <Stack spacing={3}>
+              <LabelStyle>Позиции</LabelStyle>
+              <Table>
+                <TableHead>
+                  <TableCell>
+                    Наименование
+                  </TableCell>
+                  <TableCell>
+                    Цена
+                  </TableCell>
+                  <TableCell>
+                    Кол-во
+                  </TableCell>
+                  <TableCell>
+                    Сумма
+                  </TableCell>
+                </TableHead>
+                <TableBody>
+                  {checkout?.products?.map(item => (
+                    <TableRow>
+                      <TableCell>
+                        {item?.name}
+                      </TableCell>
+                      <TableCell>
+                        {item?.price} руб.
+                      </TableCell>
+                      <TableCell>
+                        {item?.amount}
+                      </TableCell>
+                      <TableCell>
+                        {item?.summ} руб.
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+              
+            </Stack>
+            ) : (
+            <Stack spacing={3}>
+              <LabelStyle>Реализации</LabelStyle>
 
-            <RHFTextField name="name" value={search} onChange={handleSearch} label="Поиск" />
-            <List disablePadding>
-            {filteredList?.map((item, index) => (
-                <ListItem>
-                  <ListItemButton selected={selected?.index === index} onClick={e => {handleSelect(e, item['Ref_key'], index)}}>
-                    <ListItemText primary={item?.['Number']} sx={{userSelect: 'text'}} />
-                  </ListItemButton>
-                </ListItem>
-            ))}
-            
-          </List>
+              <RHFTextField name="name" value={search} onChange={handleSearch} label="Поиск" />
+              <List disablePadding>
+              {filteredList?.map((item, index) => (
+                  <ListItem>
+                    <ListItemButton selected={selected?.index === index} onClick={e => {handleSelect(e, item, index)}}>
+                      <ListItemText primary={item?.['Number']} sx={{userSelect: 'text'}} />
+                    </ListItemButton>
+                  </ListItem>
+              ))}
+              </List>
+            </Stack>
+            )}
 
             
-          </Stack>
         </Grid>
       </Grid>
     </FormProvider>

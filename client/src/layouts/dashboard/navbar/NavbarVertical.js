@@ -61,6 +61,7 @@ export default function NavbarVertical({ isOpenSidebar, onCloseSidebar }) {
     <Scrollbar
       sx={{
         height: 1,
+        displayPrint: 'none',
         '& .simplebar-content': { height: 1, display: 'flex', flexDirection: 'column' },
       }}
     >
@@ -69,6 +70,7 @@ export default function NavbarVertical({ isOpenSidebar, onCloseSidebar }) {
         sx={{
           pt: 3,
           pb: 2,
+          displayPrint: 'none',
           px: 2.5,
           flexShrink: 0,
           ...(isCollapse && { alignItems: 'center' }),
@@ -118,6 +120,8 @@ export default function NavbarVertical({ isOpenSidebar, onCloseSidebar }) {
           onMouseLeave={onHoverLeave}
           PaperProps={{
             sx: {
+              
+              displayPrint: 'none',
               width: NAVBAR.DASHBOARD_WIDTH,
               borderRightStyle: 'dashed',
               bgcolor: 'background.default',

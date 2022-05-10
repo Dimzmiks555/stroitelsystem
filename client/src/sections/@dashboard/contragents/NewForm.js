@@ -29,6 +29,7 @@ import {
 import { PartySuggestions } from 'react-dadata';
 import 'react-dadata/dist/react-dadata.css';
 import { endOfWeekWithOptions } from 'date-fns/fp';
+import InvoiceBlock from './InvoiceBlock';
 
 // ----------------------------------------------------------------------
 
@@ -205,8 +206,8 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={8}>
+      <Grid container spacing={3} >
+        <Grid item xs={12} md={8} sx={{displayPrint: 'none'}}>
           <Card sx={{ p: 3 }}>
             <Stack spacing={3} sx={{display: 'flex', flexWrap: 'wrap', width: '100%', flexDirection: 'row', justifyContent: 'space-between'}}>
               <RHFTextField name="name" label="Название" sx={{width: '47%', display: 'block'}} />
@@ -236,9 +237,10 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
               </div> */}
             </Stack>
           </Card>
+          
         </Grid>
 
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={4} sx={{displayPrint: 'none'}}>
           <Stack spacing={3}>
             
             <LabelStyle>Автозаполнение</LabelStyle>
@@ -336,6 +338,17 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
               {!isEdit ? 'Сохранить' : 'Изменить'}
             </LoadingButton>
           </Stack>
+        </Grid>
+
+        <Grid md={12} xs={12}>
+            {
+              isEdit && (
+                
+              <Card sx={{ p: 3, mt: 3 }}>
+                <InvoiceBlock></InvoiceBlock>
+              </Card>
+              )
+            }
         </Grid>
       </Grid>
     </FormProvider>

@@ -43,14 +43,13 @@ import Scrollbar from '../../../components/Scrollbar';
 import SearchNotFound from '../../../components/SearchNotFound';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 // sections
-import { RealisationsListHead, RealisationsListToolbar, RealisationsMoreMenu } from '../../../sections/@dashboard/checkouts/list';
+import { RealisationsListHead, RealisationsListToolbar as CheckoutsListToolbar, RealisationsMoreMenu } from '../../../sections/@dashboard/checkouts/list';
 
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
   { id: 'Number', label: 'Номер', alignRight: false },
-  { id: 'seller', label: 'Продавец', alignRight: false },
-  { id: 'buyer', label: 'Покупатель', alignRight: false },
+  { id: 'object', label: 'Объект', alignRight: false },
   { id: 'summ', label: 'Сумма', alignRight: false },
   { id: 'sklad', label: 'Склад', alignRight: false },
   { id: 'createdAt', label: 'Дата создания', alignRight: false },
@@ -87,7 +86,7 @@ export default function UserList() {
 
   useEffect(()=> {
 
-    fetch('http://localhost:5000/realisations')
+    fetch('http://localhost:5000/checkouts')
     .then(res => res.json())
     .then(json => {
       console.log(json)
@@ -183,7 +182,7 @@ export default function UserList() {
         />
 
         <Card>
-          <RealisationsListToolbar
+          <CheckoutsListToolbar
             numSelected={selected.length}
             filterName={filterName}
             value={tab}
@@ -206,7 +205,7 @@ export default function UserList() {
                 />
                 <TableBody>
                   {realisationsList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { id, Number, role, status, company, Date: createdAt, isVerified } = row;
+                    const { id, Number, role, status, company,  createdAt, isVerified } = row;
                     const isItemSelected = selected.indexOf(name) !== -1;
 
                     return (
@@ -223,13 +222,14 @@ export default function UserList() {
                         </TableCell>
                         <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
                           <Typography variant="subtitle2" noWrap>
+                            <NextLink href={`/dashboard/checkouts/${id}/edit`}>
                             {Number}
+                            </NextLink>
                           </Typography>
                         </TableCell>
-                        <TableCell align="left">{row['Ответственный']?.['Description']}</TableCell>
-                        <TableCell align="left">{row['Контрагент']?.['Description']}</TableCell>
-                        <TableCell align="left">{row['СуммаДокумента']}</TableCell>
-                        <TableCell align="left">{row['Склад']?.['Description']}</TableCell>
+                        <TableCell align="left">{row?.object?.name}</TableCell>
+                        <TableCell align="left">{row?.summ}</TableCell>
+                        <TableCell align="left">{row?.sklad}</TableCell>
                         <TableCell align="left">{new Date(createdAt).toLocaleDateString()}</TableCell>
                       </TableRow>
                     );

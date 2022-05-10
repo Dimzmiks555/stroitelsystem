@@ -2,7 +2,7 @@ import { Column, DataType, HasMany, Model, Table } from "sequelize-typescript";
 
 @Table
 export class Contragent extends Model {
-    @Column
+    @Column({type: DataType.STRING})
     name: string;
 
     @Column({type: DataType.TEXT})

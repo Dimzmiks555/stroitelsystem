@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
+import { Checkout } from 'src/checkouts/entities/checkout.entity';
+import { Note } from 'src/notes/entities/note.entity';
 import { CreateObjectDto } from './dto/create-object.dto';
 import { UpdateObjectDto } from './dto/update-object.dto';
 import { ObjectsModel } from './entities/object.entity';
@@ -23,7 +25,8 @@ export class ObjectsService {
 
   findOne(id: number) {
     return this.objectsModel.findOne({
-      where: {id}
+      where: {id},
+      include: [Checkout, Note]
     })
   }
 

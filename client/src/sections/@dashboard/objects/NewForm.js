@@ -28,6 +28,7 @@ import {
 
 import { AddressSuggestions } from 'react-dadata';
 import 'react-dadata/dist/react-dadata.css';
+import ExpensesBlock from './ExpensesBlock';
 
 
 // ----------------------------------------------------------------------
@@ -69,7 +70,7 @@ NewForm.propTypes = {
   currentProduct: PropTypes.object,
 };
 
-export default function NewForm({ isEdit, currentProduct }) {
+export default function NewForm({ isEdit, currentProduct, expenses }) {
   const { push } = useRouter();
 
   const { enqueueSnackbar } = useSnackbar();
@@ -174,7 +175,7 @@ export default function NewForm({ isEdit, currentProduct }) {
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={3}>
-        <Grid item xs={12} md={8}>
+        <Grid item xs={12} md={6}>
           <Card sx={{ p: 3 }}>
             <Stack spacing={3}>
               <RHFTextField name="name" label="Название" />
@@ -204,10 +205,9 @@ export default function NewForm({ isEdit, currentProduct }) {
           </Card>
         </Grid>
 
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={6}>
           <Stack spacing={3}>
-            
-
+              <ExpensesBlock expenses={expenses}></ExpensesBlock>
           </Stack>
         </Grid>
       </Grid>

@@ -30,7 +30,7 @@ const RootStyle = styled(m.div)(({ theme }) => ({
   top: 0,
   right: 0,
   bottom: 0,
-  display: 'flex',
+  display: 'none',
   position: 'fixed',
   overflow: 'hidden',
   width: NAVBAR.BASE_WIDTH,
@@ -92,15 +92,15 @@ export default function Settings() {
       <Backdrop
         open={open}
         onClick={handleClose}
-        sx={{ background: 'transparent', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        sx={{ background: 'transparent', zIndex: (theme) => theme.zIndex.drawer + 1 , displayPrint: 'none'}}
       />
 
-      {!open && <ToggleButton open={open} notDefault={notDefault} onToggle={handleToggle} />}
+      {!open && <ToggleButton sx={{displayPrint: 'none'}} open={open} notDefault={notDefault} onToggle={handleToggle} />}
 
       <AnimatePresence>
         {open && (
           <>
-            <RootStyle {...varSidebar}>
+            <RootStyle {...varSidebar} sx={{displayPrint: 'none'}}>
               <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ py: 2, pr: 1, pl: 2.5 }}>
                 <Typography variant="subtitle1">Настройки</Typography>
                 <div>

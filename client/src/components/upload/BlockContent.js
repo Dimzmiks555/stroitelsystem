@@ -14,11 +14,11 @@ export default function BlockContent() {
       direction={{ xs: 'column', md: 'row' }}
       sx={{ width: 1, textAlign: { xs: 'center', md: 'left' } }}
     >
-      <UploadIllustration sx={{ width: 220 }} />
+      {/* <UploadIllustration sx={{ width: 'auto' }} /> */}
 
-      <Box sx={{ p: 3 }}>
+      <Box sx={{ p: 0 }}>
         <Typography gutterBottom variant="h5">
-          Перетащите или выберите файл
+          Выберите файл
         </Typography>
 
         {/* <Typography variant="body2" sx={{ color: 'text.secondary' }}>

@@ -1,5 +1,5 @@
 import { sentenceCase } from 'change-case';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 // next
 import NextLink from 'next/link';
 // @mui
@@ -34,17 +34,18 @@ import Scrollbar from '../../../components/Scrollbar';
 import SearchNotFound from '../../../components/SearchNotFound';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 // sections
-import { UserListHead, UserListToolbar, UserMoreMenu } from '../../../sections/@dashboard/user/list';
+import { UserListHead, UserListToolbar, UserMoreMenu } from '../../../sections/@dashboard/note/list';
 
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'name', label: 'Имя', alignRight: false },
-  { id: 'company', label: 'Компания', alignRight: false },
-  { id: 'role', label: 'Роль', alignRight: false },
-  { id: 'isVerified', label: 'Подтвержден', alignRight: false },
-  { id: 'status', label: 'Статус', alignRight: false },
-  { id: '' },
+  { id: 'name', label: 'Название', alignRight: false },
+  { id: 'company', label: 'Объект', alignRight: false },
+  { id: 'role', label: 'Продавец', alignRight: false },
+  { id: 'role', label: 'Покупатель', alignRight: false },
+  { id: 'isVerified', label: 'Сумма', alignRight: false },
+  { id: 'status', label: 'Дата', alignRight: false },
+  { id: 'basis', label: 'Основание', alignRight: false },
 ];
 
 // ----------------------------------------------------------------------
@@ -60,7 +61,7 @@ export default function UserList() {
 
   const { themeStretch } = useSettings();
 
-  const [userList, setUserList] = useState(_userList);
+  const [list, setList] = useState([]);
 
   const [page, setPage] = useState(0);
 
@@ -71,8 +72,21 @@ export default function UserList() {
   const [orderBy, setOrderBy] = useState('name');
 
   const [filterName, setFilterName] = useState('');
+  const [attrName, setAttrName] = useState('');
 
   const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  useEffect(()=> {
+
+    fetch('http://localhost:5000/notes')
+    .then(res => res.json())
+    .then(json => {
+      console.log(json)
+      setList(json)
+    })
+
+
+  }, [])
 
   const handleRequestSort = (property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -80,9 +94,11 @@ export default function UserList() {
     setOrderBy(property);
   };
 
+  
+
   const handleSelectAllClick = (checked) => {
     if (checked) {
-      const newSelecteds = userList.map((n) => n.name);
+      const newSelecteds = list.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -109,26 +125,27 @@ export default function UserList() {
     setPage(0);
   };
 
-  const handleFilterByName = (filterName) => {
+  const handleFilterByName = (filterName, attrName) => {
     setFilterName(filterName);
+    setAttrName(attrName);
     setPage(0);
   };
 
   const handleDeleteUser = (userId) => {
-    const deleteUser = userList.filter((user) => user.id !== userId);
+    const deleteUser = list.filter((user) => user.id !== userId);
     setSelected([]);
-    setUserList(deleteUser);
+    setList(deleteUser);
   };
 
   const handleDeleteMultiUser = (selected) => {
-    const deleteUsers = userList.filter((user) => !selected.includes(user.name));
+    const deleteUsers = list.filter((user) => !selected.includes(user.name));
     setSelected([]);
-    setUserList(deleteUsers);
+    setList(deleteUsers);
   };
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - userList.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - list.length) : 0;
 
-  const filteredUsers = applySortFilter(userList, getComparator(order, orderBy), filterName);
+  const filteredUsers = applySortFilter(list, getComparator(order, orderBy), filterName, attrName);
 
   const isNotFound = !filteredUsers.length && Boolean(filterName);
 
@@ -143,7 +160,7 @@ export default function UserList() {
             { name: '' },
           ]}
           action={
-            <NextLink href={PATH_DASHBOARD.user.newUser} passHref>
+            <NextLink href={PATH_DASHBOARD.note.new} passHref>
               <Button variant="contained" startIcon={<Iconify icon={'eva:plus-fill'} />}>
                 Создать
               </Button>
@@ -166,14 +183,14 @@ export default function UserList() {
                   order={order}
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
-                  rowCount={userList.length}
+                  rowCount={list.length}
                   numSelected={selected.length}
                   onRequestSort={handleRequestSort}
                   onSelectAllClick={handleSelectAllClick}
                 />
                 <TableBody>
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { id, name, role, status, company, avatarUrl, isVerified } = row;
+                    const { id, name, role, summ, company, Date: date, isVerified } = row;
                     const isItemSelected = selected.indexOf(name) !== -1;
 
                     return (
@@ -185,29 +202,23 @@ export default function UserList() {
                         selected={isItemSelected}
                         aria-checked={isItemSelected}
                       >
-                        <TableCell padding="checkbox">
-                          <Checkbox checked={isItemSelected} onClick={() => handleClick(name)} />
-                        </TableCell>
                         <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
-                          <Avatar alt={name} src={avatarUrl} sx={{ mr: 2 }} />
-                          <Typography variant="subtitle2" noWrap>
-                            {name}
-                          </Typography>
+                          <NextLink href={`/dashboard/note/${id}/edit`}>
+                            <a>Запись № {id}</a>
+                          </NextLink>
                         </TableCell>
-                        <TableCell align="left">{company}</TableCell>
-                        <TableCell align="left">{role}</TableCell>
-                        <TableCell align="left">{isVerified ? 'Yes' : 'No'}</TableCell>
+                        <TableCell align="left">{row?.object?.name}</TableCell>
+                        <TableCell align="left">{row?.seller?.name}</TableCell>
+                        <TableCell align="left">{row?.buyer?.name}</TableCell>
                         <TableCell align="left">
-                          <Label
-                            variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
-                            color={(status === 'banned' && 'error') || 'success'}
-                          >
-                            {sentenceCase(status)}
-                          </Label>
+                            {summ} руб.
                         </TableCell>
 
-                        <TableCell align="right">
-                          <UserMoreMenu onDelete={() => handleDeleteUser(id)} userName={name} />
+                        <TableCell >
+                          {new Date(date).toLocaleDateString()}
+                        </TableCell>
+                        <TableCell >
+                          {row?.basis}
                         </TableCell>
                       </TableRow>
                     );
@@ -234,7 +245,7 @@ export default function UserList() {
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={userList.length}
+            count={list.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={(e, page) => setPage(page)}
@@ -264,7 +275,7 @@ function getComparator(order, orderBy) {
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-function applySortFilter(array, comparator, query) {
+function applySortFilter(array, comparator, query, attr) {
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
@@ -272,7 +283,20 @@ function applySortFilter(array, comparator, query) {
     return a[1] - b[1];
   });
   if (query) {
-    return array.filter((_user) => _user.name.toLowerCase().indexOf(query.toLowerCase()) !== -1);
+      return array.filter((_user) => {
+
+        
+      if(typeof _user[attr] == 'string') {
+
+        return _user[attr]?.toString()?.search(query) != -1;
+
+      } else {
+
+        return  _user[attr] == query;
+
+      }
+
+      });
   }
   return stabilizedThis.map((el) => el[0]);
 }

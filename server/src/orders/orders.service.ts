@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Op } from 'sequelize';
 import { Contragent } from 'src/contragents/entities/contragent.entity';
+import { Document } from 'src/document/entities/document.entity';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { Order } from './entities/order.entity';
@@ -14,6 +15,9 @@ export class OrdersService {
 
     @InjectModel(Contragent)
     private contragentModel: typeof Contragent,
+
+    @InjectModel(Document)
+    private documentModel: typeof Document,
   ) {}
 
   create(createOrderDto) {
@@ -60,6 +64,10 @@ export class OrdersService {
         {
           model: this.contragentModel,
           as: 'seller',
+        },
+        {
+          model: this.documentModel,
+          as: 'files',
         },
       ],
       where: {id}

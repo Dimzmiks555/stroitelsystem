@@ -9,10 +9,13 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 // @mui
 import { styled } from '@mui/material/styles';
-import { LoadingButton, StaticDatePicker } from '@mui/lab';
+import { LoadingButton, LocalizationProvider, StaticDatePicker } from '@mui/lab';
 import { Card, Chip, Grid, Stack, TextField, Typography, Autocomplete, InputAdornment, Box } from '@mui/material';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
+
+import ruLocale from 'date-fns/locale/ru';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
 
 import isWeekend from 'date-fns/isWeekend';
 // components
@@ -28,6 +31,7 @@ import {
 
 import { PartySuggestions } from 'react-dadata';
 import 'react-dadata/dist/react-dadata.css';
+import { DocIllustration, OrderCompleteIllustration, PlanFreeIcon, PlanPremiumIcon, SentIcon } from 'src/assets';
 
 // ----------------------------------------------------------------------
 
@@ -47,7 +51,7 @@ ProductNewForm.propTypes = {
 export default function ProductNewForm({ isEdit, currentUser }) {
   const [contragents, setContragents] = useState([]);
 
-  const { push, query } = useRouter();
+  const { push, query, reload } = useRouter();
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -91,7 +95,7 @@ export default function ProductNewForm({ isEdit, currentUser }) {
 
   const values = watch();
 
-  const [address, setAddress] = useState();
+  const [isUploading, setIsUploading] = useState(false);
 
   useEffect(() => {
     if (isEdit && currentUser) {
@@ -156,6 +160,35 @@ export default function ProductNewForm({ isEdit, currentUser }) {
     }
   };
 
+  const onSubmitFile = () => {
+
+    console.log(values?.images)
+    
+    setIsUploading(true)
+
+    values?.images?.forEach(doc => {
+
+      let formdata = new FormData()
+
+      formdata.append('file', doc)
+      formdata.append('order_id', query.id)
+
+      fetch(`http://localhost:5000/document`, {
+        method: 'POST',
+        body: formdata
+      })
+      .then(res => res.json())
+      .then(json => {
+        console.log(json)
+        setIsUploading(false)
+        reload()
+      })
+
+    })
+    
+
+  }
+
   const handleDrop = useCallback(
     (acceptedFiles) => {
       setValue(
@@ -166,6 +199,7 @@ export default function ProductNewForm({ isEdit, currentUser }) {
           })
         )
       );
+      console.log(acceptedFiles)
     },
     [setValue]
   );
@@ -220,18 +254,49 @@ export default function ProductNewForm({ isEdit, currentUser }) {
                 <RHFEditor simple name="description" />
               </div>
 
-              <div>
+              {isEdit && (
+                <div>
                 <LabelStyle>Входящие документы</LabelStyle>
+
+                <Box sx={{display: 'flex'}}>
+                {
+                    currentUser?.files?.map(file => (
+                        <Box sx={{my: 3, display: 'flex', flexDirection: 'column', alignItems: 'center', mr: 2, maxWidth: '23%'}}>
+                          <a href={`http://localhost:5000/public/${file.name}`} target="_blank">
+                          <Box sx={{
+                            width: 100,
+                            height: 100,
+                            p: 2,
+                            border: '1px solid #bbb', 
+                            cursor: 'pointer',
+                            borderRadius: 3,
+                            mb: 1,
+                            ":hover": {
+                              background: '#ddf'
+                            }
+                          }}>
+                            <PlanPremiumIcon/>
+                          </Box>
+                          </a>
+                            
+                          <p style={{wordBreak: 'break-word', fontSize: 14, textAlign: 'center'}}>{file?.name}</p>
+                        </Box>
+                    ))
+                  }
+                </Box>
+
                 <RHFUploadMultiFile
                   name="images"
                   showPreview
-                  accept="image/*"
                   maxSize={3145728}
                   onDrop={handleDrop}
                   onRemove={handleRemove}
+                  isLoading={isUploading}
                   onRemoveAll={handleRemoveAll}
+                  onSubmitFile={onSubmitFile}
                 />
               </div>
+              )}
             </Stack>
           </Card>
         </Grid>
@@ -252,7 +317,7 @@ export default function ProductNewForm({ isEdit, currentUser }) {
               />
             </div>
 
-            <RHFTextField name="summ" label="Сумма" />
+            <RHFTextField type="number" name="summ" label="Сумма" />
             <LabelStyle>Способ оплаты</LabelStyle>
 
             <div>
@@ -266,19 +331,20 @@ export default function ProductNewForm({ isEdit, currentUser }) {
             </div>
 
             <LabelStyle>Доставка</LabelStyle>
-
-            <StaticDatePicker
-              orientation="landscape"
-              openTo="day"
-              name="date"
-              value={values.date}
-              // shouldDisableDate={isWeekend}
-              label="Ориентировочная дата"
-              onChange={(newValue) => {
-                setValue('date', newValue);
-              }}
-              renderInput={(params) => <TextField {...params} sx={{ mb: 4 }} />}
-            />
+            <LocalizationProvider dateAdapter={AdapterDateFns} locale={ruLocale}>
+              <StaticDatePicker
+                orientation="landscape"
+                openTo="day"
+                name="date"
+                value={values.date}
+                // shouldDisableDate={isWeekend}
+                label="Ориентировочная дата"
+                onChange={(newValue) => {
+                  setValue('date', newValue);
+                }}
+                renderInput={(params) => <TextField {...params} sx={{ mb: 4 }} />}
+              />
+            </LocalizationProvider>
             {/* <Card sx={{ p: 3 }}>
               <RHFSwitch name="inStock" label="В продаже" />
 

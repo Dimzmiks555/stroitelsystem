@@ -79,7 +79,7 @@ RHFUploadMultiFile.propTypes = {
   name: PropTypes.string,
 };
 
-export function RHFUploadMultiFile({ name, ...other }) {
+export function RHFUploadMultiFile({ name, isLoading, ...other }) {
   const { control } = useFormContext();
 
   return (
@@ -91,7 +91,7 @@ export function RHFUploadMultiFile({ name, ...other }) {
 
         return (
           <UploadMultiFile
-            accept="image/*"
+            isLoading={isLoading}
             files={field.value}
             error={checkError}
             helperText={

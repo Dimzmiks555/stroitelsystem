@@ -29,15 +29,29 @@ export default function EcommerceProductCreate() {
 
   const { id } = query;
   
-  const [currentObject, setCurrentObject] = useState()
+  const [currentObject, setCurrentObject] = useState({
+    checkouts: [],
+    notes: [],
+  })
+  const [expenses, setExpenses] = useState([])
 
   useEffect(() => {
     fetch(`http://localhost:5000/objects/${id}`)
     .then(res => res.json())
     .then(json => {
-      console.log(json)
+
+      json = {...json, 
+        checkouts: json?.checkouts?.map(item => {return {...item, name: 'Реализация № ' + item?.['Number']}}),
+        notes: json?.notes?.map(item => {return {...item, name: 'Запись № ' + item?.id}}),
+      }
+
       setCurrentObject(json)
+
+      setExpenses((prevState) => ([...prevState, ...json?.checkouts, ...json?.notes]))
+      console.log(expenses)
+      console.log(json)
     })
+    
   }, [])
 
   const { themeStretch } = useSettings();
@@ -56,7 +70,7 @@ export default function EcommerceProductCreate() {
             { name: '' },
           ]}
         />
-        <NewForm isEdit currentProduct={currentObject}/>
+        <NewForm isEdit currentProduct={currentObject} expenses={expenses}/>
       </Container>
     </Page>
   );

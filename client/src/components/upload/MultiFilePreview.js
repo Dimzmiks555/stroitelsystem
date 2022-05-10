@@ -10,6 +10,7 @@ import { fData } from '../../utils/formatNumber';
 import Image from '../Image';
 import Iconify from '../Iconify';
 import { varFade } from '../animate';
+import { LoadingButton } from '@mui/lab';
 
 // ----------------------------------------------------------------------
 
@@ -36,7 +37,7 @@ MultiFilePreview.propTypes = {
   onRemoveAll: PropTypes.func,
 };
 
-export default function MultiFilePreview({ showPreview = false, files, onRemove, onRemoveAll }) {
+export default function MultiFilePreview({ showPreview = false, files, onRemove, onRemoveAll, onSubmitFile, isLoading }) {
   const hasFile = files.length > 0;
 
   return (
@@ -122,9 +123,9 @@ export default function MultiFilePreview({ showPreview = false, files, onRemove,
           <Button color="inherit" size="small" onClick={onRemoveAll}>
             Удалить всё
           </Button>
-          <Button size="small" variant="contained">
+          <LoadingButton loading={isLoading} size="small" variant="contained" onClick={onSubmitFile}>
             Загрузить файлы
-          </Button>
+          </LoadingButton>
         </Stack>
       )}
     </>

@@ -1,5 +1,6 @@
-import { BelongsTo, Column, DataType, ForeignKey, HasOne, Model, Table } from "sequelize-typescript";
+import { BelongsTo, Column, DataType, ForeignKey, HasMany, HasOne, Model, Table } from "sequelize-typescript";
 import { Contragent } from "src/contragents/entities/contragent.entity";
+import { Document } from "src/document/entities/document.entity";
 
 @Table
 export class Order extends Model {
@@ -26,7 +27,7 @@ export class Order extends Model {
     @Column({type: DataType.DATE})
     date: string;
 
-    @Column({type: DataType.FLOAT})
+    @Column({type: DataType.DECIMAL(10,2)})
     summ: number;
 
     @BelongsTo(() => Contragent, 'buyer_id')
@@ -34,4 +35,7 @@ export class Order extends Model {
 
     @BelongsTo(() => Contragent, 'seller_id')
     seller: Contragent
+
+    @HasMany(() => Document)
+    files: Array<Document>
 }
