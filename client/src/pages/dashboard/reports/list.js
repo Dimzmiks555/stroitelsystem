@@ -281,7 +281,7 @@ export default function UserList() {
                   height: '99%'
                 }
             }}
-            rowsPerPageOptions={[10, 25, 50, 100]}
+            rowsPerPageOptions={[10, 25, 50, 100, 200]}
             component="div"
             count={list.length}
             rowsPerPage={rowsPerPage}

@@ -76,14 +76,14 @@ export default function Login() {
         <RootStyle>
           <HeaderStyle>
             <Logo />
-            {smUp && (
+            {/* {smUp && (
               <Typography variant="body2" sx={{ mt: { md: -2 } }}>
                 Нет аккаунта? {''}
                 <NextLink href={PATH_AUTH.register} passHref>
                   <Link variant="subtitle2">Зарегистрируйся</Link>
                 </NextLink>
               </Typography>
-            )}
+            )} */}
           </HeaderStyle>
 
           {mdUp && (
@@ -126,14 +126,14 @@ export default function Login() {
 
               <LoginForm />
 
-              {!smUp && (
+              {/* {!smUp && (
                 <Typography variant="body2" align="center" sx={{ mt: 3 }}>
                   Нет аккаунта?{' '}
                   <NextLink href={PATH_AUTH.register} passHref>
                     <Link variant="subtitle2">Зарегистрируйся</Link>
                   </NextLink>
                 </Typography>
-              )}
+              )} */}
             </ContentStyle>
           </Container>
         </RootStyle>

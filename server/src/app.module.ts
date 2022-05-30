@@ -32,6 +32,10 @@ import { ContractsModule } from './contracts/contracts.module';
 import { Contract } from './contracts/entities/contract.entity';
 import { DealsModule } from './deals/deals.module';
 import { Deal } from './deals/entities/deal.entity';
+import { AuthModule } from './auth/auth.module';
+import { UsersService } from './users/users.service';
+import { UsersModule } from './users/users.module';
+import { User } from './users/entities/user.entity';
 
 @Module({
   imports: [
@@ -39,6 +43,7 @@ import { Deal } from './deals/entities/deal.entity';
       serveRoot: '/public',
       rootPath: join(__dirname, '..', 'uploads'),
     }),
+    SequelizeModule.forFeature([User]),
     SequelizeModule.forRoot({
       dialect: 'mysql',
       host: 'localhost',
@@ -61,7 +66,8 @@ import { Deal } from './deals/entities/deal.entity';
         Person,
         Document,
         Contract,
-        Deal
+        Deal,
+        User
       ],
     }),
     ObjectsModule, 
@@ -80,8 +86,10 @@ import { Deal } from './deals/entities/deal.entity';
     DocumentModule,
     ContractsModule,
     DealsModule,
+    AuthModule,
+    UsersModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, UsersService],
 })
 export class AppModule {}

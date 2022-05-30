@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 // @mui
 import { styled, useTheme } from '@mui/material/styles';
-import { Box, Stack, Drawer } from '@mui/material';
+import { Box, Stack, Drawer, Button } from '@mui/material';
 // hooks
 import useResponsive from '../../../hooks/useResponsive';
 import useCollapseDrawer from '../../../hooks/useCollapseDrawer';
@@ -21,6 +21,8 @@ import navConfig from './NavConfig';
 import NavbarDocs from './NavbarDocs';
 import NavbarAccount from './NavbarAccount';
 import CollapseButton from './CollapseButton';
+import useAuth from 'src/hooks/useAuth';
+import { useSnackbar } from 'notistack';
 
 // ----------------------------------------------------------------------
 
@@ -44,8 +46,11 @@ export default function NavbarVertical({ isOpenSidebar, onCloseSidebar }) {
   const theme = useTheme();
 
   const { pathname } = useRouter();
+  const { user, logout } = useAuth();
+  const { enqueueSnackbar } = useSnackbar();
 
   const isDesktop = useResponsive('up', 'lg');
+
 
   const { isCollapse, collapseClick, collapseHover, onToggleCollapse, onHoverEnter, onHoverLeave } =
     useCollapseDrawer();
@@ -56,6 +61,20 @@ export default function NavbarVertical({ isOpenSidebar, onCloseSidebar }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      router.replace(PATH_AUTH.login);
+
+      if (isMountedRef.current) {
+        handleClose();
+      }
+    } catch (error) {
+      console.error(error);
+      enqueueSnackbar('Требуется авторизация!', { variant: 'error' });
+    }
+  };
 
   const renderContent = (
     <Scrollbar
@@ -78,7 +97,7 @@ export default function NavbarVertical({ isOpenSidebar, onCloseSidebar }) {
       >
         <Stack direction="row" alignItems="center" justifyContent="space-between">
           <Logo />
-
+          <Button onClick={handleLogout}> Выйти </Button>
           {/* {isDesktop && !isCollapse && (
             <CollapseButton onToggleCollapse={onToggleCollapse} collapseClick={collapseClick} />
           )} */}

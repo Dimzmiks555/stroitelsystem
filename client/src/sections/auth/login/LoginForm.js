@@ -27,13 +27,13 @@ export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
 
   const LoginSchema = Yup.object().shape({
-    email: Yup.string().email('Некорректный логин').required('Логин не может отсутствовать'),
+    email: Yup.string().required('Логин не может отсутствовать'),
     password: Yup.string().required('Пароль не может отсутствовать'),
   });
 
   const defaultValues = {
-    email: 'demo@minimals.cc',
-    password: 'demo1234',
+    email: '',
+    password: '',
     remember: true,
   };
 
@@ -86,9 +86,9 @@ export default function LoginForm() {
 
       <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
         {/* <RHFCheckbox name="remember" label="Запомнить меня" /> */}
-        <NextLink href={PATH_AUTH.resetPassword} passHref>
-          <Link variant="subtitle2">Забыли пароль?</Link>
-        </NextLink>
+        {/* <NextLink href={PATH_AUTH.resetPassword} passHref> */}
+          {/* <Link variant="subtitle2">Забыли пароль?</Link> */}
+        {/* </NextLink> */}
       </Stack>
 
       <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>

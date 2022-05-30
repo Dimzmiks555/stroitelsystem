@@ -7,6 +7,8 @@ import TableHead from "@mui/material/TableHead"
 import { useEffect, useState } from "react"
 import {useRouter} from 'next/router'
 import NextLink from 'next/link'
+import { Checkbox } from "@mui/material"
+import InvoiceRow from "./InvoiceRow"
 
 
 export default function InvoiceBlock() {
@@ -65,47 +67,7 @@ export default function InvoiceBlock() {
                 </TableHead>
                 <TableBody>
                 {expences?.map((row, index) => (
-                    <>
-                    <TableRow
-                    hover
-                    sx={{borderTop: '2px solid #dfdfdf'}}
-                    
-                    key={row.id}
-                    tabIndex={-1}
-                    role="checkbox"
-                  >
-                    
-                    <TableCell  sx={{fontWeight: 'bold', fontSize: 12}} >
-                      {index + 1}
-                    </TableCell>
-                    <TableCell   sx={{ display: 'flex', alignItems: 'center', fontWeight: 'bold', fontSize: 12 }}>
-                      <NextLink href={`/dashboard/note/${row.id}/edit`}>
-                        <a>Запись № {row?.id} от {new Date(row.Date).toLocaleDateString()}  </a>
-                      </NextLink>
-                    </TableCell>
-                    <TableCell  sx={{fontWeight: 'bold', fontSize: 12}} colSpan={3}>
-                      {row?.object?.name}
-                    </TableCell>
-                    <TableCell sx={{fontWeight: 'bold', fontSize: 12}} align="left">
-                        {row?.summ} руб.
-                    </TableCell>
-                    <TableCell sx={{fontWeight: 'bold', fontSize: 12, maxWidth: 240}} >{row?.description}</TableCell>
-                  </TableRow>
-                  
-                  {row?.products.map((product) => (
-                    <TableRow key={product.id}>
-                      
-                      <TableCell  sx={{fontWeight: 'bold', fontSize: 12}} >
-                      </TableCell>
-                      <TableCell>{product.name}</TableCell>
-                      <TableCell align="right">{product.amount}</TableCell>
-                      <TableCell >{product.edizm}</TableCell>
-                      <TableCell >{product.price} руб.</TableCell>
-                      <TableCell >{product.summ} руб.</TableCell>
-                      <TableCell sx={{fontWeight: 'bold', fontSize: 12}}>{row?.seller?.name}</TableCell>
-                    </TableRow>
-                  ))}
-                  </>
+                    <InvoiceRow key={row.id} row={row} index={index}></InvoiceRow>
                 ))}
                 </TableBody>
             </Table>

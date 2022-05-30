@@ -109,8 +109,8 @@ function AuthProvider({ children }) {
   }, []);
 
   const login = async (email, password) => {
-    const response = await axios.post('/api/account/login', {
-      email,
+    const response = await axios.post('/login', {
+      username: email,
       password,
     });
     const { accessToken, user } = response.data;

@@ -1,4 +1,4 @@
-import { Box } from "@mui/material"
+import { Box, TextField } from "@mui/material"
 import { observer } from "mobx-react"
 import CreateTableItem from "./CreateTableItem"
 
@@ -12,6 +12,12 @@ const CreateTable = observer(({rows, objects, isEdit, openModal}) => {
 
                 </CreateTableItem>
             ))}
+            <Box sx={{my:2, display: 'flex', alignItems: 'center', justifyContent: 'flex-end', width: '100%'}}>
+                <Box sx={{my:2, display: 'flex', alignItems: 'center'}}>
+                    <Box sx={{mr: 2}}>Итого</Box>
+                    <TextField type="number" value={rows?.reduce((prev, now) => {return prev + +now.summ}, 0)?.toFixed(2)} sx={{mr: 20}}></TextField>
+                </Box>
+            </Box>
         </Box>
     )
 
