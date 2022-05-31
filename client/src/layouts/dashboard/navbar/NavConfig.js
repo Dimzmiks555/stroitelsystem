@@ -70,15 +70,15 @@ const navConfig = [
           { title: 'Списания', path: PATH_DASHBOARD.checkouts.list },
         ],
       },
-      {
-        title: 'Тендеры',
-        path: PATH_DASHBOARD.tenders.list,
-        icon: ICONS.cart,
-          children: [
-            { title: 'Тендеры', path: PATH_DASHBOARD.tenders.list },
-            { title: 'Поиск', path: PATH_DASHBOARD.eCommerce.shop },
-          ],
-      },
+      // {
+      //   title: 'Тендеры',
+      //   path: PATH_DASHBOARD.tenders.list,
+      //   icon: ICONS.cart,
+      //     children: [
+      //       { title: 'Тендеры', path: PATH_DASHBOARD.tenders.list },
+      //       { title: 'Поиск', path: PATH_DASHBOARD.eCommerce.shop },
+      //     ],
+      // },
       {
         title: 'Заказы',
         path: PATH_DASHBOARD.orders.list,

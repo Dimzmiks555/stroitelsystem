@@ -28,6 +28,7 @@ export class AuthService {
     };
   }
 
+
   async registration(data: any) {
 
     const saltOrRounds = 10;

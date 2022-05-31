@@ -37,7 +37,8 @@ export class DealsService {
         {model: Contract},
         {model: Contragent, as: 'buyer'},
         {model: Contragent, as: 'seller'},
-        {model: Document, as: 'end_files'}
+        {model: Document, as: 'end_files'},
+        {model: Document, as: 'start_files'}
       ]
     });
   }

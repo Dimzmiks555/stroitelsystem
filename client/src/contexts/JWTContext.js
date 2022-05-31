@@ -70,12 +70,13 @@ function AuthProvider({ children }) {
     const initialize = async () => {
       try {
         const accessToken = window.localStorage.getItem('accessToken');
-
+        
         if (accessToken && isValidToken(accessToken)) {
           setSession(accessToken);
 
-          const response = await axios.get('/api/account/my-account');
-          const { user } = response.data;
+          const response = await axios.get('/profile');
+          console.log(response.data)
+          const user = response.data;
 
           dispatch({
             type: 'INITIALIZE',

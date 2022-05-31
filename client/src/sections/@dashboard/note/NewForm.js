@@ -384,9 +384,10 @@ const LabelStyle = styled(Typography)(({ theme }) => ({
                   />
 
                   
-                  <LoadingButton type="submit" variant="contained" size="large" sx={{mt:2}} loading={isSubmitting}>
+                  <LoadingButton type="submit" variant="contained" size="large" sx={{mt:2, mr:2 }} loading={isSubmitting}>
                     {!isEdit ? 'Сохранить' : 'Изменить'}
                   </LoadingButton>
+                  {currentProduct?.createdAt && `Оформлено ${new Date(currentProduct?.createdAt)?.toLocaleDateString()}`}
                 </div>
                 
                 <div>

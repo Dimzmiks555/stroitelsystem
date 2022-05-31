@@ -16,6 +16,7 @@ AuthGuard.propTypes = {
 
 export default function AuthGuard({ children }) {
   const { isAuthenticated, isInitialized } = useAuth();
+  console.log('isAuthenticated', isAuthenticated)
 
   const { pathname, push } = useRouter();
 
@@ -24,7 +25,7 @@ export default function AuthGuard({ children }) {
   useEffect(() => {
     if (requestedLocation && pathname !== requestedLocation) {
       setRequestedLocation(null);
-      push(requestedLocation);
+      // push(requestedLocation);
     }
   }, [pathname, push, requestedLocation]);
 

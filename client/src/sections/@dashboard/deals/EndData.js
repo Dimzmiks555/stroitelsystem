@@ -1,4 +1,4 @@
-import { Accordion, Box, Card, Stack, Typography } from "@mui/material";
+import { Accordion, Box, Card, Chip, Stack, Typography } from "@mui/material";
 import { useCallback, useState } from "react";
 import { RHFTextField, RHFUploadMultiFile } from "src/components/hook-form";
 import {useRouter} from 'next/router'
@@ -79,10 +79,10 @@ export default function EndData({setValue, currentUser, values}) {
             <Box sx={{display: 'flex', alignItems: 'center'}}>
                 <RHFTextField name="end_summ" type="number" size="small" sx={{width: 160, mr: 2}} label="Отпускная сумма" />
                 
-                <Card>
+                <Card sx={{width: 320}}>
                 <Accordion  expanded={expanded} onChange={handleAccordion}>
                     <AccordionSummary sx={{px:2}} aria-controls="panel1d-content" id="panel1d-header" expandIcon={<p style={{fontSize: 32}}>+</p>}>
-                    <Typography>Файлы</Typography>
+                    <Typography>Файлы - {currentUser?.end_files?.length} шт</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
                     <div>
@@ -101,7 +101,7 @@ export default function EndData({setValue, currentUser, values}) {
                                         </Box>
                                         
                                         <a href={`http://localhost:5000/public/${file.name}`} target="_blank">
-                                            <p style={{wordBreak: 'break-word', fontSize: 14, textAlign: 'center'}}>{file?.name?.slice(14)}</p>
+                                            <p style={{wordBreak: 'break-word', fontSize: 14}}>{file?.name?.slice(14)}</p>
                                         </a>
                                     </Box>
                                 ))
@@ -124,6 +124,26 @@ export default function EndData({setValue, currentUser, values}) {
                 </Card>
                 
                 
+            </Box>
+            
+            <h3>Оплаты <Chip sx={{color: '#fff', ml: 3}}  color="success" label="Полная оплата"></Chip></h3>
+            <Box>
+              <Card sx={{p:3, display: 'flex', justifyContent: 'space-between', mb: 2}}>
+                  <Box>
+                    Оплата товара по счету
+                  </Box>
+                  <Box>
+                    108425,00
+                  </Box>
+              </Card>
+              <Card sx={{p:3, display: 'flex', justifyContent: 'space-between'}}>
+                  <Box>
+                    Оплата товара по счету
+                  </Box>
+                  <Box>
+                    10000,00
+                  </Box>
+              </Card>
             </Box>
         </Stack>
         </Box>

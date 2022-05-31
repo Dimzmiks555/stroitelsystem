@@ -39,10 +39,12 @@ import { UserListHead, UserListToolbar, UserMoreMenu } from '../../../sections/@
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
+  { id: 'date', label: 'Дата', alignRight: false },
   { id: 'name', label: 'Имя', alignRight: false },
   { id: 'contract', label: 'Договор', alignRight: false },
   { id: 'company', label: 'Компания', alignRight: false },
-  { id: 'end_summ', label: 'Сумма', alignRight: false },
+  { id: 'start_summ', label: 'Закупка', alignRight: false },
+  { id: 'end_summ', label: 'Продажа', alignRight: false },
   { id: 'specification', label: 'Спецификация', alignRight: false },
   { id: 'status', label: 'Статус', alignRight: false },
   { id: '' },
@@ -65,11 +67,11 @@ export default function UserList() {
 
   const [page, setPage] = useState(0);
 
-  const [order, setOrder] = useState('asc');
+  const [order, setOrder] = useState('desc');
 
   const [selected, setSelected] = useState([]);
 
-  const [orderBy, setOrderBy] = useState('name');
+  const [orderBy, setOrderBy] = useState('date');
 
   const [filterName, setFilterName] = useState('');
 
@@ -200,9 +202,12 @@ export default function UserList() {
                         aria-checked={isItemSelected}
                       >
                         <TableCell >
+                            {new Date(row?.date).toLocaleDateString()}
+                        </TableCell>
+                        <TableCell >
                           <NextLink href={`/dashboard/deals/${id}/edit`}>
                           <a >
-                            Сделка № Т-{row?.deal_number} от {new Date(row?.date).toLocaleDateString()} 
+                            Сделка № Т-{row?.deal_number} 
                           </a>
                           </NextLink>
                           <p>{row?.name}</p>
@@ -212,9 +217,10 @@ export default function UserList() {
                           <p style={{fontWeight: 'bold', fontSize: 14, color: '#88d'}}>{row?.seller?.name}</p>
                           Договор № {row?.contract?.contract_number} от {new Date(row?.contract?.date).toLocaleDateString()}
                           
-                          <p>{row?.contract?.description}</p>
+                          {/* <p>{row?.contract?.description}</p> */}
                         </TableCell>
                         <TableCell align="left">{row?.buyer?.name}</TableCell>
+                        <TableCell align="left">{row?.start_summ}</TableCell>
                         <TableCell align="left">{row?.end_summ}</TableCell>
                         <TableCell align="left">{row?.specification_number ? `Спец. № ${row?.specification_number}` : 'нет'}</TableCell>
                         <TableCell align="left">
@@ -292,7 +298,10 @@ function applySortFilter(array, comparator, query) {
     return a[1] - b[1];
   });
   if (query) {
-    return array.filter((_user) => _user.name.toLowerCase().indexOf(query.toLowerCase()) !== -1);
+    return array.filter((_user) => {
+      console.log(_user)
+      return _user.deal_number == query
+    });
   }
   return stabilizedThis.map((el) => el[0]);
 }

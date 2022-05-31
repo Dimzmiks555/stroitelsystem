@@ -27,6 +27,7 @@ import {
   RHFUploadMultiFile,
 } from '../../../components/hook-form';
 import EndData from './EndData';
+import StartData from './StartData';
 
 // ----------------------------------------------------------------------
 
@@ -39,7 +40,7 @@ NewForm.propTypes = {
 };
 
 export default function NewForm({ isEdit, currentProduct }) {
-  const { push, query } = useRouter();
+  const { push, query, reload } = useRouter();
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -149,6 +150,7 @@ export default function NewForm({ isEdit, currentProduct }) {
         })
           .then((res) => res.json)
           .then((json) => {
+            push('/dashboard/deals/list')
             console.log(json);
           });
       } else {
@@ -162,6 +164,7 @@ export default function NewForm({ isEdit, currentProduct }) {
         })
           .then((res) => res.json)
           .then((json) => {
+            reload()
             console.log(json);
           });
       }
@@ -247,7 +250,13 @@ export default function NewForm({ isEdit, currentProduct }) {
                 isEdit && (
                   <Box sx={{ width: 380}}>
                     <p style={{fontWeight: 'bold', fontSize: 14, color: '#88d'}}>{currentProduct?.seller?.name}</p>
-                    <p>Договор № {currentProduct?.contract?.contract_number} от {new Date(currentProduct?.contract?.date).toLocaleDateString()} с {currentProduct?.buyer?.name} </p>
+                    <p>
+                    {
+                      currentProduct?.contract?.contract_number &&
+                      <>Договор № {currentProduct?.contract?.contract_number} от {new Date(currentProduct?.contract?.date).toLocaleDateString()} с  </>
+                    }
+                    {currentProduct?.buyer?.name}
+                    </p>
                     <p style={{fontSize: 14, color: '#aaa'}}>{currentProduct?.contract?.description}</p>
                   </Box>
                 )
@@ -328,7 +337,28 @@ export default function NewForm({ isEdit, currentProduct }) {
               </Card>
               
 
-              <div>
+              
+
+              
+              
+            </Stack>
+            <Stack spacing={3} sx={{ml: 8}}>
+            
+
+
+                  
+              <StartData values={values} currentUser={currentProduct} setValue={setValue}></StartData>
+              <EndData values={values} currentUser={currentProduct} setValue={setValue}></EndData>
+
+
+            
+            </Stack>
+            <Stack spacing={3} sx={{ml: 8}}>
+            
+
+
+
+            <div>
                 <RHFTextField size="small" multiline rows={3} fullWidth name="description" label="Описание сделки" />
               </div>
 
@@ -400,36 +430,6 @@ export default function NewForm({ isEdit, currentProduct }) {
                 />
               </Box>
               
-
-              
-              
-            </Stack>
-            <Stack spacing={3} sx={{ml: 8}}>
-            
-
-
-
-              <Box>
-                <h2>Входящие данные</h2>
-                
-                <RHFTextField sx={{my: 2}} name="start_summ" size="small" type="number" label="Закупочная сумма" />  
-                <div>
-                  <RHFUploadMultiFile
-                    name="images"
-                    showPreview
-                    accept="image/*"
-                    maxSize={3145728}
-                    onDrop={handleDrop}
-                    onRemove={handleRemove}
-                    onRemoveAll={handleRemoveAll}
-                  />
-                </div>
-              </Box>
-              
-              <h3>Оплата</h3>
-
-
-              <EndData values={values} currentUser={currentProduct} setValue={setValue}></EndData>
 
 
             

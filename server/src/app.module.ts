@@ -3,7 +3,6 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ObjectsModule } from './objects/objects.module';
 import { NotesModule } from './notes/notes.module';
-import { ApplicationsModule } from './applications/applications.module';
 import { ContragentsModule } from './contragents/contragents.module';
 import { TendersModule } from './tenders/tenders.module';
 import { OrdersModule } from './orders/orders.module';
@@ -21,7 +20,6 @@ import { CheckoutsProduct } from './checkouts-products/entities/checkouts-produc
 import { Note } from './notes/entities/note.entity';
 import { NoteProductsModule } from './note-products/note-products.module';
 import { NoteProduct } from './note-products/entities/note-product.entity';
-import { ReportsModule } from './reports/reports.module';
 import { PeopleModule } from './people/people.module';
 import { Person } from './people/entities/person.entity';
 import { DocumentModule } from './document/document.module';
@@ -36,6 +34,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersService } from './users/users.service';
 import { UsersModule } from './users/users.module';
 import { User } from './users/entities/user.entity';
+import { PaymentModule } from './payment/payment.module';
 
 @Module({
   imports: [
@@ -72,7 +71,6 @@ import { User } from './users/entities/user.entity';
     }),
     ObjectsModule, 
     NotesModule, 
-    ApplicationsModule, 
     ContragentsModule, 
     TendersModule, 
     OrdersModule,
@@ -81,13 +79,13 @@ import { User } from './users/entities/user.entity';
     CheckoutsModule,
     CheckoutsProductsModule,
     NoteProductsModule,
-    ReportsModule,
     PeopleModule,
     DocumentModule,
     ContractsModule,
     DealsModule,
     AuthModule,
     UsersModule,
+    PaymentModule,
   ],
   controllers: [AppController],
   providers: [AppService, UsersService],
