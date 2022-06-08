@@ -88,8 +88,8 @@ export default function UserList() {
   const [rowsPerPage, setRowsPerPage] = useState(25);
 
   useEffect(()=> {
-
-    fetch('http://localhost:5000/contracts')
+    console.log(process.env.NEXT_PUBLIC_HOST)
+    fetch(`${process.env.NEXT_PUBLIC_HOST}/contracts`)
     .then(res => res.json())
     .then(json => {
       console.log(json)

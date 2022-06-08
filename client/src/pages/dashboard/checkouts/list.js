@@ -86,7 +86,7 @@ export default function UserList() {
 
   useEffect(()=> {
 
-    fetch('http://localhost:5000/checkouts')
+    fetch(`${process.env.NEXT_PUBLIC_HOST}/checkouts`)
     .then(res => res.json())
     .then(json => {
       console.log(json)

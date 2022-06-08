@@ -108,17 +108,18 @@ export default function NewForm({ isEdit, currentProduct }) {
   }, [isEdit, currentProduct]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/contragents')
+    fetch(`${process.env.NEXT_PUBLIC_HOST}/contragents`)
       .then((res) => res.json())
       .then((json) => {
         let list = json.map((item) => {
           return { label: item.name, value: item.id };
         });
+        
 
         setContragents(list);
       });
 
-    fetch('http://localhost:5000/contracts')
+    fetch(`${process.env.NEXT_PUBLIC_HOST}/contracts`)
     .then((res) => res.json())
     .then((json) => {
       let list = json.map((item) => {
@@ -216,6 +217,7 @@ export default function NewForm({ isEdit, currentProduct }) {
   function handleAccordion() {
     setExpanded(!expanded)
   }
+
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
@@ -347,8 +349,8 @@ export default function NewForm({ isEdit, currentProduct }) {
 
 
                   
-              <StartData values={values} currentUser={currentProduct} setValue={setValue}></StartData>
-              <EndData values={values} currentUser={currentProduct} setValue={setValue}></EndData>
+              <StartData contragents={contragents} values={values} currentUser={currentProduct} setValue={setValue}></StartData>
+              <EndData contragents={contragents} values={values} currentUser={currentProduct} setValue={setValue}></EndData>
 
 
             

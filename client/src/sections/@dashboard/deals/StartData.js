@@ -1,4 +1,4 @@
-import { Accordion, Box, Button, Card, Chip, Stack, Typography } from "@mui/material";
+import { Accordion, Box, Button, Card, Chip, Stack, TextField, Typography } from "@mui/material";
 import { useCallback, useState } from "react";
 import { RHFTextField, RHFUploadMultiFile } from "src/components/hook-form";
 import {useRouter} from 'next/router'
@@ -6,11 +6,14 @@ import { PlanPremiumIcon } from "src/assets";
 
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
+import AddPayment from "./paymentBlock/AddPayment";
+import PaymentBlock from "./paymentBlock/paymentBlock";
 
-export default function StartData({setValue, currentUser, values}) {
+export default function StartData({setValue, currentUser, values, contragents}) {
 
     
     const { push, query, reload } = useRouter();
+
 
     const onSubmitFile = () => {
 
@@ -70,6 +73,26 @@ export default function StartData({setValue, currentUser, values}) {
         setExpanded(!expanded)
     }
 
+  async function copy(){
+    const clipboardItems = await navigator.clipboard.read();
+
+    for (const clipboardItem of clipboardItems) {
+
+      for (const type of clipboardItem.types) {
+        const blob = await clipboardItem.getType(type);
+        const reader = await blob.text()
+        console.log(reader)
+        // we can now use blob here
+      }
+
+    }
+    // setTimeout(async()=>console.log(
+      // await window.navigator.clipboard.readText()), 3000)
+  }
+  window.addEventListener('focus', function(){
+    copy()
+  })
+
     return (
         <Box >
             <h2>Входящие данные</h2>
@@ -88,8 +111,7 @@ export default function StartData({setValue, currentUser, values}) {
                             <div>
                                 <Box sx={{mb:2}}>
                                     {currentUser?.start_files?.map(file => (
-                                        
-                                            <Box sx={{mb: 0, display: 'flex', alignItems: 'center', mr: 2, width: '100%', pr: 2 }}>
+                                            <Box key={file.id} sx={{mb: 0, display: 'flex', alignItems: 'center', mr: 2, width: '100%', pr: 2 }}>
                                                 <Box sx={{
                                                 width: 30,
                                                 height: 30,
@@ -123,17 +145,7 @@ export default function StartData({setValue, currentUser, values}) {
                         </Accordion>
                     </Card>
                 </Box>
-                <h3>Оплаты <Button sx={{ ml: 3}} variant="outlined">Добавить</Button><Chip sx={{color: '#555', ml: 3}}  color="default" label="Нет оплаты"></Chip> </h3>
-                <Box>
-                    {/* <Card sx={{p:3, display: 'flex', justifyContent: 'space-between'}}>
-                        <Box>
-                            Оплата товара по счету
-                        </Box>
-                        <Box>
-                            118425,00
-                        </Box>
-                    </Card> */}
-                </Box>
+                <PaymentBlock contragents={contragents} type="start" dealSumm={currentUser?.start_summ} dealId={currentUser?.id}></PaymentBlock>
             </Stack>
         </Box>
     )

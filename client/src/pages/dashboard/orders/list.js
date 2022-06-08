@@ -81,14 +81,14 @@ export default function UserList() {
   useEffect(()=> {
 
     if (tab === 0) {
-      fetch('http://localhost:5000/orders?status=new')
+      fetch(`${process.env.NEXT_PUBLIC_HOST}/orders?status=new`)
       .then(res => res.json())
       .then(json => {
         console.log(json)
         setOrderList(json)
       })
     } else {
-      fetch('http://localhost:5000/orders?status=all')
+      fetch(`${process.env.NEXT_PUBLIC_HOST}/orders?status=all`)
       .then(res => res.json())
       .then(json => {
         console.log(json)

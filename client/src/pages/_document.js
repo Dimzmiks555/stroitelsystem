@@ -24,7 +24,7 @@ export default class MyDocument extends Document {
           <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
           <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
 
-          <meta name="theme-color" content={palette.light.primary.main} />
+          {/* <meta name="theme-color" content={palette.light.primary.main} /> */}
           <link rel="manifest" href="/manifest.json" />
 
           <link rel="preconnect" href="https://fonts.gstatic.com" />

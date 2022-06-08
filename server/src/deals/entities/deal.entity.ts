@@ -2,6 +2,7 @@ import { BelongsTo, Column, DataType, ForeignKey, HasMany, Model, Table } from "
 import { Contract } from "src/contracts/entities/contract.entity";
 import { Contragent } from "src/contragents/entities/contragent.entity";
 import { Document } from "src/document/entities/document.entity";
+import { Payment } from "src/payment/entities/payment.entity";
 
 @Table
 export class Deal extends Model {
@@ -68,6 +69,9 @@ export class Deal extends Model {
 
     @HasMany(() => Document, 'end_deal_id')
     end_files: Array<Document>
+
+    @HasMany(() => Payment, 'deal_id')
+    payments: Array<Payment>
 
 
 

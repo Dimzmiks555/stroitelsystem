@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import { Contract } from 'src/contracts/entities/contract.entity';
 import { Contragent } from 'src/contragents/entities/contragent.entity';
 import { Document } from 'src/document/entities/document.entity';
+import { Payment } from 'src/payment/entities/payment.entity';
 import { CreateDealDto } from './dto/create-deal.dto';
 import { UpdateDealDto } from './dto/update-deal.dto';
 import { Deal } from './entities/deal.entity';
@@ -25,6 +26,7 @@ export class DealsService {
         {model: Contract},
         {model: Contragent, as: 'buyer'},
         {model: Contragent, as: 'seller'},
+        {model: Payment, as: 'payments'}
         // {model: Document, as: 'end_files'}
       ]
     });
@@ -38,7 +40,7 @@ export class DealsService {
         {model: Contragent, as: 'buyer'},
         {model: Contragent, as: 'seller'},
         {model: Document, as: 'end_files'},
-        {model: Document, as: 'start_files'}
+        {model: Document, as: 'start_files'},
       ]
     });
   }

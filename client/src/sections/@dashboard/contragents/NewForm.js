@@ -10,7 +10,7 @@ import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 // @mui
 import { styled } from '@mui/material/styles';
 import { LoadingButton } from '@mui/lab';
-import { Card, Chip, Grid, Stack, TextField, Typography, Autocomplete, InputAdornment } from '@mui/material';
+import { Card, Chip, Grid, Stack, TextField, Typography, Autocomplete, InputAdornment, Box } from '@mui/material';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // components
@@ -30,6 +30,7 @@ import { PartySuggestions } from 'react-dadata';
 import 'react-dadata/dist/react-dadata.css';
 import { endOfWeekWithOptions } from 'date-fns/fp';
 import InvoiceBlock from './InvoiceBlock';
+import { BankAccountsList } from './BankAccountsList';
 
 // ----------------------------------------------------------------------
 
@@ -87,12 +88,12 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
       inn: currentProduct?.inn || '',
       kpp: currentProduct?.kpp || '',
       address: currentProduct?.address || '',
-      manager: currentProduct?.address || '',
-      ogrn: currentProduct?.address || '',
-      okato: currentProduct?.address || '',
-      oktmo: currentProduct?.address || '',
-      okpo: currentProduct?.address || '',
-      opf: currentProduct?.address || '',
+      manager: currentProduct?.manager || '',
+      ogrn: currentProduct?.ogrn || '',
+      okato: currentProduct?.okato || '',
+      oktmo: currentProduct?.oktmo || '',
+      okpo: currentProduct?.okpo || '',
+      opf: currentProduct?.opf || '',
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [currentProduct]
@@ -208,34 +209,24 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={3} >
         <Grid item xs={12} md={8} sx={{displayPrint: 'none'}}>
-          <Card sx={{ p: 3 }}>
-            <Stack spacing={3} sx={{display: 'flex', flexWrap: 'wrap', width: '100%', flexDirection: 'row', justifyContent: 'space-between'}}>
-              <RHFTextField name="name" label="Название" sx={{width: '47%', display: 'block'}} />
-              <RHFTextField name="opf" label="ОПФ" sx={{width: '47%', display: 'block'}} />
-              <RHFTextField name="address" label="Адрес" sx={{width: '47%'}} />
-              <RHFTextField name="inn" label="ИНН" sx={{width: '47%'}} />
-              <RHFTextField name="kpp" label="КПП" sx={{width: '47%'}} />
-              <RHFTextField name="ogrn" label="ОГРН" sx={{width: '47%'}} />
-              <RHFTextField name="okato" label="ОКАТО" sx={{width: '47%'}} />
-              <RHFTextField name="okpo" label="ОКПО" sx={{width: '47%'}} />
-              <RHFTextField name="oktmo" label="ОКТМО" sx={{width: '47%'}} />
-              <RHFTextField name="phone" label="Номер телефона" sx={{width: '47%'}} />
-              <RHFTextField name="manager" label="Управляющий" sx={{width: '47%'}} />
-
-
-              {/* <div>
-                <LabelStyle>Изображения</LabelStyle>
-                <RHFUploadMultiFile
-                  name="images"
-                  showPreview
-                  accept="image/*"
-                  maxSize={3145728}
-                  onDrop={handleDrop}
-                  onRemove={handleRemove}
-                  onRemoveAll={handleRemoveAll}
-                />
-              </div> */}
+          <Card sx={{ p: 3, display: 'flex', flexDirection: 'row' }}>
+            <Stack sx={{display: 'flex', flexWrap: 'wrap', width: '47%', mr: 4, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'start'}}>
+              <RHFTextField sx={{width: '100%', mb: 2}} size="small" name="name" label="Название"  />
+              <RHFTextField sx={{width: '100%', mb: 2}} size="small" name="opf" label="ОПФ"  />
+              <RHFTextField sx={{width: '100%', mb: 2}} size="small" name="address" label="Адрес"  />
+              <RHFTextField sx={{width: '100%', mb: 2}} size="small" name="inn" label="ИНН"  />
+              <RHFTextField sx={{width: '100%', mb: 2}} size="small" name="kpp" label="КПП"  />
+              <RHFTextField sx={{width: '100%', mb: 2}} size="small" name="ogrn" label="ОГРН"  />
+              <RHFTextField sx={{width: '100%', mb: 2}} size="small" name="okato" label="ОКАТО"  />
+              <RHFTextField sx={{width: '100%', mb: 2}} size="small" name="okpo" label="ОКПО"  />
+              <RHFTextField sx={{width: '100%', mb: 2}} size="small" name="oktmo" label="ОКТМО"  />
+              <RHFTextField sx={{width: '100%', mb: 2}} size="small" name="phone" label="Номер телефона"  />
+              <RHFTextField sx={{width: '100%', mb: 2}} size="small" name="manager" label="Управляющий"  />
             </Stack>
+            <Box>
+                <h2>Счета</h2>
+                <BankAccountsList></BankAccountsList>
+            </Box>
           </Card>
           
         </Grid>
@@ -250,89 +241,6 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
               <LabelStyle>Описание</LabelStyle>
               <RHFEditor simple name="description" />
             </div>
-            {/* <Card sx={{ p: 3 }}>
-              <RHFSwitch name="inStock" label="В продаже" />
-
-              <Stack spacing={3} mt={2}>
-                <RHFTextField name="code" label="Код товара" />
-                <RHFTextField name="sku" label="Артикул" />
-
-                <div>
-                  <LabelStyle>Пол</LabelStyle>
-                  <RHFRadioGroup
-                    name="gender"
-                    options={GENDER_OPTION}
-                    sx={{
-                      '& .MuiFormControlLabel-root': { mr: 4 },
-                    }}
-                  />
-                </div>
-
-                <RHFSelect name="category" label="Категория">
-                  {CATEGORY_OPTION.map((category) => (
-                    <optgroup key={category.group} label={category.group}>
-                      {category.classify.map((classify) => (
-                        <option key={classify} value={classify}>
-                          {classify}
-                        </option>
-                      ))}
-                    </optgroup>
-                  ))}
-                </RHFSelect>
-
-                <Controller
-                  name="tags"
-                  control={control}
-                  render={({ field }) => (
-                    <Autocomplete
-                      {...field}
-                      multiple
-                      freeSolo
-                      onChange={(event, newValue) => field.onChange(newValue)}
-                      options={TAGS_OPTION.map((option) => option)}
-                      renderTags={(value, getTagProps) =>
-                        value.map((option, index) => (
-                          <Chip {...getTagProps({ index })} key={option} size="small" label={option} />
-                        ))
-                      }
-                      renderInput={(params) => <TextField label="Тэги" {...params} />}
-                    />
-                  )}
-                />
-              </Stack>
-            </Card>
-
-            <Card sx={{ p: 3 }}>
-              <Stack spacing={3} mb={2}>
-                <RHFTextField
-                  name="price"
-                  label="Закупочная цена"
-                  placeholder="0.00"
-                  value={getValues('price') === 0 ? '' : getValues('price')}
-                  onChange={(event) => setValue('price', Number(event.target.value))}
-                  InputLabelProps={{ shrink: true }}
-                  InputProps={{
-                    startAdornment: <InputAdornment position="start">₽</InputAdornment>,
-                    type: 'number',
-                  }}
-                />
-
-                <RHFTextField
-                  name="priceSale"
-                  label="Розничная цена"
-                  placeholder="0.00"
-                  value={getValues('priceSale') === 0 ? '' : getValues('priceSale')}
-                  onChange={(event) => setValue('price', Number(event.target.value))}
-                  InputLabelProps={{ shrink: true }}
-                  InputProps={{
-                    startAdornment: <InputAdornment position="start">₽</InputAdornment>,
-                    type: 'number',
-                  }}
-                />
-              </Stack>
-
-              <RHFSwitch name="taxes" label="Цена включает НДС" />
-            </Card> */}
 
             <LoadingButton type="submit" variant="contained" size="large" loading={isSubmitting}>
               {!isEdit ? 'Сохранить' : 'Изменить'}

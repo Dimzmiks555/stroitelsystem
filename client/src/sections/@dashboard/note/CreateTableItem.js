@@ -21,7 +21,7 @@ const CreateTableItem = observer(({item, openModal, index, isEdit}) => {
 
     useEffect(()=> {
 
-        fetch('http://localhost:5000/nomenklatura')
+        fetch(`${process.env.NEXT_PUBLIC_HOST}/nomenklatura`)
         .then(res => res.json())
         .then(json => {
         console.log(json)

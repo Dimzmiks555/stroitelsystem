@@ -1,26 +1,45 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/sequelize';
+import { Contragent } from 'src/contragents/entities/contragent.entity';
 import { CreatePaymentDto } from './dto/create-payment.dto';
 import { UpdatePaymentDto } from './dto/update-payment.dto';
+import { Payment } from './entities/payment.entity';
 
 @Injectable()
 export class PaymentService {
-  create(createPaymentDto: CreatePaymentDto) {
-    return 'This action adds a new payment';
+
+  constructor(
+    @InjectModel(Payment)
+    private paymentModel: typeof Payment
+  ){}
+
+
+  create(createPaymentDto) {
+    return this.paymentModel.create(createPaymentDto)
   }
 
-  findAll() {
-    return `This action returns all payment`;
+  findAll(query) {
+    return this.paymentModel.findAndCountAll({
+      where: query,
+      include: [
+        {'model': Contragent}
+      ]
+    });
   }
 
   findOne(id: number) {
     return `This action returns a #${id} payment`;
   }
 
-  update(id: number, updatePaymentDto: UpdatePaymentDto) {
-    return `This action updates a #${id} payment`;
+  update(id, updatePaymentDto) {
+    return this.paymentModel.update(updatePaymentDto, {
+      where: {id}
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} payment`;
+  remove(id) {
+    return this.paymentModel.destroy({
+      where: {id}
+    })
   }
 }

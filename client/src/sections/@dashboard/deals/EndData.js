@@ -6,8 +6,9 @@ import { PlanPremiumIcon } from "src/assets";
 
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
+import PaymentBlock from "./paymentBlock/paymentBlock";
 
-export default function EndData({setValue, currentUser, values}) {
+export default function EndData({setValue, currentUser, values, contragents}) {
 
     
     const { push, query, reload } = useRouter();
@@ -89,7 +90,7 @@ export default function EndData({setValue, currentUser, values}) {
                         <Box sx={{mb:2}}>
                             {currentUser?.end_files?.map(file => (
                                 
-                                    <Box sx={{mb: 0, display: 'flex', alignItems: 'center', mr: 2, width: '100%', pr: 2 }}>
+                                    <Box key={file.id} sx={{mb: 0, display: 'flex', alignItems: 'center', mr: 2, width: '100%', pr: 2 }}>
                                         <Box sx={{
                                         width: 30,
                                         height: 30,
@@ -126,25 +127,8 @@ export default function EndData({setValue, currentUser, values}) {
                 
             </Box>
             
-            <h3>Оплаты <Chip sx={{color: '#fff', ml: 3}}  color="success" label="Полная оплата"></Chip></h3>
-            <Box>
-              <Card sx={{p:3, display: 'flex', justifyContent: 'space-between', mb: 2}}>
-                  <Box>
-                    Оплата товара по счету
-                  </Box>
-                  <Box>
-                    108425,00
-                  </Box>
-              </Card>
-              <Card sx={{p:3, display: 'flex', justifyContent: 'space-between'}}>
-                  <Box>
-                    Оплата товара по счету
-                  </Box>
-                  <Box>
-                    10000,00
-                  </Box>
-              </Card>
-            </Box>
+            
+            <PaymentBlock contragents={contragents} type="end" dealSumm={currentUser?.end_summ} dealId={currentUser?.id}></PaymentBlock>
         </Stack>
         </Box>
     )

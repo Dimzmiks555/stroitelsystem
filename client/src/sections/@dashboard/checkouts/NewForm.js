@@ -110,13 +110,13 @@ export default function NewForm({ isEdit, currentUser }) {
   }, [isEdit, currentUser]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/realisations')
+    fetch(`${process.env.NEXT_PUBLIC_HOST}/realisations`)
       .then((res) => res.json())
       .then((json) => {
         setFiltered(json)
         setRealisations(json);
       });
-    fetch('http://localhost:5000/objects')
+    fetch(`${process.env.NEXT_PUBLIC_HOST}/objects`)
     .then((res) => res.json())
     .then((json) => {
       
@@ -128,7 +128,7 @@ export default function NewForm({ isEdit, currentUser }) {
     });
 
     if (isEdit) {
-      fetch(`http://localhost:5000/checkouts/${query.id}`)
+      fetch(`${process.env.NEXT_PUBLIC_HOST}/checkouts/${query.id}`)
       .then((res) => res.json())
       .then((json) => {
         setCheckout(json)

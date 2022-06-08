@@ -90,7 +90,7 @@ export default function UserList() {
 
   useEffect(()=> {
 
-    fetch('http://localhost:5000/objects')
+    fetch(`${process.env.NEXT_PUBLIC_HOST}/objects`)
     .then(res => res.json())
     .then(json => {
       console.log(json)

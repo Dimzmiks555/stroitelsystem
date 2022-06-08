@@ -104,7 +104,7 @@ export default function NewForm({ isEdit, currentUser }) {
   }, [isEdit, currentUser]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/contragents')
+    fetch(`${process.env.NEXT_PUBLIC_HOST}/contragents`)
       .then((res) => res.json())
       .then((json) => {
         let list = json.map((item) => {

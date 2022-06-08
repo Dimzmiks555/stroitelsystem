@@ -35,6 +35,9 @@ import { UsersService } from './users/users.service';
 import { UsersModule } from './users/users.module';
 import { User } from './users/entities/user.entity';
 import { PaymentModule } from './payment/payment.module';
+import { Payment } from './payment/entities/payment.entity';
+import { BankAccountModule } from './bank-account/bank-account.module';
+import { BankAccount } from './bank-account/entities/bank-account.entity';
 
 @Module({
   imports: [
@@ -66,7 +69,9 @@ import { PaymentModule } from './payment/payment.module';
         Document,
         Contract,
         Deal,
-        User
+        User,
+        Payment,
+        BankAccount
       ],
     }),
     ObjectsModule, 
@@ -86,6 +91,7 @@ import { PaymentModule } from './payment/payment.module';
     AuthModule,
     UsersModule,
     PaymentModule,
+    BankAccountModule,
   ],
   controllers: [AppController],
   providers: [AppService, UsersService],

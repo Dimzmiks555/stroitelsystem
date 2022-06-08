@@ -46,8 +46,6 @@ const TABLE_HEAD = [
   { id: 'start_summ', label: 'Закупка', alignRight: false },
   { id: 'end_summ', label: 'Продажа', alignRight: false },
   { id: 'specification', label: 'Спецификация', alignRight: false },
-  { id: 'status', label: 'Статус', alignRight: false },
-  { id: '' },
 ];
 
 // ----------------------------------------------------------------------
@@ -79,7 +77,7 @@ export default function UserList() {
 
   useEffect(()=> {
 
-    fetch('http://localhost:5000/deals')
+    fetch(`${process.env.NEXT_PUBLIC_HOST}/deals`)
     .then(res => res.json())
     .then(json => {
       console.log(json)
@@ -189,8 +187,34 @@ export default function UserList() {
                 />
                 <TableBody>
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { id, name, role, status, company, avatarUrl, isVerified } = row;
+                    const { id, name, role, company, avatarUrl, isVerified } = row;
                     const isItemSelected = selected.indexOf(name) !== -1;
+
+                    const start_payments = row?.payments?.filter(item => item?.type == 'start')
+                    let start_status = 'none'
+                    let start_payments_summ = start_payments?.reduce((prev,now) => prev + +now?.summ, 0)
+                    // console.log(start_payments_summ, +row?.start_summ)
+                    if (start_payments_summ == 0) {
+                      start_status = "none"
+                    } else if (start_payments_summ >= +row?.start_summ) {
+                      start_status = "full"
+                    } else if (start_payments_summ < +row?.start_summ) {
+                      start_status = "part"
+                    }
+
+                    const end_payments = row?.payments?.filter(item => item?.type == 'end')
+                    let end_status = 'none'
+                    let end_payments_summ = end_payments?.reduce((prev,now) => prev + +now?.summ, 0)
+                    // console.log(start_payments_summ, +row?.end_summ)
+                    if (end_payments_summ == 0) {
+                      end_status = "none"
+                    } else if (end_payments_summ >= +row?.end_summ) {
+                      end_status = "full"
+                    } else if (end_payments_summ < +row?.end_summ) {
+                      end_status = "part"
+                    }
+
+
 
                     return (
                       <TableRow
@@ -219,22 +243,19 @@ export default function UserList() {
                           
                           {/* <p>{row?.contract?.description}</p> */}
                         </TableCell>
-                        <TableCell align="left">{row?.buyer?.name}</TableCell>
-                        <TableCell align="left">{row?.start_summ}</TableCell>
-                        <TableCell align="left">{row?.end_summ}</TableCell>
+                        <TableCell align="left" >{row?.buyer?.name}</TableCell>
+                        <TableCell align="left" sx={{
+                          fontWeight: 'bold',
+                          backgroundColor: start_status == 'full' ? '#5d5': start_status == 'part' ? '#d55': 'none',
+                          color: start_status == 'full' ? '#fff': start_status == 'part' ? '#fff': '#333'
+                        }} >{row?.start_summ}</TableCell>
+                        
+                        <TableCell align="left" sx={{
+                          fontWeight: 'bold',
+                          backgroundColor: end_status == 'full' ? '#5d5': end_status == 'part' ? '#d55': 'none',
+                          color: end_status == 'full' ? '#fff': end_status == 'part' ? '#fff': '#333'
+                        }} >{row?.end_summ}</TableCell>
                         <TableCell align="left">{row?.specification_number ? `Спец. № ${row?.specification_number}` : 'нет'}</TableCell>
-                        <TableCell align="left">
-                          <Label
-                            variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
-                            color={(status === 'banned' && 'error') || 'success'}
-                          >
-                            {status}
-                          </Label>
-                        </TableCell>
-
-                        <TableCell align="right">
-                          <UserMoreMenu onDelete={() => handleDeleteUser(id)} userName={name} />
-                        </TableCell>
                       </TableRow>
                     );
                   })}

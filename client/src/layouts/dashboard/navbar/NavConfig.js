@@ -80,20 +80,25 @@ const navConfig = [
       //     ],
       // },
       {
-        title: 'Заказы',
-        path: PATH_DASHBOARD.orders.list,
-        icon: ICONS.booking
-      },
-      {
         title: 'Сделки',
         path: PATH_DASHBOARD.deals.list,
         icon: ICONS.chat
+      },
+      {
+        title: 'Заказы',
+        path: PATH_DASHBOARD.orders.list,
+        icon: ICONS.booking
       },
       {
         title: 'Прочее',
         path: PATH_DASHBOARD.other_expenses.list,
         icon: ICONS.ecommerce
       },
+      // {
+      //   title: 'Предложения',
+      //   path: PATH_DASHBOARD.other_expenses.list,
+      //   icon: ICONS.calendar
+      // },
       // {
       //   title: 'Документы',
       //   path: PATH_DASHBOARD.tenders.list,

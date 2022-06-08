@@ -119,7 +119,7 @@ const LabelStyle = styled(Typography)(({ theme }) => ({
   const values = watch();
 
   useEffect(() => {
-    fetch('http://localhost:5000/contragents')
+    fetch(`${process.env.NEXT_PUBLIC_HOST}/contragents`)
       .then((res) => res.json())
       .then((json) => {
         let list = json.map((item) => {
@@ -129,7 +129,7 @@ const LabelStyle = styled(Typography)(({ theme }) => ({
         setContragents(list);
       });
 
-    fetch('http://localhost:5000/objects')
+    fetch(`${process.env.NEXT_PUBLIC_HOST}/objects`)
     .then((res) => res.json())
     .then((json) => {
       let list = json.map((item) => {
