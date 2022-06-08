@@ -10,7 +10,7 @@ export default function PaymentBlock({dealSumm, dealId, type, contragents}) {
     const [ isAdding, setIsAdding ] = useState(false)
     
     useEffect(() => {
-        fetch(`http://localhost:5000/payment?deal_id=${dealId}&type=${type}`)
+        fetch(`${process.env.NEXT_PUBLIC_HOST}/payment?deal_id=${dealId}&type=${type}`)
         .then(res => res.json())
         .then(json => {
             // router.reload()
