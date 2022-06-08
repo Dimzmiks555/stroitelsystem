@@ -136,7 +136,7 @@ export default function NewForm({ isEdit, currentProduct, expenses }) {
       console.log(values);
       
       if (!isEdit) {
-        fetch(`http://localhost:5000/objects`, {
+        fetch(`${process.env.NEXT_PUBLIC_HOST}/objects`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -149,7 +149,7 @@ export default function NewForm({ isEdit, currentProduct, expenses }) {
             console.log(json);
           });
       } else {
-        fetch(`http://localhost:5000/objects/${query?.id}`, {
+        fetch(`${process.env.NEXT_PUBLIC_HOST}/objects/${query?.id}`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',

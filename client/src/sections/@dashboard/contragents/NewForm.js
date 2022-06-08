@@ -162,7 +162,7 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
 
   const onSubmit = async () => {
     try {
-      fetch(`http://localhost:5000/contragents`, {
+      fetch(`${process.env.NEXT_PUBLIC_HOST}/contragents`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

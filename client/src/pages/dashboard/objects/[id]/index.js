@@ -36,7 +36,7 @@ export default function EcommerceProductCreate() {
   const [expenses, setExpenses] = useState([])
 
   useEffect(() => {
-    fetch(`http://localhost:5000/objects/${id}`)
+    fetch(`${process.env.NEXT_PUBLIC_HOST}/objects/${id}`)
     .then(res => res.json())
     .then(json => {
 

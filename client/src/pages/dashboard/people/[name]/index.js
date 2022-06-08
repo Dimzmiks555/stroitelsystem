@@ -29,7 +29,7 @@ export default function EcommerceProductCreate() {
   const [current, setCurrent] = useState({})
 
   useEffect(() => {
-    fetch(`http://localhost:5000/people/${query.name}`)
+    fetch(`${process.env.NEXT_PUBLIC_HOST}/people/${query.name}`)
     .then(res => res.json())
     .then(json => {
       console.log(json)

@@ -21,7 +21,7 @@ export default function AddPayment({type, contragents}) {
             type
         }
 
-        fetch(`http://localhost:5000/payment`, {
+        fetch(`${process.env.NEXT_PUBLIC_HOST}/payment`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

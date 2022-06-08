@@ -134,7 +134,7 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
   const onSubmit = async () => {
     try {
       if (isEdit) {
-        fetch(`http://localhost:5000/people/${query.name}`, {
+        fetch(`${process.env.NEXT_PUBLIC_HOST}/people/${query.name}`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
@@ -147,7 +147,7 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
           console.log(json)
         })
       } else {
-        fetch(`http://localhost:5000/people`, {
+        fetch(`${process.env.NEXT_PUBLIC_HOST}/people`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

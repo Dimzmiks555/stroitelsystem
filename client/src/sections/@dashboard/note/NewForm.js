@@ -171,7 +171,7 @@ const LabelStyle = styled(Typography)(({ theme }) => ({
           rows: TableStore.rows
         }
 
-        fetch(`http://localhost:5000/notes`, {
+        fetch(`${process.env.NEXT_PUBLIC_HOST}/notes`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -196,7 +196,7 @@ const LabelStyle = styled(Typography)(({ theme }) => ({
         if (objectModel?.value) { data.object_id = objectModel?.value }
 
         console.log(data)
-        fetch(`http://localhost:5000/notes/${query?.id}`, {
+        fetch(`${process.env.NEXT_PUBLIC_HOST}/notes/${query?.id}`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',

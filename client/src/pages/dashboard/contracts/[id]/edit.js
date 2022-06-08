@@ -36,7 +36,7 @@ export default function UserEdit() {
   const { id } = query;
 
   useEffect(() => {
-    fetch(`http://localhost:5000/contracts/${id}`)
+    fetch(`${process.env.NEXT_PUBLIC_HOST}/contracts/${id}`)
     .then(res => res.json())
     .then(json => {
       console.log(json)

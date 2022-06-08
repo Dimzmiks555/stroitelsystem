@@ -80,7 +80,7 @@ const CreateTableItem = observer(({item, openModal, index, isEdit}) => {
 
     function handleDelete(e) {
 
-        fetch(`http://localhost:5000/note-products/${item?.id}`, {
+        fetch(`${process.env.NEXT_PUBLIC_HOST}/note-products/${item?.id}`, {
             method: 'DELETE',
             headers: {
                 Accept: 'applications/json',

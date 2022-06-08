@@ -28,7 +28,7 @@ export default function StartData({setValue, currentUser, values, contragents}) 
           formdata.append('file', doc)
           formdata.append('start_deal_id', query.id)
     
-          fetch(`http://localhost:5000/document`, {
+          fetch(`${process.env.NEXT_PUBLIC_HOST}/document`, {
             method: 'POST',
             body: formdata
           })

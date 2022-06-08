@@ -122,7 +122,7 @@ export default function NewForm({ isEdit, currentUser }) {
       console.log(values);
       
       if (!isEdit) {
-        fetch(`http://localhost:5000/nomenklatura`, {
+        fetch(`${process.env.NEXT_PUBLIC_HOST}/nomenklatura`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -135,7 +135,7 @@ export default function NewForm({ isEdit, currentUser }) {
             console.log(json);
           });
       } else {
-        fetch(`http://localhost:5000/nomenklatura/${query?.id}`, {
+        fetch(`${process.env.NEXT_PUBLIC_HOST}/nomenklatura/${query?.id}`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',

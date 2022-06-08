@@ -125,7 +125,7 @@ export default function ProductNewForm({ isEdit, currentUser }) {
       console.log(values);
       
       if (!isEdit) {
-        fetch(`http://localhost:5000/orders`, {
+        fetch(`${process.env.NEXT_PUBLIC_HOST}/orders`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -138,7 +138,7 @@ export default function ProductNewForm({ isEdit, currentUser }) {
             console.log(json);
           });
       } else {
-        fetch(`http://localhost:5000/orders/${query?.id}`, {
+        fetch(`${process.env.NEXT_PUBLIC_HOST}/orders/${query?.id}`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
@@ -173,7 +173,7 @@ export default function ProductNewForm({ isEdit, currentUser }) {
       formdata.append('file', doc)
       formdata.append('order_id', query.id)
 
-      fetch(`http://localhost:5000/document`, {
+      fetch(`${process.env.NEXT_PUBLIC_HOST}/document`, {
         method: 'POST',
         body: formdata
       })

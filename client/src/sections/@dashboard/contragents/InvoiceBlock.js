@@ -19,7 +19,7 @@ export default function InvoiceBlock() {
 
     useEffect(()=> {
 
-        fetch(`http://localhost:5000/notes?seller_id=${router.query.name}`)
+        fetch(`${process.env.NEXT_PUBLIC_HOST}/notes?seller_id=${router.query.name}`)
         .then(res => res.json())
         .then(json => {
           console.log(json)

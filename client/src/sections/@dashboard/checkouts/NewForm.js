@@ -159,7 +159,7 @@ export default function NewForm({ isEdit, currentUser }) {
       console.log(values);
       
       if (!isEdit) {
-        fetch(`http://localhost:5000/checkouts`, {
+        fetch(`${process.env.NEXT_PUBLIC_HOST}/checkouts`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -172,7 +172,7 @@ export default function NewForm({ isEdit, currentUser }) {
             console.log(json);
           });
       } else {
-        fetch(`http://localhost:5000/checkouts/${query?.id}`, {
+        fetch(`${process.env.NEXT_PUBLIC_HOST}/checkouts/${query?.id}`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',

@@ -13,7 +13,7 @@ export default function DeletePayment({handleOpen, handleClose, open, payment_id
 
     const handleDelete = () => {
 
-        fetch(`http://localhost:5000/payment/${payment_id}`, {
+        fetch(`${process.env.NEXT_PUBLIC_HOST}/payment/${payment_id}`, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',

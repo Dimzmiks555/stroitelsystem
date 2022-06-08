@@ -141,7 +141,7 @@ export default function NewForm({ isEdit, currentProduct }) {
       console.log(values);
       
       if (!isEdit) {
-        fetch(`http://localhost:5000/deals`, {
+        fetch(`${process.env.NEXT_PUBLIC_HOST}/deals`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -155,7 +155,7 @@ export default function NewForm({ isEdit, currentProduct }) {
             console.log(json);
           });
       } else {
-        fetch(`http://localhost:5000/deals/${query?.id}`, {
+        fetch(`${process.env.NEXT_PUBLIC_HOST}/deals/${query?.id}`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
