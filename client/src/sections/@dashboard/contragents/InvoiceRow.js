@@ -25,20 +25,37 @@ export default function InvoiceRow({row, index}) {
             <Checkbox checked={checked} onChange={handleChange}></Checkbox> {index + 1}
         </TableCell>
         <TableCell   sx={{ display: 'flex', alignItems: 'center', fontWeight: 'bold', fontSize: 12 }}>
+                {console.log(row)}
             <NextLink href={`/dashboard/note/${row.id}/edit`}>
-            <a>Запись № {row?.id} от {new Date(row.Date).toLocaleDateString()}  </a>
+                {
+                    row?.contragent ? (
+                        <a>Аванс № {row?.id} от {new Date(row.Date).toLocaleDateString()}  </a>
+                    ):(
+                        <a>Запись № {row?.id} от {new Date(row.Date).toLocaleDateString()}  </a>
+                    )
+                }
             </NextLink>
         </TableCell>
         <TableCell  sx={{fontWeight: 'bold', fontSize: 12}} colSpan={3}>
-            {row?.object?.name}
+            {row?.contragent ? 
+                row?.description
+            : 
+                row?.object?.name
+            }
         </TableCell>
         <TableCell sx={{fontWeight: 'bold', fontSize: 12}} align="left">
             {row?.summ} руб.
         </TableCell>
-        <TableCell sx={{fontWeight: 'bold', fontSize: 12, maxWidth: 240}} >{row?.description}</TableCell>
+        <TableCell sx={{fontWeight: 'bold', fontSize: 12, maxWidth: 240}} >
+            {row?.contragent ? 
+                row?.contragent?.name
+            : 
+                row?.description
+            }
+        </TableCell>
         </TableRow>
         
-        {row?.products.map((product) => (
+        {row?.products?.map((product) => (
         <TableRow key={product.id} sx={{ background: checked && '#6f8'}}>
             
             <TableCell  sx={{fontWeight: 'bold', fontSize: 12}} >

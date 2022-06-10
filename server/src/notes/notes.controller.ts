@@ -18,17 +18,17 @@ export class NotesController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string, @Query() params: any) {
+  findOne(@Param('id') id, @Query() params: any) {
     return this.notesService.findOne(+id, params);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateNoteDto: UpdateNoteDto) {
+  update(@Param('id') id, @Body() updateNoteDto: UpdateNoteDto) {
     return this.notesService.update(+id, updateNoteDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id) {
     return this.notesService.remove(+id);
   }
 }

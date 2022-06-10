@@ -73,25 +73,6 @@ export default function StartData({setValue, currentUser, values, contragents}) 
         setExpanded(!expanded)
     }
 
-  async function copy(){
-    const clipboardItems = await navigator.clipboard.read();
-
-    for (const clipboardItem of clipboardItems) {
-
-      for (const type of clipboardItem.types) {
-        const blob = await clipboardItem.getType(type);
-        const reader = await blob.text()
-        console.log(reader)
-        // we can now use blob here
-      }
-
-    }
-    // setTimeout(async()=>console.log(
-      // await window.navigator.clipboard.readText()), 3000)
-  }
-  window.addEventListener('focus', function(){
-    copy()
-  })
 
     return (
         <Box >

@@ -88,6 +88,15 @@ export const PATH_DASHBOARD = {
     edit: path(ROOTS_DASHBOARD, `/other_expenses/reece-chung/edit`),
     account: path(ROOTS_DASHBOARD, '/other_expenses/account'),
   },
+  avanses: {
+    root: path(ROOTS_DASHBOARD, '/avanses'),
+    profile: path(ROOTS_DASHBOARD, '/avanses/profile'),
+    cards: path(ROOTS_DASHBOARD, '/avanses/cards'),
+    list: path(ROOTS_DASHBOARD, '/avanses/list'),
+    new: path(ROOTS_DASHBOARD, '/avanses/new'),
+    edit: path(ROOTS_DASHBOARD, `/avanses/reece-chung/edit`),
+    account: path(ROOTS_DASHBOARD, '/avanses/account'),
+  },
   orders: {
     root: path(ROOTS_DASHBOARD, '/orders'),
     profile: path(ROOTS_DASHBOARD, '/orders/profile'),

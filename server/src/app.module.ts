@@ -38,6 +38,8 @@ import { PaymentModule } from './payment/payment.module';
 import { Payment } from './payment/entities/payment.entity';
 import { BankAccountModule } from './bank-account/bank-account.module';
 import { BankAccount } from './bank-account/entities/bank-account.entity';
+import { AvanseModule } from './avanse/avanse.module';
+import { Avanse } from './avanse/entities/avanse.entity';
 
 @Module({
   imports: [
@@ -71,7 +73,8 @@ import { BankAccount } from './bank-account/entities/bank-account.entity';
         Deal,
         User,
         Payment,
-        BankAccount
+        BankAccount,
+        Avanse
       ],
     }),
     ObjectsModule, 
@@ -92,6 +95,7 @@ import { BankAccount } from './bank-account/entities/bank-account.entity';
     UsersModule,
     PaymentModule,
     BankAccountModule,
+    AvanseModule,
   ],
   controllers: [AppController],
   providers: [AppService, UsersService],

@@ -14,6 +14,7 @@ import InvoiceRow from "./InvoiceRow"
 export default function InvoiceBlock() {
 
     const [ expences, setExpences] = useState([])
+    const [ avanses, setAvanses] = useState([])
 
     const router = useRouter()
 
@@ -22,14 +23,22 @@ export default function InvoiceBlock() {
         fetch(`${process.env.NEXT_PUBLIC_HOST}/notes?seller_id=${router.query.name}`)
         .then(res => res.json())
         .then(json => {
-          console.log(json)
 
-          json.sort(function(a, b) {
-            return b.Date.localeCompare(a.Date);
-          })
+          fetch(`${process.env.NEXT_PUBLIC_HOST}/avanse?contragent_id=${router.query.name}`)
+            .then(res => res.json())
+            .then(new_json => {
 
-          setExpences(json)
+                let allData = [...new_json, ...json]
+
+                allData.sort(function(a, b) {
+                    return b.Date.localeCompare(a.Date);
+                })
+
+                setExpences(allData)
+            })
+
         })
+        
     
     
     }, [])
@@ -69,6 +78,9 @@ export default function InvoiceBlock() {
                 {expences?.map((row, index) => (
                     <InvoiceRow key={row.id} row={row} index={index}></InvoiceRow>
                 ))}
+                {/* {avanses?.map((row, index) => (
+                    <InvoiceRow key={row.id} row={row} index={index}></InvoiceRow>
+                ))} */}
                 </TableBody>
             </Table>
 
