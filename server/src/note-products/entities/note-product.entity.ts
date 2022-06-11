@@ -11,7 +11,7 @@ export class NoteProduct extends Model {
     @Column
     edizm: string
 
-    @Column({type: DataType.DECIMAL(10,2)})
+    @Column({type: DataType.DECIMAL(10,4)})
     amount: number
 
     @Column({type: DataType.DECIMAL(10,2)})
