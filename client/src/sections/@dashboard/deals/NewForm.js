@@ -248,6 +248,28 @@ export default function NewForm({ isEdit, currentProduct }) {
               </Box>
 
               <RHFTextField size="small" multiline rows={2} name="name" label="Наименование сделки" />
+              <Controller
+              name="status"
+              control={control}
+              render={({ field }) => (
+                  <Autocomplete
+                    {...field}
+                    freeSolo
+                    onChange={(event, newValue) => setValue('status', newValue?.value)}
+                    options={[
+                      {label: 'В работе', value: 'В РАБОТЕ'},
+                      {label: 'Ожидает выставления', value: 'ОЖИДАЕТ ВЫСТАВЛЕНИЯ'},
+                      {label: 'Выставлен', value: 'ВЫСТАВЛЕН'}
+                    ]}
+                    renderTags={(value, getTagProps) =>
+                      value.map((option, index) => (
+                        <Chip {...getTagProps({ index })} key={option} size="small" label={option} />
+                      ))
+                    } 
+                    renderInput={(params) => <TextField label="Статус"{...params} size="small" sx={{mb: 0}} />}
+                  />
+                )}
+              />
               {
                 isEdit && (
                   <Box sx={{ width: 380}}>
@@ -358,7 +380,12 @@ export default function NewForm({ isEdit, currentProduct }) {
             <Stack spacing={3} sx={{ml: 8}}>
             
 
-
+            <Chip sx={{height: 60, fontSize: 20}} color={
+              currentProduct?.status == 'В РАБОТЕ' ? 'primary':
+              currentProduct?.status == 'ОЖИДАЕТ ВЫСТАВЛЕНИЯ' ? 'warning':
+              currentProduct?.status == 'ВЫСТАВЛЕН' ? 'success': 'default'
+            } label={currentProduct?.status}></Chip>
+            
 
             <div>
                 <RHFTextField size="small" multiline rows={3} fullWidth name="description" label="Описание сделки" />

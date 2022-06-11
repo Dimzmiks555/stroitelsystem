@@ -17,6 +17,7 @@ import {
   Typography,
   TableContainer,
   TablePagination,
+  Chip,
 } from '@mui/material';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
@@ -45,7 +46,7 @@ const TABLE_HEAD = [
   { id: 'company', label: 'Компания', alignRight: false },
   { id: 'start_summ', label: 'Закупка', alignRight: false },
   { id: 'end_summ', label: 'Продажа', alignRight: false },
-  { id: 'specification', label: 'Спецификация', alignRight: false },
+  { id: 'status', label: 'Статус', alignRight: false },
 ];
 
 // ----------------------------------------------------------------------
@@ -255,7 +256,13 @@ export default function UserList() {
                           backgroundColor: end_status == 'full' ? '#5d5': end_status == 'part' ? '#d55': 'none',
                           color: end_status == 'full' ? '#fff': end_status == 'part' ? '#fff': '#333'
                         }} >{row?.end_summ}</TableCell>
-                        <TableCell align="left">{row?.specification_number ? `Спец. № ${row?.specification_number}` : 'нет'}</TableCell>
+                        <TableCell align="left">
+                          <Chip color={
+                            row?.status == 'В РАБОТЕ' ? 'primary':
+                            row?.status == 'ОЖИДАЕТ ВЫСТАВЛЕНИЯ' ? 'warning':
+                            row?.status == 'ВЫСТАВЛЕН' ? 'success': 'default'
+                          } label={row?.status}></Chip>
+                        </TableCell>
                       </TableRow>
                     );
                   })}

@@ -32,6 +32,9 @@ export class Deal extends Model {
     description: string
 
     @Column
+    status: string
+
+    @Column
     warranty: string
 
     @Column
