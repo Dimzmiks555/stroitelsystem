@@ -1,13 +1,13 @@
 import { Box } from "@mui/material"
 import { observer } from "mobx-react"
-import CreateTableItem from "./CreateTableItem"
+import CreateTableItem from "../Table/CreateTableItem"
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
-import NewForm from "../nomenklatura/NewForm";
+import NewForm from "../../nomenklatura/NewForm";
 
 const NewNomenklatura = observer(({open, handleClose}) => {
 

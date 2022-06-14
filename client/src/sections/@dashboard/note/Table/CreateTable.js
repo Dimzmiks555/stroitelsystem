@@ -1,6 +1,6 @@
 import { Box, TextField } from "@mui/material"
 import { observer } from "mobx-react"
-import CreateTableItem from "./CreateTableItem"
+import CreateTableItem from "./CreateTableItem.js"
 
 const CreateTable = observer(({rows, objects, isEdit, openModal}) => {
 
