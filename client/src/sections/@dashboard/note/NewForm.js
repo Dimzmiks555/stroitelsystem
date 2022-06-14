@@ -193,6 +193,9 @@ const LabelStyle = styled(Typography)(({ theme }) => ({
           isChecked: false
         }
 
+        
+        if (currentProduct?.isChecked) { data.isUpdatedAfterCheck = true }
+
         if (values.seller?.value) { data.seller_id = values.seller?.value }
         if (values.buyer?.value) { data.buyer_id = values.buyer?.value }
         if (objectModel?.value) { data.object_id = objectModel?.value }

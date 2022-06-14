@@ -10,6 +10,9 @@ export class Note extends Model {
     @Column({defaultValue: false})
     isChecked: boolean
 
+    @Column({defaultValue: false})
+    isUpdatedAfterCheck: boolean
+
     @Column
     Date: string
 

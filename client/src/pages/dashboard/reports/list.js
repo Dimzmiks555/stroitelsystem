@@ -294,6 +294,7 @@ export default function UserList() {
                               <NextLink href={`/dashboard/note/${id}/edit`}>
                                 <a> Запись № {id} от {new Date(date).toLocaleDateString()}  </a>
                               </NextLink>
+                                {row?.isUpdatedAfterCheck && <Chip sx={{p: 0,ml: 2, color: 'white', fontSize: 12}} color="warning" label="Изменено"></Chip>}
                             </TableCell>
                             <TableCell  sx={{fontWeight: 'bold', fontSize: 11}} colSpan={3}>
                               {row?.object?.name}
