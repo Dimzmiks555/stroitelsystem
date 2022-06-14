@@ -17,6 +17,7 @@ import {
   Typography,
   TableContainer,
   TablePagination,
+  Box,
 } from '@mui/material';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
@@ -162,7 +163,7 @@ export default function UserList() {
           }
         />
 
-        <Card>
+        <Card sx={{bgcolor: "#f6f6ff"}}>
           <UserListToolbar
             numSelected={selected.length}
             filterName={filterName}
@@ -171,80 +172,55 @@ export default function UserList() {
           />
 
           <Scrollbar>
-            <TableContainer sx={{ minWidth: 800 }}>
-              <Table>
-                <UserListHead
-                  order={order}
-                  orderBy={orderBy}
-                  headLabel={TABLE_HEAD}
-                  rowCount={userList.length}
-                  numSelected={selected.length}
-                  onRequestSort={handleRequestSort}
-                  onSelectAllClick={handleSelectAllClick}
-                />
-                <TableBody>
-                  {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { id, name, role, status, company, avatarUrl, createdAt } = row;
-                    const isItemSelected = selected.indexOf(name) !== -1;
+            <Box sx={{display: 'flex', flexWrap: 'wrap', p: 3, gap: '20px'}}>
+              {filteredUsers.map((row) => {
+                const { id, name, role, status, company, avatarUrl, createdAt } = row;
+                const isItemSelected = selected.indexOf(name) !== -1;
 
-                    return (
-                      <TableRow
-                        hover
-                        key={id}
-                        tabIndex={-1}
-                        role="checkbox"
-                        selected={isItemSelected}
-                        aria-checked={isItemSelected}
-                      >
-                        <TableCell padding="checkbox">
-                          <Checkbox checked={isItemSelected} onClick={() => handleClick(name)} />
-                        </TableCell>
-                        <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
-                          <Avatar alt={name} src={avatarUrl} sx={{ mr: 2 }} />
-                          <NextLink href={`/dashboard/objects/${id}`}>
-                              {name}
-                          </NextLink>
-                        </TableCell>
-                        <TableCell align="left">
-                          <Label
-                            variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
-                            color={(status === 'banned' && 'error') || 'success'}
-                          >
-                            {new Date(createdAt).toLocaleDateString()}
-                          </Label>
-                        </TableCell>
+                return (
+                  <Card sx={{width: '18%', p: 2}}>
+                      <Avatar alt={name} src={avatarUrl} sx={{ mr: 2, mb: 2, bgcolor: '#49f', color: 'white' }}>
+                        <Iconify icon={'ic:outline-cottage'} />
+                      </Avatar>
+                      <NextLink href={`/dashboard/objects/${id}`}>
+                          {name}
+                      </NextLink>
+                  </Card>
+                  // <TableRow
+                  //   hover
+                  //   key={id}
+                  //   tabIndex={-1}
+                  //   role="checkbox"
+                  //   selected={isItemSelected}
+                  //   aria-checked={isItemSelected}
+                  // >
+                  //   <TableCell padding="checkbox">
+                  //     <Checkbox checked={isItemSelected} onClick={() => handleClick(name)} />
+                  //   </TableCell>
+                  //   <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
+                  //     <Avatar alt={name} src={avatarUrl} sx={{ mr: 2 }}>
+                  //       <Iconify icon={'ic:outline-cottage'} />
+                  //     </Avatar>
+                  //     <NextLink href={`/dashboard/objects/${id}`}>
+                  //         {name}
+                  //     </NextLink>
+                  //   </TableCell>
+                  //   <TableCell align="left">
+                  //     <Label
+                  //       variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
+                  //       color={(status === 'banned' && 'error') || 'success'}
+                  //     >
+                  //       {new Date(createdAt).toLocaleDateString()}
+                  //     </Label>
+                  //   </TableCell>
 
-                      </TableRow>
-                    );
-                  })}
-                  {emptyRows > 0 && (
-                    <TableRow style={{ height: 53 * emptyRows }}>
-                      <TableCell colSpan={6} />
-                    </TableRow>
-                  )}
-                </TableBody>
-                {isNotFound && (
-                  <TableBody>
-                    <TableRow>
-                      <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
-                        <SearchNotFound searchQuery={filterName} />
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
-                )}
-              </Table>
-            </TableContainer>
+                  // </TableRow>
+                );
+              })}
+            </Box>
+            
           </Scrollbar>
 
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
-            component="div"
-            count={userList.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={(e, page) => setPage(page)}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
         </Card>
       </Container>
     </Page>
