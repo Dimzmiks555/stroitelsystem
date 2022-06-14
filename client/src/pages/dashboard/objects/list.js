@@ -183,7 +183,11 @@ export default function UserList() {
                         <Iconify icon={'ic:outline-cottage'} />
                       </Avatar>
                       <NextLink href={`/dashboard/objects/${id}`}>
-                          {name}
+                          <a style={{
+                            textDecoration: 'none', 
+                            color: '#49d', 
+                            fontWeight: 'bold'
+                          }}>{name}</a>
                       </NextLink>
                   </Card>
                   // <TableRow

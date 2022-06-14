@@ -44,6 +44,7 @@ export default function UserListToolbar({ numSelected, filterName, onFilterName,
         </Typography>
       ) : (
         <InputStyle
+          sx={{bgcolor: 'white', borderRadius: 1}}
           stretchStart={240}
           value={filterName}
           onChange={(event) => onFilterName(event.target.value)}

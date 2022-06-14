@@ -165,11 +165,11 @@ const navConfig = [
         path: PATH_DASHBOARD.people.list,
         icon: ICONS.user
       },
-      {
-        title: 'Номенклатура',
-        path: PATH_DASHBOARD.nomenklatura.list,
-        icon: ICONS.kanban
-      },
+      // {
+      //   title: 'Номенклатура',
+      //   path: PATH_DASHBOARD.nomenklatura.list,
+      //   icon: ICONS.kanban
+      // },
       {
         title: 'Договоры',
         path: PATH_DASHBOARD.contracts.list,
