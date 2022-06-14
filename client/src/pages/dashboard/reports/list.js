@@ -2,6 +2,7 @@ import { sentenceCase } from 'change-case';
 import { useEffect, useState } from 'react';
 // next
 import NextLink from 'next/link';
+import { useRouter } from 'next/router';
 // @mui
 import { useTheme } from '@mui/material/styles';
 import {
@@ -36,6 +37,11 @@ import Iconify from '../../../components/Iconify';
 import Scrollbar from '../../../components/Scrollbar';
 import SearchNotFound from '../../../components/SearchNotFound';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 // sections
 import { UserListHead, UserListToolbar, UserMoreMenu } from '../../../sections/@dashboard/user/list';
 
@@ -61,6 +67,7 @@ UserList.getLayout = function getLayout(page) {
 
 export default function UserList() {
   const theme = useTheme();
+  const router = useRouter();
 
   const { themeStretch } = useSettings();
 
@@ -78,9 +85,19 @@ export default function UserList() {
 
   const [rowsPerPage, setRowsPerPage] = useState(100);
 
+  const [open, setOpen] = useState(false);
+
+    const handleOpen = () => {
+        setOpen(true);
+    };
+  
+    const handleClose = () => {
+        setOpen(false);
+    };
+
   useEffect(()=> {
 
-    fetch(`${process.env.NEXT_PUBLIC_HOST}/notes`)
+    fetch(`${process.env.NEXT_PUBLIC_HOST}/notes?isChecked=0`)
     .then(res => res.json())
     .then(json => {
       console.log(json)
@@ -155,6 +172,31 @@ export default function UserList() {
     window.print()
   }
 
+  
+  const handleSetReport = () => {
+
+    Promise.all(list.map(note => {
+      return fetch(`${process.env.NEXT_PUBLIC_HOST}/notes/${note.id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          isChecked: true
+        })
+
+      })
+    }))
+    .then(json => {
+      router.reload()
+      console.log(json)
+    })
+
+
+
+  }
+
   return (
     <Page title="Отчеты">
       <Container maxWidth={themeStretch ? false : 'lg'} >
@@ -168,7 +210,11 @@ export default function UserList() {
           ]}
           action={
             [
-              <Button onClick={handlePrint} sx={{mr: 6}} color="warning" variant="contained" startIcon={<Iconify icon={'fluent:print-48-filled'} />}>
+              <Button onClick={handleOpen} sx={{mr: 6, color: 'white'}} color="success" variant="contained" startIcon={<Iconify icon={'akar-icons:double-check'} />}>
+                Сдать отчет
+              </Button>
+              ,
+              <Button onClick={handlePrint} sx={{mr: 6, color: 'white'}} color="warning" variant="contained" startIcon={<Iconify icon={'fluent:print-48-filled'} />}>
                 Распечатать
               </Button>
               ,
@@ -180,7 +226,28 @@ export default function UserList() {
             ]
           }
         />
-
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Подтвердить сдачу отчета?"}
+          </DialogTitle>
+          <DialogContent>
+            {/* <DialogContentText id="alert-dialog-description">
+              Let Google help apps determine location. This means sending anonymous
+              location data to Google, even when no apps are running.
+            </DialogContentText> */}
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Отменить</Button>
+            <Button onClick={handleSetReport} sx={{color: 'white'}} color="success" variant="contained" autoFocus>
+              Сдать
+            </Button>
+          </DialogActions>
+        </Dialog>
         <Card >
           <UserListToolbar
             numSelected={selected.length}
@@ -221,7 +288,7 @@ export default function UserList() {
                             aria-checked={isItemSelected}
                           >
                             <TableCell  sx={{fontWeight: 'bold', fontSize: 11, p: 0, textAlign: 'center'}} >
-                              {index + 1}
+                              <Chip color={row?.isChecked ? 'success' : 'error'} label={index + 1}></Chip> 
                             </TableCell>
                             <TableCell   sx={{ display: 'flex', alignItems: 'center', fontWeight: 'bold', fontSize: 11 }}>
                               <NextLink href={`/dashboard/note/${id}/edit`}>

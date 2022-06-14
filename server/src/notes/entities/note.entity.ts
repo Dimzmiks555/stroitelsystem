@@ -5,6 +5,11 @@ import { ObjectsModel } from "src/objects/entities/object.entity";
 
 @Table
 export class Note extends Model {
+
+
+    @Column({defaultValue: false})
+    isChecked: boolean
+
     @Column
     Date: string
 

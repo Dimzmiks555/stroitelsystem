@@ -17,6 +17,8 @@ import {
   Typography,
   TableContainer,
   TablePagination,
+  Badge,
+  Chip,
 } from '@mui/material';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
@@ -204,7 +206,9 @@ export default function UserList() {
                       >
                         <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
                           <NextLink href={`/dashboard/note/${id}/edit`}>
-                            <a>Запись № {id}</a>
+                            <Badge  variant="dot" color={row?.isChecked ? 'success' : 'error'} anchorOrigin={{vertical: 'top',horizontal: 'right',}}>
+                              <a><Chip sx={{cursor: 'pointer'}} variant='outlined' color="primary" label={`Запись № ${id}`}></Chip></a>
+                            </Badge>
                           </NextLink>
                         </TableCell>
                         <TableCell align="left">{row?.object?.name}</TableCell>

@@ -5,13 +5,14 @@ import { useSnackbar } from 'notistack';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 // next
 import { useRouter } from 'next/router';
+import NextLink from 'next/link';
 // form
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 // @mui
 import { styled } from '@mui/material/styles';
 import { LoadingButton } from '@mui/lab';
-import { Card, Chip, Grid, Stack, TextField, Typography, Autocomplete, InputAdornment, Box, Switch, FormControlLabel, Table, TableRow, TableCell, TableHead, TableBody } from '@mui/material';
+import { Card, Chip, Grid, Stack, TextField, Typography, Autocomplete, InputAdornment, Box, Switch, FormControlLabel, Table, TableRow, TableCell, TableHead, TableBody, Avatar, Alert, AlertTitle } from '@mui/material';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // components
@@ -188,7 +189,8 @@ const LabelStyle = styled(Typography)(({ theme }) => ({
           ...values, 
           summ: +values.summ,
           Date: valueDate,
-          rows: TableStore.rows
+          rows: TableStore.rows,
+          isChecked: false
         }
 
         if (values.seller?.value) { data.seller_id = values.seller?.value }
@@ -347,6 +349,14 @@ const LabelStyle = styled(Typography)(({ theme }) => ({
                         renderInput={(params) => <TextField label="Объект" {...params} />}
                       />
 
+                    {isEdit && (
+                      <Alert severity="warning">
+                        <AlertTitle>ВНИМАНИЕ</AlertTitle>
+                          При обновлении запись снова попадает в отчет!<br/>
+                          Если вы просто просматриваете запись,<br/> нажмите кнопку <Chip variant="" color="primary" label="Закрыть"></Chip>
+                      </Alert>
+                    )}
+
                     </Stack>
                     {/* <FormControlLabel
                       control={
@@ -383,11 +393,24 @@ const LabelStyle = styled(Typography)(({ theme }) => ({
                     }}
                   />
 
-                  
-                  <LoadingButton type="submit" variant="contained" size="large" sx={{mt:2, mr:2 }} loading={isSubmitting}>
-                    {!isEdit ? 'Сохранить' : 'Изменить'}
-                  </LoadingButton>
-                  {currentProduct?.createdAt && `Оформлено ${new Date(currentProduct?.createdAt)?.toLocaleDateString()}`}
+                  <Box sx={{display: 'flex', alignItems: 'center', mt:2 }}>
+                    
+                    {isEdit &&  (
+                      <NextLink href="/dashboard/note/list">
+                        <LoadingButton variant="contained" size="large" sx={{mr:2 }} >
+                          {isEdit &&  'Закрыть'}
+                        </LoadingButton>
+                      </NextLink>
+                    )}
+                    
+                    <LoadingButton type="submit" variant="contained" color={isEdit ? "warning" : "primary"} size="large" sx={{mr:2 }} loading={isSubmitting}>
+                      {!isEdit ? 'Сохранить' : 'Обновить'}
+                    </LoadingButton>
+                    {isEdit && (
+                      <Avatar sx={{ bgcolor: currentProduct?.isChecked ? '#0a0' : '#d00' , mr: 2}}> </Avatar>
+                    )}
+                    {currentProduct?.createdAt && `Оформлено ${new Date(currentProduct?.createdAt)?.toLocaleDateString()}`}
+                  </Box>
                 </div>
                 
                 <div>
