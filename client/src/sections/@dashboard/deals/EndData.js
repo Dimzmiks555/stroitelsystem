@@ -101,7 +101,7 @@ export default function EndData({setValue, currentUser, values, contragents}) {
                                         <PlanPremiumIcon/>
                                         </Box>
                                         
-                                        <a href={`http://localhost:5000/public/${file.name}`} target="_blank">
+                                        <a href={`${process.env.NEXT_PUBLIC_HOST}/public/${file.name}`} target="_blank">
                                             <p style={{wordBreak: 'break-word', fontSize: 14}}>{file?.name?.slice(14)}</p>
                                         </a>
                                     </Box>
