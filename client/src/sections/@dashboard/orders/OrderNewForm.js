@@ -262,7 +262,7 @@ export default function ProductNewForm({ isEdit, currentUser }) {
                 {
                     currentUser?.files?.map(file => (
                         <Box sx={{my: 3, display: 'flex', flexDirection: 'column', alignItems: 'center', mr: 2, maxWidth: '23%'}}>
-                          <a href={`http://localhost:5000/public/${file.name}`} target="_blank">
+                          <a href={`${process.env.NEXT_PUBLIC_HOST}/public/${file.name}`} target="_blank">
                           <Box sx={{
                             width: 100,
                             height: 100,
