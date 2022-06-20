@@ -203,14 +203,12 @@ export default function UserList() {
 
           <NewPrice/>
 
-          <List sx={{p: 3}}>
+          <Box sx={{pl:4}}>
             {pricesList?.map((item) => (
-                <Box>
-                    <p>{item?.name}  {item?.price} руб. за 1 {item?.unit}</p>
-                </Box>
+                <NewPrice isEdit priceModel={item}></NewPrice>
             ))}
             
-          </List>
+          </Box>
   
           </Scrollbar>
 

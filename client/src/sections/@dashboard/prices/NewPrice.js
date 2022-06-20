@@ -3,11 +3,17 @@ import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 
 
-export const NewPrice = () => {
+export const NewPrice = ({isEdit, priceModel}) => {
 
     const router = useRouter()
 
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const { register, handleSubmit, watch, formState: { errors } } = useForm({
+        defaultValues: {
+            name: priceModel?.name,
+            price: priceModel?.price,
+            unit: priceModel?.unit,
+        }
+    });
     const onSubmit = data => {
         
         fetch(`${process.env.NEXT_PUBLIC_HOST}/price`, {
@@ -32,11 +38,15 @@ export const NewPrice = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-        <Stack p={3} spacing={3} direction="row">
+        <Stack p={2} spacing={3} direction="row">
             <TextField label="Наименование" {...register("name")}/>
             <TextField type="number" label="Цена" {...register("price")}/>
             <TextField label="Ед. из" {...register("unit")}/>
-            <Button type="submit" variant="contained">Создать</Button>
+            {!isEdit ?
+                <Button type="submit" variant="contained">Создать</Button>
+                :
+                <Button type="submit" variant="contained" disabled>Изменить</Button>
+            }
         </Stack>
     </form>
   )
