@@ -75,10 +75,8 @@ const navConfig = [
           { title: 'Записи', path: PATH_DASHBOARD.note.list},
           { title: 'Отчёты', path: PATH_DASHBOARD.reports.list },
           { title: 'Списания', path: PATH_DASHBOARD.checkouts.list },
-          {
-            title: 'Авансы',
-            path: PATH_DASHBOARD.avanses.list
-          },
+          { title: 'Авансы', path: PATH_DASHBOARD.avanses.list},
+          { title: 'Покупки', path: PATH_DASHBOARD.avanses.list},
         ],
       },
       // {

@@ -30,7 +30,7 @@ export class Checkout extends Model {
     @Column
     Date: string
     
-    @Column({type: DataType.FLOAT})
+    @Column({type: DataType.DECIMAL(10,2)})
     summ: number
     
     @Column

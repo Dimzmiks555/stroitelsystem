@@ -13,13 +13,13 @@ export class CheckoutsProduct extends Model {
     @Column
     checkout_id: number
 
-    @Column({type: DataType.FLOAT})
+    @Column({type: DataType.DECIMAL(10,2)})
     price: number
     
-    @Column({type: DataType.FLOAT})
+    @Column({type: DataType.DECIMAL(10,4)})
     amount: number
     
-    @Column({type: DataType.FLOAT})
+    @Column({type: DataType.DECIMAL(10,2)})
     summ: number
 
 

@@ -91,7 +91,7 @@ export default function NewForm({ isEdit, currentProduct, expenses }) {
       priceSale: currentProduct?.priceSale || 0,
       tags: currentProduct?.tags || [TAGS_OPTION[0]],
       inStock: true,
-      taxes: true,
+      initial_balance: currentProduct?.initial_balance || 0,
       gender: currentProduct?.gender || GENDER_OPTION[2],
       category: currentProduct?.category || CATEGORY_OPTION[0].classify[1],
     }),
@@ -182,6 +182,7 @@ export default function NewForm({ isEdit, currentProduct, expenses }) {
               <RHFTextField name="name" label="Название" />
 
               <RHFTextField name="description" multiline rows={2} label="Описание" />
+              <RHFTextField type="number" name="initial_balance" label="Начальное сальдо" />
 
               <Controller
                 name="type"

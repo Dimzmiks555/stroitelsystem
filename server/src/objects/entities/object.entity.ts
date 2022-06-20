@@ -16,6 +16,9 @@ export class ObjectsModel extends Model {
     @Column({type: DataType.TEXT})
     status: string;
 
+    @Column({type: DataType.DECIMAL(10,2)})
+    initial_balance: number;
+
     @HasMany(() => Checkout)
     checkouts: Array<Checkout>;
 
