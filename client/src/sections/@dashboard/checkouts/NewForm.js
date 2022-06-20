@@ -50,6 +50,7 @@ export default function NewForm({ isEdit, currentUser }) {
   const [filteredList, setFiltered] = useState([]);
   const [objectsList, setObjects] = useState([]);
   const [objectModel, setObject] = useState();
+  const [peopleList, setPeople] = useState([]);
   const [selected, setSelected] = useState({});
   const [checkout, setCheckout] = useState({});
 
@@ -127,6 +128,17 @@ export default function NewForm({ isEdit, currentUser }) {
       setObjects(list);
     });
 
+    fetch(`${process.env.NEXT_PUBLIC_HOST}/people`)
+    .then((res) => res.json())
+    .then((json) => {
+      
+      let list = json.map((item) => {
+        return { label: `${item.surname} ${item.name} ${item.lastname}`, value: item.id };
+      });
+
+      setPeople(list);
+    });
+
     if (isEdit) {
       fetch(`${process.env.NEXT_PUBLIC_HOST}/checkouts/${query.id}`)
       .then((res) => res.json())
@@ -143,6 +155,7 @@ export default function NewForm({ isEdit, currentUser }) {
 
     let data = {
       description: values?.description,
+      person_id: values?.person_id,
       Number: selected.item?.['Number'],
       Ref_Key: selected.item?.['Ref_Key'],
       object_id: objectModel?.value,
@@ -231,7 +244,8 @@ export default function NewForm({ isEdit, currentUser }) {
                 isEdit ? (
                   <>
                    <p>Объект: {checkout?.object?.name}</p>
-                   <p>Покупатель: {checkout?.buyer}</p>
+                   <p>Ответственное лицо: {checkout?.person?.surname} {checkout?.person?.name} {checkout?.person?.lastname} </p>
+                   <p>Покупатель в 1С: {checkout?.buyer}</p>
                    <p>Продавец: {checkout?.seller}</p>
                    <p>Склад: {checkout?.sklad}</p>
                    <p>Сумма: {checkout?.summ} руб.</p>
@@ -248,9 +262,26 @@ export default function NewForm({ isEdit, currentUser }) {
                   />
                 )
               }
+              <Controller
+                name="person_id"
+                control={control}
+                render={({ field }) => (
+                  <Autocomplete
+                    {...field}
+                    freeSolo
+                    onChange={(event, newValue) => setValue('person_id', newValue?.value)}
+                    options={peopleList}
+                    renderTags={(value, getTagProps) =>
+                      value.map((option, index) => (
+                        <Chip {...getTagProps({ index })} key={option} size="small" label={option} />
+                      ))
+                    } 
+                    renderInput={(params) => <TextField label="Ответственное лицо" {...params} size="small" sx={{mb: 0}} />}
+                  />
+                )}
+              />
               <div>
-                <LabelStyle>Описание</LabelStyle>
-                <RHFEditor simple name="description" />
+                <RHFTextField multiline rows={2}  name="description" label="Описание"/>
               </div>
 
               <LoadingButton type="submit" variant="contained" size="large" loading={isSubmitting}>

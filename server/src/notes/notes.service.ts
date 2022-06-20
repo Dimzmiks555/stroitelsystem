@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import { Contragent } from 'src/contragents/entities/contragent.entity';
 import { NoteProduct } from 'src/note-products/entities/note-product.entity';
 import { ObjectsModel } from 'src/objects/entities/object.entity';
+import { Person } from 'src/people/entities/person.entity';
 import { CreateNoteDto } from './dto/create-note.dto';
 import { UpdateNoteDto } from './dto/update-note.dto';
 import { Note } from './entities/note.entity';
@@ -48,6 +49,7 @@ export class NotesService {
       include: [
         {model: ObjectsModel},
         {model: NoteProduct},
+        {model: Person},
         {model: Contragent, as: 'buyer'},
         {model: Contragent, as: 'seller'},
       ],
@@ -64,6 +66,7 @@ export class NotesService {
       include: [
         {model: ObjectsModel},
         {model: NoteProduct},
+        {model: Person},
         {model: Contragent, as: 'buyer'},
         {model: Contragent, as: 'seller'},
       ]

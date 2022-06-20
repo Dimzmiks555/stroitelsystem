@@ -9,7 +9,7 @@ import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 // @mui
 import { styled } from '@mui/material/styles';
 import { LoadingButton } from '@mui/lab';
-import { Card, Chip, Grid, Stack, TextField, Typography, Autocomplete, InputAdornment } from '@mui/material';
+import { Card, Chip, Grid, Stack, TextField, Typography, Autocomplete, InputAdornment, Box } from '@mui/material';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
 
@@ -29,6 +29,7 @@ import {
 import { AddressSuggestions } from 'react-dadata';
 import 'react-dadata/dist/react-dadata.css';
 import ExpensesBlock from './ExpensesBlock';
+import InvoiceBlock from './invoice/InvoiceBlock';
 
 
 // ----------------------------------------------------------------------
@@ -180,10 +181,52 @@ export default function NewForm({ isEdit, currentProduct, expenses }) {
             <Stack spacing={3}>
               <RHFTextField name="name" label="Название" />
 
-              <div>
-                <LabelStyle>Описание</LabelStyle>
-                <RHFEditor simple name="description" />
-              </div>
+              <RHFTextField name="description" multiline rows={2} label="Описание" />
+
+              <Controller
+                name="type"
+                control={control}
+                render={({ field }) => (
+                  <Autocomplete
+                    {...field}
+                    freeSolo
+                    onChange={(event, newValue) => setValue('type', newValue?.value)}
+                    options={[
+                      {label: 'Дом', value: 'Дом'},
+                      {label: 'Организация', value: 'Организация'},
+                      {label: 'Сторонний объект', value: 'Сторонний объект'}
+                    ]}
+                    renderTags={(value, getTagProps) =>
+                      value.map((option, index) => (
+                        <Chip {...getTagProps({ index })} key={option} size="small" label={option} />
+                      ))
+                    } 
+                    renderInput={(params) => <TextField label="Тип" {...params} size="small" sx={{mb: 0}} />}
+                  />
+                )}
+              />
+
+              <Controller
+                name="status"
+                control={control}
+                render={({ field }) => (
+                  <Autocomplete
+                    {...field}
+                    freeSolo
+                    onChange={(event, newValue) => setValue('status', newValue?.value)}
+                    options={[
+                      {label: 'В работе', value: 'В работе'},
+                      {label: 'Завершен', value: 'Завершен'},
+                    ]}
+                    renderTags={(value, getTagProps) =>
+                      value.map((option, index) => (
+                        <Chip {...getTagProps({ index })} key={option} size="small" label={option} />
+                      ))
+                    } 
+                    renderInput={(params) => <TextField label="Статус"{...params} size="small" sx={{mb: 2}} />}
+                  />
+                )}
+              />
 
               {/* <div>
                 <LabelStyle>Изображения</LabelStyle>
@@ -207,10 +250,14 @@ export default function NewForm({ isEdit, currentProduct, expenses }) {
 
         <Grid item xs={12} md={6}>
           <Stack spacing={3}>
-              <ExpensesBlock expenses={expenses}></ExpensesBlock>
+              {/* <ExpensesBlock expenses={expenses}></ExpensesBlock> */}
           </Stack>
         </Grid>
       </Grid>
+      
+      <Box sx={{py: 3}}>
+        <InvoiceBlock/>
+      </Box>
     </FormProvider>
   );
 }

@@ -302,7 +302,7 @@ export default function UserList() {
                             <TableCell sx={{fontWeight: 'bold', fontSize: 11}} align="left">
                                 {+summ} ₽
                             </TableCell>
-                            <TableCell sx={{fontWeight: 'bold', fontSize: 11, maxWidth: 240}} >{row?.description}</TableCell>
+                            <TableCell sx={{fontWeight: 'bold', fontSize: 11, maxWidth: 240}} >{row?.description} ({row?.person?.surname} {row?.person?.name})</TableCell>
                           </TableRow>
                             {row.products.map((product) => (
                               <TableRow key={product.id}>

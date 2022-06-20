@@ -21,6 +21,13 @@ const ICONS = {
   analytics: getIcon('ic_analytics'),
   dashboard: getIcon('ic_dashboard'),
   booking: getIcon('ic_booking'),
+  prices: getIcon('ic_prices'),
+  one_c: getIcon('ic_1c'),
+  house: getIcon('ic_house'),
+  contract: getIcon('ic_contract'),
+  worker: getIcon('ic_worker'),
+  deals: getIcon('ic_deals'),
+  report: getIcon('ic_report'),
 };
 
 const navConfig = [
@@ -65,7 +72,7 @@ const navConfig = [
         path: PATH_DASHBOARD.note.list,
         icon: ICONS.analytics,
         children: [
-          { title: 'Записи', path: PATH_DASHBOARD.note.list },
+          { title: 'Записи', path: PATH_DASHBOARD.note.list},
           { title: 'Отчёты', path: PATH_DASHBOARD.reports.list },
           { title: 'Списания', path: PATH_DASHBOARD.checkouts.list },
           {
@@ -86,7 +93,7 @@ const navConfig = [
       {
         title: 'Сделки',
         path: PATH_DASHBOARD.deals.list,
-        icon: ICONS.chat
+        icon: ICONS.deals
       },
       {
         title: 'Заказы',
@@ -153,7 +160,7 @@ const navConfig = [
       {
         title: 'Объекты',
         path: PATH_DASHBOARD.objects.list,
-        icon: ICONS.banking
+        icon: ICONS.house
       },
       {
         title: 'Контрагенты',
@@ -163,7 +170,7 @@ const navConfig = [
       {
         title: 'Люди',
         path: PATH_DASHBOARD.people.list,
-        icon: ICONS.user
+        icon: ICONS.worker
       },
       // {
       //   title: 'Номенклатура',
@@ -173,10 +180,15 @@ const navConfig = [
       {
         title: 'Договоры',
         path: PATH_DASHBOARD.contracts.list,
-        icon: ICONS.chat
+        icon: ICONS.contract
       },
       { title: 'Реализации', 
-        path: PATH_DASHBOARD.realisations.list 
+        path: PATH_DASHBOARD.realisations.list ,
+        icon: ICONS.one_c
+      },
+      { title: 'Цены', 
+        path: PATH_DASHBOARD.prices.list ,
+        icon: ICONS.prices
       },
     ],
   },

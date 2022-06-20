@@ -10,6 +10,12 @@ export class ObjectsModel extends Model {
     @Column({type: DataType.TEXT})
     description: string;
 
+    @Column({type: DataType.TEXT})
+    type: string;
+
+    @Column({type: DataType.TEXT})
+    status: string;
+
     @HasMany(() => Checkout)
     checkouts: Array<Checkout>;
 

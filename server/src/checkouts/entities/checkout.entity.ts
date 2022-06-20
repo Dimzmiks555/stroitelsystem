@@ -1,6 +1,7 @@
 import { BelongsTo, Column, DataType, ForeignKey, HasMany, Model, Table } from "sequelize-typescript";
 import { CheckoutsProduct } from "src/checkouts-products/entities/checkouts-product.entity";
 import { ObjectsModel } from "src/objects/entities/object.entity";
+import { Person } from "src/people/entities/person.entity";
 
 @Table
 export class Checkout extends Model {
@@ -16,6 +17,15 @@ export class Checkout extends Model {
     @ForeignKey(() => ObjectsModel)
     @Column
     object_id: number
+
+    
+    @ForeignKey(() => Person)
+    @Column
+    person_id: number
+
+    
+    @BelongsTo(() => Person, 'person_id')
+    person: Person
     
     @Column
     Date: string

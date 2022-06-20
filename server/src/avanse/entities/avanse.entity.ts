@@ -16,6 +16,10 @@ export class Avanse extends Model {
     @ForeignKey(() => Contragent)
     @Column
     contragent_id: number
+
+    @ForeignKey(() => Contragent)
+    @Column
+    object_id: number
     
     @BelongsTo(() => Contragent, 'contragent_id')
     contragent: Contragent

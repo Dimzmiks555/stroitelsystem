@@ -40,6 +40,8 @@ import { BankAccountModule } from './bank-account/bank-account.module';
 import { BankAccount } from './bank-account/entities/bank-account.entity';
 import { AvanseModule } from './avanse/avanse.module';
 import { Avanse } from './avanse/entities/avanse.entity';
+import { PriceModule } from './price/price.module';
+import { Price } from './price/entities/price.entity';
 
 @Module({
   imports: [
@@ -55,9 +57,9 @@ import { Avanse } from './avanse/entities/avanse.entity';
       username: 'root',
       password: 'root',
       database: 'stroitel_system',
-      sync: {alter: true},
-      synchronize: true,
-      autoLoadModels: true,
+      // sync: {alter: true},
+      // synchronize: true,
+      // autoLoadModels: true,
       models: [
         Order,
         Contragent,
@@ -74,7 +76,8 @@ import { Avanse } from './avanse/entities/avanse.entity';
         User,
         Payment,
         BankAccount,
-        Avanse
+        Avanse,
+        Price
       ],
     }),
     ObjectsModule, 
@@ -96,6 +99,7 @@ import { Avanse } from './avanse/entities/avanse.entity';
     PaymentModule,
     BankAccountModule,
     AvanseModule,
+    PriceModule,
   ],
   controllers: [AppController],
   providers: [AppService, UsersService],

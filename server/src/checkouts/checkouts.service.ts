@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import { CheckoutsProductsService } from 'src/checkouts-products/checkouts-products.service';
 import { CheckoutsProduct } from 'src/checkouts-products/entities/checkouts-product.entity';
 import { ObjectsModel } from 'src/objects/entities/object.entity';
+import { Person } from 'src/people/entities/person.entity';
 import { RealisationsService } from 'src/realisations/realisations.service';
 import { CreateCheckoutDto } from './dto/create-checkout.dto';
 import { UpdateCheckoutDto } from './dto/update-checkout.dto';
@@ -49,9 +50,11 @@ export class CheckoutsService {
 
   }
 
-  findAll() {
+  findAll(params: any) {
     return this.checkoutModel.findAll({
+      where: params,
       include: [
+        {model: CheckoutsProduct},
         {model: ObjectsModel}
       ]
     })
@@ -62,13 +65,16 @@ export class CheckoutsService {
       where: {id},
       include: [
         {model: CheckoutsProduct},
-        {model: ObjectsModel}
+        {model: ObjectsModel},
+        {model: Person}
       ]
     })
   }
 
   update(id: number, updateCheckoutDto: UpdateCheckoutDto) {
-    return `This action updates a #${id} checkout`;
+    return this.checkoutModel.update(updateCheckoutDto, {
+      where: {id}
+    });
   }
 
   remove(id: number) {

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { CheckoutsService } from './checkouts.service';
 import { CreateCheckoutDto } from './dto/create-checkout.dto';
 import { UpdateCheckoutDto } from './dto/update-checkout.dto';
@@ -13,8 +13,8 @@ export class CheckoutsController {
   }
 
   @Get()
-  findAll() {
-    return this.checkoutsService.findAll();
+  findAll(@Query() params: any) {
+    return this.checkoutsService.findAll(params);
   }
 
   @Get(':id')

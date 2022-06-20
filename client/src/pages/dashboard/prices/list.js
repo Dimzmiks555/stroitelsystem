@@ -2,6 +2,11 @@ import { sentenceCase } from 'change-case';
 import { useEffect, useState } from 'react';
 // next
 import NextLink from 'next/link';
+
+import TreeView from '@mui/lab/TreeView';
+// import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+// import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import TreeItem from '@mui/lab/TreeItem';
 // @mui
 import { useTheme } from '@mui/material/styles';
 import {
@@ -17,7 +22,13 @@ import {
   Typography,
   TableContainer,
   TablePagination,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
   Box,
+  TextField,
+  Stack,
 } from '@mui/material';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
@@ -35,13 +46,19 @@ import Scrollbar from '../../../components/Scrollbar';
 import SearchNotFound from '../../../components/SearchNotFound';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 // sections
-import { UserListHead, UserListToolbar, UserMoreMenu } from '../../../sections/@dashboard/objects/list';
+import { UserListHead as OrderListHead, UserListToolbar as OrderListToolbar, UserMoreMenu as OrderMoreMenu } from '../../../sections/@dashboard/nomenklatura/list';
+import { NewPrice } from 'src/sections/@dashboard/prices/NewPrice';
 
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
   { id: 'name', label: 'Название', alignRight: false },
-  { id: 'createdAt', label: 'Дата добавления', alignRight: false },
+  { id: 'seller', label: 'Продавец', alignRight: false },
+  { id: 'buyer', label: 'Покупатель', alignRight: false },
+  { id: 'summ', label: 'Сумма', alignRight: false },
+  { id: 'isVerified', label: 'Дата доставки', alignRight: false },
+  { id: 'status', label: 'Статус', alignRight: false },
+  { id: 'createdAt', label: 'Дата создания', alignRight: false },
   { id: '' },
 ];
 
@@ -58,21 +75,33 @@ export default function UserList() {
 
   const { themeStretch } = useSettings();
 
-  
-
-  const [userList, setList] = useState([]);
+  const [pricesList, setList] = useState([]);
 
   const [page, setPage] = useState(0);
 
-  const [order, setOrder] = useState('asc');
+  const [order, setOrder] = useState('desc');
 
   const [selected, setSelected] = useState([]);
+  
+  const [tab, setTab] = useState(0);
 
-  const [orderBy, setOrderBy] = useState('name');
+  const [orderBy, setOrderBy] = useState('createdAt');
 
   const [filterName, setFilterName] = useState('');
 
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(25);
+
+  useEffect(()=> {
+
+    fetch(`${process.env.NEXT_PUBLIC_HOST}/price`)
+    .then(res => res.json())
+    .then(json => {
+      console.log(json)
+      setList(json)
+    })
+
+
+  }, [])
 
   const handleRequestSort = (property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -82,24 +111,12 @@ export default function UserList() {
 
   const handleSelectAllClick = (checked) => {
     if (checked) {
-      const newSelecteds = userList.map((n) => n.name);
+      const newSelecteds = pricesList.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
     setSelected([]);
   };
-
-  useEffect(()=> {
-
-    fetch(`${process.env.NEXT_PUBLIC_HOST}/objects`)
-    .then(res => res.json())
-    .then(json => {
-      console.log(json)
-      setList(json)
-    })
-
-
-  }, [])
 
   const handleClick = (name) => {
     const selectedIndex = selected.indexOf(name);
@@ -127,112 +144,74 @@ export default function UserList() {
   };
 
   const handleDeleteUser = (userId) => {
-    const deleteUser = userList.filter((user) => user.id !== userId);
+    const deleteUser = pricesList.filter((user) => user.id !== userId);
     setSelected([]);
-    setUserList(deleteUser);
+    setList(deleteUser);
   };
 
   const handleDeleteMultiUser = (selected) => {
-    const deleteUsers = userList.filter((user) => !selected.includes(user.name));
+    const deleteUsers = pricesList.filter((user) => !selected.includes(user.name));
     setSelected([]);
-    setUserList(deleteUsers);
+    setList(deleteUsers);
   };
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - userList.length) : 0;
 
-  const filteredUsers = applySortFilter(userList, getComparator(order, orderBy), filterName);
+  const handleTab = (event, newValue) => {
+    setTab(newValue);
+  };
+
+
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - pricesList.length) : 0;
+
+  const filteredUsers = applySortFilter(pricesList, getComparator(order, orderBy), filterName);
 
   const isNotFound = !filteredUsers.length && Boolean(filterName);
 
+  
+
   return (
-    <Page title="Объекты">
+    <Page title="Цены">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading="Объекты"
+          heading="Цены"
           links={[
             // { name: 'Dashboard', href: PATH_DASHBOARD.root },
             // { name: 'User', href: PATH_DASHBOARD.user.root },
             { name: '' },
           ]}
           action={
-            <NextLink href={PATH_DASHBOARD.objects.new} passHref>
+            <NextLink href={PATH_DASHBOARD.nomenklatura.new} passHref>
               <Button variant="contained" startIcon={<Iconify icon={'eva:plus-fill'} />}>
-                Добавить
+                Создать
               </Button>
             </NextLink>
           }
         />
 
-        <Card sx={{bgcolor: "#f6f6ff"}}>
-          <UserListToolbar
+        <Card>
+          <OrderListToolbar
             numSelected={selected.length}
             filterName={filterName}
             onFilterName={handleFilterByName}
+            value={tab}
+            handleChange={handleTab}
             onDeleteUsers={() => handleDeleteMultiUser(selected)}
           />
 
+
           <Scrollbar>
-            <Box sx={{display: 'flex', flexWrap: 'wrap', p: 3, gap: '20px'}}>
-              {filteredUsers.map((row) => {
-                const { id, name, role, status, type, avatarUrl, createdAt } = row;
-                const isItemSelected = selected.indexOf(name) !== -1;
 
-                return (
-                  <Card sx={{width: '18%', p: 2}}>
-                      <Box sx={{display: 'flex', alignItems: 'center', mb: 2}}>
-                        <Avatar alt={name} src={avatarUrl} sx={{ mr: 2, bgcolor: status == 'Завершен' ? '#f44' : '#49f', color: 'white' }}>
-                          <Iconify icon={'ic:outline-cottage'} />
-                        </Avatar>
-                        <p style={{
-                            fontWeight: '900',
-                            color: type == 'Дом' ? '#dd3f29':
-                            type == 'Организация' ? '#c0f':
-                            '#3c3'
-                        }}>
-                          {type}
-                          </p>
-                      </Box>
-                      <NextLink href={`/dashboard/objects/${id}`}>
-                          <a style={{
-                            textDecoration: 'none', 
-                            color: '#49d', 
-                            fontWeight: 'bold'
-                          }}>{name}</a>
-                      </NextLink>
-                  </Card>
-                  // <TableRow
-                  //   hover
-                  //   key={id}
-                  //   tabIndex={-1}
-                  //   role="checkbox"
-                  //   selected={isItemSelected}
-                  //   aria-checked={isItemSelected}
-                  // >
-                  //   <TableCell padding="checkbox">
-                  //     <Checkbox checked={isItemSelected} onClick={() => handleClick(name)} />
-                  //   </TableCell>
-                  //   <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
-                  //     <Avatar alt={name} src={avatarUrl} sx={{ mr: 2 }}>
-                  //       <Iconify icon={'ic:outline-cottage'} />
-                  //     </Avatar>
-                  //     <NextLink href={`/dashboard/objects/${id}`}>
-                  //         {name}
-                  //     </NextLink>
-                  //   </TableCell>
-                  //   <TableCell align="left">
-                  //     <Label
-                  //       variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
-                  //       color={(status === 'banned' && 'error') || 'success'}
-                  //     >
-                  //       {new Date(createdAt).toLocaleDateString()}
-                  //     </Label>
-                  //   </TableCell>
+          <NewPrice/>
 
-                  // </TableRow>
-                );
-              })}
-            </Box>
+          <List sx={{p: 3}}>
+            {pricesList?.map((item) => (
+                <Box>
+                    <p>{item?.name}  {item?.price} руб. за 1 {item?.unit}</p>
+                </Box>
+            ))}
             
+          </List>
+  
           </Scrollbar>
 
         </Card>

@@ -2,6 +2,7 @@ import { BelongsTo, Column, DataType, ForeignKey, HasMany, Model, Table } from "
 import { Contragent } from "src/contragents/entities/contragent.entity";
 import { NoteProduct } from "src/note-products/entities/note-product.entity";
 import { ObjectsModel } from "src/objects/entities/object.entity";
+import { Person } from "src/people/entities/person.entity";
 
 @Table
 export class Note extends Model {
@@ -33,6 +34,10 @@ export class Note extends Model {
     @Column
     buyer_id: number
 
+    @ForeignKey(() => Person)
+    @Column
+    person_id: number
+
     @ForeignKey(() => ObjectsModel)
     @Column
     object_id: number
@@ -45,6 +50,9 @@ export class Note extends Model {
     
     @BelongsTo(() => Contragent, 'seller_id')
     seller: Contragent
+
+    @BelongsTo(() => Person, 'person_id')
+    person: Person
 
     @HasMany(() => NoteProduct)
     products: Array<NoteProduct>;
