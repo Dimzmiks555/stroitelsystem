@@ -32,6 +32,9 @@ export class Checkout extends Model {
     
     @Column({type: DataType.DECIMAL(10,2)})
     summ: number
+
+    @Column({type: DataType.DECIMAL(10,2)})
+    summ_after_discount: number
     
     @Column
     buyer: string

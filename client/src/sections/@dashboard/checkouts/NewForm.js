@@ -29,6 +29,7 @@ import {
 import { PartySuggestions } from 'react-dadata';
 import 'react-dadata/dist/react-dadata.css';
 import Index from 'src/pages/dashboard/note';
+import { CheckoutTable } from './CheckoutTable';
 
 // ----------------------------------------------------------------------
 
@@ -53,6 +54,9 @@ export default function NewForm({ isEdit, currentUser }) {
   const [peopleList, setPeople] = useState([]);
   const [selected, setSelected] = useState({});
   const [checkout, setCheckout] = useState({});
+
+
+  const [newSumm, setNewSumm] = useState(null);
 
   const { push, query } = useRouter();
 
@@ -110,6 +114,7 @@ export default function NewForm({ isEdit, currentUser }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEdit, currentUser]);
 
+
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_HOST}/realisations`)
       .then((res) => res.json())
@@ -144,6 +149,7 @@ export default function NewForm({ isEdit, currentUser }) {
       .then((res) => res.json())
       .then((json) => {
         setCheckout(json)
+        setNewSumm(json?.summ_after_discount)
       });
     }
 
@@ -161,6 +167,7 @@ export default function NewForm({ isEdit, currentUser }) {
       object_id: objectModel?.value,
       Date: selected.item?.['Date'],
       summ: selected.item?.['СуммаДокумента'],
+      summ_after_discount: selected.item?.['СуммаДокумента'],
       buyer: selected.item?.['Контрагент']?.['Description'],
       seller: selected.item?.['Ответственный']?.['Description'],
       sklad: selected.item?.['Склад']?.['Description'],
@@ -237,19 +244,21 @@ export default function NewForm({ isEdit, currentUser }) {
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={3}>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={4}>
           <Card sx={{ p: 3 }}>
             <Stack spacing={3}>
               {
                 isEdit ? (
                   <>
-                   <p>Объект: {checkout?.object?.name}</p>
-                   <p>Ответственное лицо: {checkout?.person?.surname} {checkout?.person?.name} {checkout?.person?.lastname} </p>
-                   <p>Покупатель в 1С: {checkout?.buyer}</p>
-                   <p>Продавец: {checkout?.seller}</p>
-                   <p>Склад: {checkout?.sklad}</p>
-                   <p>Сумма: {checkout?.summ} руб.</p>
-                   <p>Дата: {new Date(checkout?.['Date']).toLocaleDateString()}</p>
+                    <p>Объект: {checkout?.object?.name}</p>
+                    <p>Ответственное лицо: {checkout?.person?.surname} {checkout?.person?.name} {checkout?.person?.lastname} </p>
+                    <p>Покупатель в 1С: {checkout?.buyer}</p>
+                    <p>Продавец: {checkout?.seller}</p>
+                    <p>Склад: {checkout?.sklad}</p>
+                    <p>Сумма: {checkout?.summ} руб.</p>
+                    <TextField value={newSumm}></TextField>
+                    <p>Сумма со скидкой: {checkout?.summ_after_discount} руб.</p>
+                    <p>Дата: {new Date(checkout?.['Date']).toLocaleDateString()}</p>
                   </>
                 ) : (
                   <Autocomplete
@@ -291,46 +300,9 @@ export default function NewForm({ isEdit, currentUser }) {
           </Card>
         </Grid>
 
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={8}>
             {isEdit ? (
-            <Stack spacing={3}>
-              <LabelStyle>Позиции</LabelStyle>
-              <Table>
-                <TableHead>
-                  <TableCell>
-                    Наименование
-                  </TableCell>
-                  <TableCell>
-                    Цена
-                  </TableCell>
-                  <TableCell>
-                    Кол-во
-                  </TableCell>
-                  <TableCell>
-                    Сумма
-                  </TableCell>
-                </TableHead>
-                <TableBody>
-                  {checkout?.products?.map(item => (
-                    <TableRow>
-                      <TableCell>
-                        {item?.name}
-                      </TableCell>
-                      <TableCell>
-                        {item?.price} руб.
-                      </TableCell>
-                      <TableCell>
-                        {item?.amount}
-                      </TableCell>
-                      <TableCell>
-                        {item?.summ} руб.
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-              
-            </Stack>
+              <CheckoutTable checkout={checkout} setCheckout={setCheckout} setNewSumm={setNewSumm}></CheckoutTable>
             ) : (
             <Stack spacing={3}>
               <LabelStyle>Реализации</LabelStyle>

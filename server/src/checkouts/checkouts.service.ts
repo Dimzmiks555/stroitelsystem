@@ -36,8 +36,10 @@ export class CheckoutsService {
         name: item?.['Номенклатура']?.['НаименованиеПолное'],
         sku: item?.['Номенклатура']?.['Артикул'],
         price: item['Цена'],
+        price_after_discount: item['Цена'],
         amount: item['Количество'],
         summ: item['Сумма'],
+        summ_after_discount: item['Сумма'],
         checkout_id: +checkout?.id,
       }
 

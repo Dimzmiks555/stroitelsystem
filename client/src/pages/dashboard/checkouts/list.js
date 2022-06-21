@@ -51,6 +51,7 @@ const TABLE_HEAD = [
   { id: 'Number', label: 'Номер', alignRight: false },
   { id: 'object', label: 'Объект', alignRight: false },
   { id: 'summ', label: 'Сумма', alignRight: false },
+  { id: 'summ', label: 'Сумма со скидкой', alignRight: false },
   { id: 'sklad', label: 'Склад', alignRight: false },
   { id: 'createdAt', label: 'Дата создания', alignRight: false },
 ];
@@ -229,6 +230,7 @@ export default function UserList() {
                         </TableCell>
                         <TableCell align="left">{row?.object?.name}</TableCell>
                         <TableCell align="left">{row?.summ}</TableCell>
+                        <TableCell align="left">{row?.summ_after_discount}</TableCell>
                         <TableCell align="left">{row?.sklad}</TableCell>
                         <TableCell align="left">{new Date(createdAt).toLocaleDateString()}</TableCell>
                       </TableRow>

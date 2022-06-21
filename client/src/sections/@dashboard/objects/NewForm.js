@@ -34,35 +34,7 @@ import InvoiceBlock from './invoice/InvoiceBlock';
 
 // ----------------------------------------------------------------------
 
-const GENDER_OPTION = ['Мужской', 'Женский', 'Дети'];
 
-const CATEGORY_OPTION = [
-  { group: 'Clothing', classify: ['Shirts', 'T-shirts', 'Jeans', 'Leather'] },
-  { group: 'Tailored', classify: ['Suits', 'Blazers', 'Trousers', 'Waistcoats'] },
-  { group: 'Accessories', classify: ['Shoes', 'Backpacks and bags', 'Bracelets', 'Face masks'] },
-];
-
-const TAGS_OPTION = [
-  'Toy Story 3',
-  'Logan',
-  'Full Metal Jacket',
-  'Dangal',
-  'The Sting',
-  '2001: A Space Odyssey',
-  "Singin' in the Rain",
-  'Toy Story',
-  'Bicycle Thieves',
-  'The Kid',
-  'Inglourious Basterds',
-  'Snatch',
-  '3 Idiots',
-];
-
-const LabelStyle = styled(Typography)(({ theme }) => ({
-  ...theme.typography.subtitle2,
-  color: theme.palette.text.secondary,
-  marginBottom: theme.spacing(1),
-}));
 
 // ----------------------------------------------------------------------
 
@@ -84,16 +56,10 @@ export default function NewForm({ isEdit, currentProduct, expenses }) {
     () => ({
       name: currentProduct?.name || '',
       description: currentProduct?.description || '',
-      images: currentProduct?.images || [],
-      code: currentProduct?.code || '',
       sku: currentProduct?.sku || '',
       price: currentProduct?.price || 0,
       priceSale: currentProduct?.priceSale || 0,
-      tags: currentProduct?.tags || [TAGS_OPTION[0]],
-      inStock: true,
       initial_balance: currentProduct?.initial_balance || 0,
-      gender: currentProduct?.gender || GENDER_OPTION[2],
-      category: currentProduct?.category || CATEGORY_OPTION[0].classify[1],
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [currentProduct]

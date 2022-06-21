@@ -24,8 +24,10 @@ export class CheckoutsProductsService {
     return `This action returns a #${id} checkoutsProduct`;
   }
 
-  update(id: number, updateCheckoutsProductDto: UpdateCheckoutsProductDto) {
-    return `This action updates a #${id} checkoutsProduct`;
+  update(id, updateCheckoutsProductDto) {
+    return this.checkoutsProduct.update(updateCheckoutsProductDto, {
+      where: { id }
+    });
   }
 
   remove(id: number) {

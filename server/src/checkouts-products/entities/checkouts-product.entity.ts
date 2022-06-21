@@ -15,12 +15,18 @@ export class CheckoutsProduct extends Model {
 
     @Column({type: DataType.DECIMAL(10,2)})
     price: number
+
+    @Column({type: DataType.DECIMAL(10,2)})
+    price_after_discount: number
     
     @Column({type: DataType.DECIMAL(10,4)})
     amount: number
     
     @Column({type: DataType.DECIMAL(10,2)})
     summ: number
+
+    @Column({type: DataType.DECIMAL(10,2)})
+    summ_after_discount: number
 
 
 }
