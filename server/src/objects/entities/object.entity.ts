@@ -19,6 +19,9 @@ export class ObjectsModel extends Model {
     @Column({type: DataType.DECIMAL(10,2)})
     initial_balance: number;
 
+    @Column({type: DataType.DATE})
+    initial_balance_date: string;
+
     @HasMany(() => Checkout)
     checkouts: Array<Checkout>;
 

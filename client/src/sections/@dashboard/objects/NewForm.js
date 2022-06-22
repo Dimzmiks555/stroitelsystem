@@ -8,7 +8,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 // @mui
 import { styled } from '@mui/material/styles';
-import { LoadingButton } from '@mui/lab';
+import { DatePicker, LoadingButton } from '@mui/lab';
 import { Card, Chip, Grid, Stack, TextField, Typography, Autocomplete, InputAdornment, Box } from '@mui/material';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
@@ -60,6 +60,7 @@ export default function NewForm({ isEdit, currentProduct, expenses }) {
       price: currentProduct?.price || 0,
       priceSale: currentProduct?.priceSale || 0,
       initial_balance: currentProduct?.initial_balance || 0,
+      initial_balance_date: currentProduct?.initial_balance_date || null,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [currentProduct]
@@ -149,7 +150,24 @@ export default function NewForm({ isEdit, currentProduct, expenses }) {
 
               <RHFTextField name="description" multiline rows={2} label="Описание" />
               <RHFTextField type="number" name="initial_balance" label="Начальное сальдо" />
-
+              <Controller
+                name="initial_balance_date"
+                control={control}
+                render={({ field }) => (
+                  <DatePicker
+                    {...field}
+                    value={values?.initial_balance_date}
+                    orientation="landscape"
+                    disableOpenPicker
+                    openTo="day"
+                    label="Дата начального сальдо"
+                    mask='__/__/____'
+                    inputFormat="dd/MM/yyyy"
+                    renderInput={(params) => <TextField size="small"  {...params} sx={{mb:4}} />}
+                  />
+                )}
+              />
+              
               <Controller
                 name="type"
                 control={control}
@@ -223,7 +241,7 @@ export default function NewForm({ isEdit, currentProduct, expenses }) {
       </Grid>
       
       <Box sx={{py: 3}}>
-        <InvoiceBlock/>
+        <InvoiceBlock object={defaultValues}/>
       </Box>
     </FormProvider>
   );

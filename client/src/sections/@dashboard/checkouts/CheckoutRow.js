@@ -6,8 +6,8 @@ import { useRouter } from 'next/router'
 
 export const CheckoutRow = ({item}) => {
 
-    const [price, setPrice] = useState(item?.price_after_discount)
-    const [summ, setSumm] = useState(item?.summ_after_discount)
+    const [price_after_discount, setPrice] = useState(item?.price_after_discount)
+    const [summ_after_discount, setSumm] = useState(item?.summ_after_discount)
 
     useEffect(() => {
         
@@ -25,11 +25,12 @@ export const CheckoutRow = ({item}) => {
                 'Content-Type': 'application/json',
                 'accept': 'application/json'
             },
-            body: JSON.stringify({price, summ})
+            body: JSON.stringify({price_after_discount, summ_after_discount})
         })
         .then(res => res.json())
         .then(json => {
             console.log(json)
+            alert('Изменено')
         })
 
 
@@ -45,7 +46,7 @@ export const CheckoutRow = ({item}) => {
                 {item?.price}
             </TableCell>
             <TableCell>
-                <TextField type="number" onChange={e => {setPrice(e.target.value)}} value={price} sx={{width:120}}></TextField>
+                <TextField type="number" onChange={e => {setPrice(e.target.value)}} value={price_after_discount} sx={{width:120}}></TextField>
             </TableCell>
             <TableCell>
                 {item?.amount}
@@ -54,7 +55,7 @@ export const CheckoutRow = ({item}) => {
                 {item?.summ}
             </TableCell>
             <TableCell>
-                <TextField type="number" onChange={e => {setSumm(e.target.value)}} value={summ} sx={{width:120}}></TextField>
+                <TextField type="number" onChange={e => {setSumm(e.target.value)}} value={summ_after_discount} sx={{width:120}}></TextField>
             </TableCell>
             <TableCell>
                 <IconButton onClick={handleSubmit} color="success" edge="start">

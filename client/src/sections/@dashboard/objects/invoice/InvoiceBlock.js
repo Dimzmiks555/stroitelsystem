@@ -7,16 +7,25 @@ import TableHead from "@mui/material/TableHead"
 import { useEffect, useState } from "react"
 import {useRouter} from 'next/router'
 import NextLink from 'next/link'
-import { Checkbox } from "@mui/material"
+import { Box, Checkbox, TextField } from "@mui/material"
 import InvoiceRow from "./InvoiceRow"
+import { DatePicker } from "@mui/lab"
 
 
-export default function InvoiceBlock() {
+export default function InvoiceBlock({object}) {
 
     const [ expences, setExpences] = useState([])
     const [ avanses, setAvanses] = useState([])
+    
+    const [ startDate, setStartDate] = useState(0)
+    const [ endDate, setEndDate] = useState(new Date())
 
     const router = useRouter()
+
+    useEffect(() => {
+        console.log(object)
+        setStartDate(object?.initial_balance_date)
+    }, [object])
 
     useEffect(()=> {
 
@@ -46,7 +55,6 @@ export default function InvoiceBlock() {
                         allData.push(...checkoutsList)
                     }
                     
-                    console.log(allData)
 
                     allData.sort(function(a, b) {
                         return b.Date.localeCompare(a.Date);
@@ -65,7 +73,29 @@ export default function InvoiceBlock() {
 
     return (
         <Stack spacing={3} sx={{display: 'flex', flexWrap: 'wrap', width: '100%', flexDirection: 'row', justifyContent: 'space-between'}}>
-
+            <Box>
+                <h2>Сводка</h2>
+                <Stack spacing={3} direction="row" mt="30px">
+                    <DatePicker
+                        orientation="landscape"
+                        openTo="day"
+                        value={startDate}
+                        label="От"
+                        mask='__/__/____'
+                        inputFormat="dd/MM/yyyy"
+                        renderInput={(params) => <TextField size="small"  {...params} sx={{mb:4}} />}
+                    />
+                    <DatePicker
+                        orientation="landscape"
+                        openTo="day"
+                        value={endDate}
+                        label="До"
+                        mask='__/__/____'
+                        inputFormat="dd/MM/yyyy"
+                        renderInput={(params) => <TextField size="small"  {...params} sx={{mb:4}} />}
+                    />
+                </Stack>
+            </Box>
             <Table size="small">
                 <TableHead>
                     <TableRow>
