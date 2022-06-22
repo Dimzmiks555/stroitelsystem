@@ -78,6 +78,7 @@ export default function NewForm({ isEdit, currentUser }) {
       seller_id: currentUser?.seller_id || '',
       status: currentUser?.status || 'Создан',
       summ: currentUser?.summ || '0',
+      summ_after_discount: currentUser?.summ_after_discount || '0',
       date: currentUser?.date || '',
       payment_method: currentUser?.payment_method || '',
     }),
@@ -192,6 +193,9 @@ export default function NewForm({ isEdit, currentUser }) {
             console.log(json);
           });
       } else {
+
+        data.summ_after_discount = newSumm
+
         fetch(`${process.env.NEXT_PUBLIC_HOST}/checkouts/${query?.id}`, {
           method: 'PATCH',
           headers: {
@@ -256,7 +260,7 @@ export default function NewForm({ isEdit, currentUser }) {
                     <p>Продавец: {checkout?.seller}</p>
                     <p>Склад: {checkout?.sklad}</p>
                     <p>Сумма: {checkout?.summ} руб.</p>
-                    <TextField value={newSumm}></TextField>
+                    <RHFTextField value={newSumm} onChange={e => {setNewSumm(e.target.value)}}></RHFTextField>
                     <p>Сумма со скидкой: {checkout?.summ_after_discount} руб.</p>
                     <p>Дата: {new Date(checkout?.['Date']).toLocaleDateString()}</p>
                   </>
