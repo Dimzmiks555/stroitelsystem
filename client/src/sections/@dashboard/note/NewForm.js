@@ -7,8 +7,7 @@ import { useRouter } from 'next/router';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 // @mui
-import { styled } from '@mui/material/styles';
-import { Card, Chip, Grid, Stack, TextField, Typography, Autocomplete, InputAdornment, Box, Switch, FormControlLabel, Table, TableRow, TableCell, TableHead, TableBody, Avatar, Alert, AlertTitle } from '@mui/material';
+import { Card, Chip, Grid, Stack, TextField, Typography, Autocomplete, InputAdornment, Box, Switch, FormControlLabel, Table, TableRow, TableCell, TableHead, TableBody, Avatar, Alert, AlertTitle, SpeedDial, SpeedDialIcon } from '@mui/material';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // components
@@ -22,6 +21,8 @@ import TableStore from './Table/TableStore';
 import { observer } from 'mobx-react';
 import NewNomenklatura from './Main/NewNomenklatura';
 import { Main } from './Main/Main';
+import { PriceWidget } from './Widgets/PriceWidget';
+import { WidgetController } from './Widgets/WidgetController';
 
 // ----------------------------------------------------------------------
 
@@ -215,11 +216,11 @@ import { Main } from './Main/Main';
   };
 
 
-  
     
 
   return (
     <>
+    <WidgetController></WidgetController>
     <NewNomenklatura open={open} handleClose={handleClose}></NewNomenklatura>
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={3}>
@@ -255,6 +256,7 @@ import { Main } from './Main/Main';
           </Card>
         </Grid>
       </Grid>
+      
     </FormProvider>
     </>
   );

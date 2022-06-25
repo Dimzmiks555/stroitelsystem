@@ -11,6 +11,7 @@ import Page from '../../../components/Page';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 // sections
 import NewForm from '../../../sections/@dashboard/note/NewForm';
+import { PriceWidget } from 'src/sections/@dashboard/note/Widgets/PriceWidget';
 
 // ----------------------------------------------------------------------
 
@@ -36,6 +37,7 @@ export default function UserCreate() {
         />
         <NewForm />
       </Container>
+      
     </Page>
   );
 }
