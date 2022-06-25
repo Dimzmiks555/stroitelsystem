@@ -57,7 +57,8 @@ export class CheckoutsService {
       where: params,
       include: [
         {model: CheckoutsProduct},
-        {model: ObjectsModel}
+        {model: ObjectsModel},
+        {model: Person},
       ]
     })
   }

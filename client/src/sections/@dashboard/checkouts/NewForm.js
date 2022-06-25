@@ -10,7 +10,7 @@ import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 // @mui
 import { styled } from '@mui/material/styles';
 import { LoadingButton, StaticDatePicker } from '@mui/lab';
-import { Card, Chip, Grid, Stack, TextField, Typography, Autocomplete, InputAdornment, Box, List, ListItem, ListItemButton, ListItemText, TableHead, TableBody, Table, TableRow, TableCell } from '@mui/material';
+import { Card, Chip, Grid, Stack, TextField, Typography, Autocomplete, InputAdornment, Box, List, ListItem, ListItemButton, ListItemText, TableHead, TableBody, Table, TableRow, TableCell, Avatar } from '@mui/material';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
 
@@ -30,6 +30,7 @@ import { PartySuggestions } from 'react-dadata';
 import 'react-dadata/dist/react-dadata.css';
 import Index from 'src/pages/dashboard/note';
 import { CheckoutTable } from './CheckoutTable';
+import ToReportBlock from './ToReportBlock';
 
 // ----------------------------------------------------------------------
 
@@ -57,6 +58,15 @@ export default function NewForm({ isEdit, currentUser }) {
 
 
   const [newSumm, setNewSumm] = useState(null);
+
+  const [open, setOpen] = useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const { push, query } = useRouter();
 
@@ -260,8 +270,7 @@ export default function NewForm({ isEdit, currentUser }) {
                     <p>Продавец: {checkout?.seller}</p>
                     <p>Склад: {checkout?.sklad}</p>
                     <p>Сумма: {checkout?.summ} руб.</p>
-                    <RHFTextField value={newSumm} onChange={e => {setNewSumm(e.target.value)}}></RHFTextField>
-                    <p>Сумма со скидкой: {checkout?.summ_after_discount} руб.</p>
+                    <p>Сумма со скидкой: <RHFTextField value={newSumm} onChange={e => {setNewSumm(e.target.value)}}></RHFTextField></p>
                     <p>Дата: {new Date(checkout?.['Date']).toLocaleDateString()}</p>
                   </>
                 ) : (
@@ -296,10 +305,23 @@ export default function NewForm({ isEdit, currentUser }) {
               <div>
                 <RHFTextField multiline rows={2}  name="description" label="Описание"/>
               </div>
-
-              <LoadingButton type="submit" variant="contained" size="large" loading={isSubmitting}>
-                {!isEdit ? 'Сохранить' : 'Изменить'}
-              </LoadingButton>
+              <Box sx={{display: 'flex', alignItems: 'center', mt:2 }}>
+                
+                <ToReportBlock currentProduct={checkout} open={open} handleClose={handleClose}></ToReportBlock>
+                {isEdit &&  (
+                    <LoadingButton onClick={handleClickOpen} variant="contained" color='success' size="large" sx={{mr:2, color: 'white' }} >
+                      {isEdit &&  'В отчет'}
+                    </LoadingButton>
+                )}
+                
+                <LoadingButton type="submit" variant="contained" size="large" sx={{mr:2 }} loading={isSubmitting}>
+                  {!isEdit ? 'Сохранить' : 'Обновить'}
+                </LoadingButton>
+                {isEdit && (
+                  <Avatar sx={{ bgcolor: checkout?.isChecked ? '#0a0' : '#d00' , mr: 2}}> </Avatar>
+                )}
+                {/* {checkout?.createdAt && `Оформлено ${new Date(checkout?.createdAt)?.toLocaleDateString()}`} */}
+              </Box>
             </Stack>
           </Card>
         </Grid>

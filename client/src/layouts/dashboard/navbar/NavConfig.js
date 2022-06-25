@@ -73,10 +73,9 @@ const navConfig = [
         icon: ICONS.analytics,
         children: [
           { title: 'Записи', path: PATH_DASHBOARD.note.list},
-          { title: 'Отчёты', path: PATH_DASHBOARD.reports.list },
           { title: 'Списания', path: PATH_DASHBOARD.checkouts.list },
-          { title: 'Авансы', path: PATH_DASHBOARD.avanses.list},
           { title: 'Покупки', path: PATH_DASHBOARD.avanses.list},
+          { title: 'Авансы', path: PATH_DASHBOARD.avanses.list},
         ],
       },
       // {
@@ -103,11 +102,11 @@ const navConfig = [
         path: PATH_DASHBOARD.other_expenses.list,
         icon: ICONS.ecommerce
       },
-      // {
-      //   title: 'Предложения',
-      //   path: PATH_DASHBOARD.other_expenses.list,
-      //   icon: ICONS.calendar
-      // },
+      {
+        title: 'Отчёты',
+        path: PATH_DASHBOARD.reports.list,
+        icon: ICONS.calendar
+      },
       // {
       //   title: 'Документы',
       //   path: PATH_DASHBOARD.tenders.list,

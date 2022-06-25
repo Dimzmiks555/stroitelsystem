@@ -5,6 +5,14 @@ import { Person } from "src/people/entities/person.entity";
 
 @Table
 export class Checkout extends Model {
+
+    
+    @Column({defaultValue: false})
+    isChecked: boolean
+
+    @Column({defaultValue: false})
+    isUpdatedAfterCheck: boolean
+
     @Column({type: DataType.TEXT})
     description: string
 
