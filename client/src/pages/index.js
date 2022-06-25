@@ -5,17 +5,6 @@ import Layout from '../layouts';
 // components
 import Page from '../components/Page';
 // sections
-import {
-  HomeHero,
-  HomeMinimal,
-  HomeDarkMode,
-  HomeLookingFor,
-  HomeColorPresets,
-  HomePricingPlans,
-  HomeAdvertisement,
-  HomeCleanInterfaces,
-  HomeHugePackElements,
-} from '../sections/home';
 import { useRouter } from 'next/router';
 
 // ----------------------------------------------------------------------
