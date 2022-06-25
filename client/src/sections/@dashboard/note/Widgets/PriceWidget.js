@@ -26,7 +26,7 @@ export const PriceWidget = () => {
             <Card sx={{
                     position: 'absolute',
                     zIndex: 20,
-                    width: 320,
+                    width: 700,
                     background: '#efe',
                     top: '200px', 
                     left: '40%'
@@ -37,9 +37,9 @@ export const PriceWidget = () => {
                     <IconButton ><Iconify sx={{width: 35, height: 35, color: '#fff'}} icon={'eva:close-square-outline'} /></IconButton>
                 </Box>
                 </strong>
-                <Box sx={{p: 1}}>
+                <Box sx={{p: 1, display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between'}}>
                     {list.map(price => (
-                        <Box sx={{background: '#fff', p: 1, borderRadius: 1, mb: 1, display: 'flex', justifyContent: 'space-between'}}>
+                        <Box sx={{background: '#fff', p: 1, borderRadius: 1, mb: 1, display: 'flex', justifyContent: 'space-between', width: '48%'}}>
                             <p>{price?.name}</p>
                             <p>{price?.price} за {price?.unit}</p>
                         </Box>
