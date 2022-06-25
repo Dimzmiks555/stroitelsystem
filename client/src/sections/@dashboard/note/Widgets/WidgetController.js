@@ -41,7 +41,7 @@ export const WidgetController = () => {
             </SpeedDial>
             {
                 active == 'price' && 
-                <PriceWidget></PriceWidget>
+                <PriceWidget setActive={setActive}></PriceWidget>
             }
         </Box>
     )
