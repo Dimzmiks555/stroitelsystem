@@ -24,8 +24,9 @@ export const WidgetController = () => {
     return (
         <Box >
             <SpeedDial
+                direction='down'
                 ariaLabel="SpeedDial basic example"
-                sx={{ position: 'absolute', bottom: 16, right: 16 }}
+                sx={{ position: 'fixed', top: 40, right: 40 }}
                 icon={<SpeedDialIcon />}
             >
                 

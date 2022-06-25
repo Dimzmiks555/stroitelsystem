@@ -48,7 +48,7 @@ export const Main = ({ setObjectModel, setValueDate, contragents, isEdit, curren
   return (
     
     <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
-    <Box sx={{display: 'flex', flexDirection: 'column', m: 4}}>
+    <Box sx={{display: 'flex', flexDirection: 'column', m: 2}}>
       <DatePicker
         orientation="landscape"
         disableOpenPicker
@@ -60,7 +60,7 @@ export const Main = ({ setObjectModel, setValueDate, contragents, isEdit, curren
         }}
         mask='__/__/____'
         inputFormat="dd/MM/yyyy"
-        renderInput={(params) => <TextField size="small"  {...params} sx={{mb:4}} />}
+        renderInput={(params) => <TextField size="small"  {...params} sx={{mb:2}} />}
       />
       
       <Controller
@@ -109,7 +109,7 @@ export const Main = ({ setObjectModel, setValueDate, contragents, isEdit, curren
 
     <Stack spacing={3}>
 
-        <Stack spacing={1} my={4}>
+        <Stack spacing={1} my={2}>
         
 
         <Controller
@@ -174,22 +174,24 @@ export const Main = ({ setObjectModel, setValueDate, contragents, isEdit, curren
       </Stack>
     
     <div>
-      <h2>Описание</h2>
       <RHFTextField
         multiline
+        size="small"
+        label="Описание"
         name="description"
         fullWidth
-        rows={5}
-        sx={{display: 'block'}}
+        rows={3}
+        sx={{display: 'block', mt: 2}}
         
       />
       
-      <RHFTextField name="basis" label="Основание" sx={{my:2}} />
+      <RHFTextField size="small" name="basis" label="Основание" sx={{my:2}} />
 
       
       <RHFTextField
         name="summ"
         label="Общая сумма"
+        size="small"
         placeholder="0"
         InputLabelProps={{ shrink: true }}
         InputProps={{
