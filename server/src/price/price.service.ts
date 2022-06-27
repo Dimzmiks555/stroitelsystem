@@ -25,7 +25,9 @@ export class PriceService {
   }
 
   update(id, updatePriceDto) {
-    return `This action updates a #${id} price`;
+    return this.priceModel.update(updatePriceDto, {
+      where: {id}
+    });
   }
 
   remove(id) {

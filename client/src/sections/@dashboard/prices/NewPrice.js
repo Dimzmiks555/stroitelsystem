@@ -16,19 +16,36 @@ export const NewPrice = ({isEdit, priceModel}) => {
     });
     const onSubmit = data => {
         
-        fetch(`${process.env.NEXT_PUBLIC_HOST}/price`, {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json',
-                'accept': 'application/json',
-            },
-            body: JSON.stringify(data)
-        })
-        .then(res => res.json())
-        .then(json => {
-            console.log(json)
-            router.reload()
-        })
+        if (isEdit) {
+            fetch(`${process.env.NEXT_PUBLIC_HOST}/price/${priceModel?.id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-type': 'application/json',
+                    'accept': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(res => res.json())
+            .then(json => {
+                console.log(json)
+                // router.reload()
+            })
+        } else {
+            fetch(`${process.env.NEXT_PUBLIC_HOST}/price`, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                    'accept': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(res => res.json())
+            .then(json => {
+                console.log(json)
+                router.reload()
+            })
+        }
+        
 
 
 
@@ -45,7 +62,7 @@ export const NewPrice = ({isEdit, priceModel}) => {
             {!isEdit ?
                 <Button type="submit" variant="contained">Создать</Button>
                 :
-                <Button type="submit" variant="contained" disabled>Изменить</Button>
+                <Button type="submit" variant="contained" >Изменить</Button>
             }
         </Stack>
     </form>
