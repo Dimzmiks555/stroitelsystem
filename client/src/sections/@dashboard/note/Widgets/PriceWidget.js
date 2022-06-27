@@ -46,10 +46,10 @@ export const PriceWidget = ({setActive}) => {
                     left: '40%'
                 }}>
                 <strong>
-                <Box sx={{background: '#3a8', pl: 2, cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#fff'}}>
-                    <h3>Цены</h3>
-                    <IconButton onClick={e => {setActive('none')}}><Iconify sx={{width: 35, height: 35, color: '#fff'}} icon={'eva:close-square-outline'} /></IconButton>
-                </Box>
+                    <Box sx={{background: '#3a8', pl: 2, cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#fff'}}>
+                        <h3>Цены</h3>
+                        <IconButton onClick={e => {setActive('none')}}><Iconify sx={{width: 35, height: 35, color: '#fff'}} icon={'eva:close-square-outline'} /></IconButton>
+                    </Box>
                 </strong>
                 <Box sx={{p:1}}>
                     <TextField size="small" sx={{background: '#fff', borderRadius: '8px'}} label="Поиск..." value={search} onChange={handleSearch}></TextField>

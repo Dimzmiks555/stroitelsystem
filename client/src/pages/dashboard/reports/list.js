@@ -12,6 +12,7 @@ import { RealisationsReport } from 'src/sections/@dashboard/reports/Realisations
 import { useState } from 'react';
 import { Box, Card, Tab, Tabs } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
+import { ObjectReport } from 'src/sections/@dashboard/reports/ObjectReport';
 
 // ----------------------------------------------------------------------
 
@@ -55,6 +56,9 @@ export default function UserList() {
         </TabPanel>
         <TabPanel value="2">
           <RealisationsReport></RealisationsReport>
+        </TabPanel>
+        <TabPanel value="5">
+          <ObjectReport></ObjectReport>
         </TabPanel>
       </TabContext>
     </Page>

@@ -42,6 +42,7 @@ import { AvanseModule } from './avanse/avanse.module';
 import { Avanse } from './avanse/entities/avanse.entity';
 import { PriceModule } from './price/price.module';
 import { Price } from './price/entities/price.entity';
+import { ExpenseModule } from './expense/expense.module';
 
 @Module({
   imports: [
@@ -100,6 +101,7 @@ import { Price } from './price/entities/price.entity';
     BankAccountModule,
     AvanseModule,
     PriceModule,
+    ExpenseModule,
   ],
   controllers: [AppController],
   providers: [AppService, UsersService],
