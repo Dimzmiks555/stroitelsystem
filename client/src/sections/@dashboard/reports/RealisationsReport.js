@@ -65,6 +65,9 @@ export const RealisationsReport = () => {
     const { themeStretch } = useSettings();
 
     const [list, setList] = useState([]);
+    const [filtered, setFiltered] = useState([]);
+    const [objectId, setObjectId] = useState(1);
+    const [objects, setObjects] = useState([]);
   
     const [page, setPage] = useState(0);
   
@@ -92,13 +95,49 @@ export const RealisationsReport = () => {
   
       fetch(`${process.env.NEXT_PUBLIC_HOST}/checkouts?isChecked=0`)
       .then(res => res.json())
-      .then(json => {
-        console.log(json)
-        setList(json)
+      .then(jsonData => {
+        setList(jsonData)
+        setFiltered(jsonData)
+
+        fetch(`${process.env.NEXT_PUBLIC_HOST}/objects`)
+        .then((res) => res.json())
+        .then((json) => {
+
+          let filteredList = json.filter(object => {
+
+            let trueArray = false
+
+            jsonData.forEach(note => {
+              if (object.id == note?.object_id) {
+                trueArray = true
+              }
+            })
+
+            return trueArray
+
+          })
+
+          let list = filteredList.map((item) => {
+            return { label: item.name, value: item.id };
+          });
+
+          setObjects(list);
+        });
+
       })
   
   
     }, [])
+
+    useEffect(()=> {
+      console.log(objectId)
+      if (objectId != 0) {
+        setFiltered(list.filter(item => item?.object_id == objectId))
+      } else {
+        setFiltered(list)
+      }
+  
+    }, [objectId])
   
     const handleRequestSort = (property) => {
       const isAsc = orderBy === property && order === 'asc';
@@ -186,6 +225,15 @@ export const RealisationsReport = () => {
       };
 
       
+      const handleChangeObject = (e, newValue) => {
+      
+        if (newValue) {
+          setObjectId(newValue.value)
+        } else {
+          setObjectId(0)
+        }
+  
+      }
 
 
     return (
@@ -236,6 +284,8 @@ export const RealisationsReport = () => {
             <UserListToolbar
                 numSelected={selected.length}
                 filterName={filterName}
+                handleChangeObject={handleChangeObject}
+                objects={objects}
                 sx={{displayPrint: 'none'}}
                 onFilterName={handleFilterByName}
                 onDeleteUsers={() => handleDeleteMultiUser(selected)}
@@ -255,7 +305,7 @@ export const RealisationsReport = () => {
                     onSelectAllClick={handleSelectAllClick}
                     />
                     <TableBody colSpan={6} >
-                    {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => {
+                    {filtered.map((row, index) => {
                         const { id, name, role, summ_after_discount, company, Date: date, isVerified } = row;
                         const isItemSelected = selected.indexOf(id) !== -1;
 

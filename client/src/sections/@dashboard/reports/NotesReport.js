@@ -66,6 +66,9 @@ export const NotesReport = () => {
     const { themeStretch } = useSettings();
 
     const [list, setList] = useState([]);
+    const [filtered, setFiltered] = useState([]);
+    const [objectId, setObjectId] = useState(0);
+    const [objects, setObjects] = useState([]);
   
     const [page, setPage] = useState(0);
   
@@ -93,14 +96,53 @@ export const NotesReport = () => {
   
       fetch(`${process.env.NEXT_PUBLIC_HOST}/notes?isChecked=0`)
       .then(res => res.json())
-      .then(json => {
-        console.log(json)
-        setList(json)
+      .then(jsonData => {
+        setList(jsonData)
+        setFiltered(jsonData)
+
+        fetch(`${process.env.NEXT_PUBLIC_HOST}/objects`)
+        .then((res) => res.json())
+        .then((json) => {
+
+          let filteredList = json.filter(object => {
+
+            let trueArray = false
+
+            jsonData.forEach(note => {
+              if (object.id == note?.object_id) {
+                trueArray = true
+              }
+            })
+
+            return trueArray
+
+          })
+
+          let list = filteredList.map((item) => {
+            return { label: item.name, value: item.id };
+          });
+
+          setObjects(list);
+        });
+
       })
+
+      
   
   
     }, [])
   
+    useEffect(()=> {
+      console.log(objectId)
+      if (objectId != 0) {
+        setFiltered(list.filter(item => item?.object_id == objectId))
+      } else {
+        setFiltered(list)
+      }
+  
+    }, [objectId])
+
+
     const handleRequestSort = (property) => {
       const isAsc = orderBy === property && order === 'asc';
       setOrder(isAsc ? 'desc' : 'asc');
@@ -187,6 +229,15 @@ export const NotesReport = () => {
       setSelected(newSelected);
     };
 
+    const handleChangeObject = (e, newValue) => {
+      
+      if (newValue) {
+        setObjectId(newValue.value)
+      } else {
+        setObjectId(0)
+      }
+
+    }
 
 
     return (
@@ -234,121 +285,130 @@ export const NotesReport = () => {
             </DialogActions>
             </Dialog>
             <Card >
-            <UserListToolbar
-                numSelected={selected.length}
-                filterName={filterName}
-                sx={{displayPrint: 'none'}}
-                onFilterName={handleFilterByName}
-                onDeleteUsers={() => handleDeleteMultiUser(selected)}
-            />
+              <UserListToolbar
+                  numSelected={selected.length}
+                  filterName={filterName}
+                  sx={{displayPrint: 'none'}}
+                  handleChangeObject={handleChangeObject}
+                  objects={objects}
+                  onFilterName={handleFilterByName}
+                  onDeleteUsers={() => handleDeleteMultiUser(selected)}
+              />
+            {
+              filtered.length != 0 ? (
+                  <>
+                  <Scrollbar>
+                      <TableContainer sx={{ minWidth: 800, fontSize: 6 }}>
+                      <Table size='small' >
+                          <UserListHead
+                          order={order}
+                          orderBy={orderBy}
+                          sx={{displayPrint: 'none'}}
+                          headLabel={TABLE_HEAD}
+                          rowCount={list.length}
+                          numSelected={selected.length}
+                          onRequestSort={handleRequestSort}
+                          onSelectAllClick={handleSelectAllClick}
+                          />
+                          <TableBody colSpan={6} >
+                          {filtered.map((row, index) => {
+                              const { id, name, role, summ, company, Date: date, isVerified } = row;
+                              const isItemSelected = selected.indexOf(id) !== -1;
 
-            <Scrollbar>
-                <TableContainer sx={{ minWidth: 800, fontSize: 6 }}>
-                <Table size='small' >
-                    <UserListHead
-                    order={order}
-                    orderBy={orderBy}
-                    sx={{displayPrint: 'none'}}
-                    headLabel={TABLE_HEAD}
-                    rowCount={list.length}
-                    numSelected={selected.length}
-                    onRequestSort={handleRequestSort}
-                    onSelectAllClick={handleSelectAllClick}
-                    />
-                    <TableBody colSpan={6} >
-                    {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => {
-                        const { id, name, role, summ, company, Date: date, isVerified } = row;
-                        const isItemSelected = selected.indexOf(id) !== -1;
+                              return (
+                              <>
+                                  <TableRow
+                                      hover
+                                      sx={{borderTop: '2px solid #dfdfdf'}}
+                                      
+                                      key={id}
+                                      tabIndex={-1}
+                                      role="checkbox"
+                                      selected={isItemSelected}
+                                      aria-checked={isItemSelected}
+                                  >
+                                      
+                                      <TableCell padding="checkbox">
+                                        <Checkbox checked={isItemSelected} onClick={() => handleClick(id)} />
+                                      </TableCell>
+                                      <TableCell  sx={{fontWeight: 'bold', fontSize: 11, p: 0, textAlign: 'center'}} >
+                                      <Chip color={row?.isChecked ? 'success' : 'error'} label={index + 1}></Chip> 
+                                      </TableCell>
+                                      <TableCell   sx={{ display: 'flex', alignItems: 'center', fontWeight: 'bold', fontSize: 11 }}>
+                                      <NextLink href={`/dashboard/note/${id}/edit`}>
+                                          <a> Запись № {id} от {new Date(date).toLocaleDateString()}  </a>
+                                      </NextLink>
+                                          {row?.isUpdatedAfterCheck && <Chip sx={{p: 0,ml: 2, color: 'white', fontSize: 12}} color="warning" label="Изменено"></Chip>}
+                                      </TableCell>
+                                      <TableCell  sx={{fontWeight: 'bold', fontSize: 11}} colSpan={3}>
+                                      {row?.object?.name}
+                                      </TableCell>
+                                      <TableCell sx={{fontWeight: 'bold', fontSize: 11}} align="left">
+                                          {+summ} ₽
+                                      </TableCell>
+                                      <TableCell sx={{fontWeight: 'bold', fontSize: 11, maxWidth: 240}} >{row?.description} ({row?.person?.surname} {row?.person?.name})</TableCell>
+                                  </TableRow>
+                                      {row.products.map((product) => (
+                                      <TableRow key={product.id}>
+                                          
+                                        <TableCell padding="checkbox">
+                                          
+                                        </TableCell>
+                                          <TableCell  sx={{fontWeight: 'bold', fontSize: 11, p: 0}} >
+                                          </TableCell>
+                                          <TableCell sx={{fontSize: 11}}>{product.name}</TableCell>
+                                          <TableCell sx={{fontSize: 11}} align="right">{+product.amount}</TableCell>
+                                          <TableCell sx={{fontSize: 11}}>{product.edizm}</TableCell>
+                                          <TableCell sx={{fontSize: 11}}>{+product.price} ₽</TableCell>
+                                          <TableCell sx={{fontSize: 11}}>{+product.summ} ₽</TableCell>
+                                          <TableCell sx={{fontSize: 11}}>{row?.seller?.name}</TableCell>
+                                      </TableRow>
+                                      ))}
+                              </>
+                              );
+                          })}
+                          {emptyRows > 0 && (
+                              <TableRow style={{ height: 53 * emptyRows }}>
+                              <TableCell colSpan={6} />
+                              </TableRow>
+                          )}
+                          </TableBody>
+                          {isNotFound && (
+                          <TableBody>
+                              <TableRow>
+                              <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
+                                  <SearchNotFound searchQuery={filterName} />
+                              </TableCell>
+                              </TableRow>
+                          </TableBody>
+                          )}
+                      </Table>
+                      </TableContainer>
+                  </Scrollbar>
 
-                        return (
-                        <>
-                            <TableRow
-                                hover
-                                sx={{borderTop: '2px solid #dfdfdf'}}
-                                
-                                key={id}
-                                tabIndex={-1}
-                                role="checkbox"
-                                selected={isItemSelected}
-                                aria-checked={isItemSelected}
-                            >
-                                
-                                <TableCell padding="checkbox">
-                                  <Checkbox checked={isItemSelected} onClick={() => handleClick(id)} />
-                                </TableCell>
-                                <TableCell  sx={{fontWeight: 'bold', fontSize: 11, p: 0, textAlign: 'center'}} >
-                                <Chip color={row?.isChecked ? 'success' : 'error'} label={index + 1}></Chip> 
-                                </TableCell>
-                                <TableCell   sx={{ display: 'flex', alignItems: 'center', fontWeight: 'bold', fontSize: 11 }}>
-                                <NextLink href={`/dashboard/note/${id}/edit`}>
-                                    <a> Запись № {id} от {new Date(date).toLocaleDateString()}  </a>
-                                </NextLink>
-                                    {row?.isUpdatedAfterCheck && <Chip sx={{p: 0,ml: 2, color: 'white', fontSize: 12}} color="warning" label="Изменено"></Chip>}
-                                </TableCell>
-                                <TableCell  sx={{fontWeight: 'bold', fontSize: 11}} colSpan={3}>
-                                {row?.object?.name}
-                                </TableCell>
-                                <TableCell sx={{fontWeight: 'bold', fontSize: 11}} align="left">
-                                    {+summ} ₽
-                                </TableCell>
-                                <TableCell sx={{fontWeight: 'bold', fontSize: 11, maxWidth: 240}} >{row?.description} ({row?.person?.surname} {row?.person?.name})</TableCell>
-                            </TableRow>
-                                {row.products.map((product) => (
-                                <TableRow key={product.id}>
-                                    
-                                  <TableCell padding="checkbox">
-                                    
-                                  </TableCell>
-                                    <TableCell  sx={{fontWeight: 'bold', fontSize: 11, p: 0}} >
-                                    </TableCell>
-                                    <TableCell sx={{fontSize: 11}}>{product.name}</TableCell>
-                                    <TableCell sx={{fontSize: 11}} align="right">{+product.amount}</TableCell>
-                                    <TableCell sx={{fontSize: 11}}>{product.edizm}</TableCell>
-                                    <TableCell sx={{fontSize: 11}}>{+product.price} ₽</TableCell>
-                                    <TableCell sx={{fontSize: 11}}>{+product.summ} ₽</TableCell>
-                                    <TableCell sx={{fontSize: 11}}>{row?.seller?.name}</TableCell>
-                                </TableRow>
-                                ))}
-                        </>
-                        );
-                    })}
-                    {emptyRows > 0 && (
-                        <TableRow style={{ height: 53 * emptyRows }}>
-                        <TableCell colSpan={6} />
-                        </TableRow>
-                    )}
-                    </TableBody>
-                    {isNotFound && (
-                    <TableBody>
-                        <TableRow>
-                        <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
-                            <SearchNotFound searchQuery={filterName} />
-                        </TableCell>
-                        </TableRow>
-                    </TableBody>
-                    )}
-                </Table>
-                </TableContainer>
-            </Scrollbar>
-
-            <TablePagination
-                sx={{
-                displayPrint: 'none', 
-                    '@print': {
-                    width: '99%',
-                    m:0,
-                    p:0,
-                    height: '99%'
-                    }
-                }}
-                rowsPerPageOptions={[10, 25, 50, 100, 200]}
-                component="div"
-                count={list.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={(e, page) => setPage(page)}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-            />
+                  <TablePagination
+                      sx={{
+                      displayPrint: 'none', 
+                          '@print': {
+                          width: '99%',
+                          m:0,
+                          p:0,
+                          height: '99%'
+                          }
+                      }}
+                      rowsPerPageOptions={[10, 25, 50, 100, 200]}
+                      component="div"
+                      count={list.length}
+                      rowsPerPage={rowsPerPage}
+                      page={page}
+                      onPageChange={(e, page) => setPage(page)}
+                      onRowsPerPageChange={handleChangeRowsPerPage}
+                  />
+                  </>
+              ) : (
+                <Box>Данных не найдено</Box>
+              )
+            }
             </Card>
         </Container>
     )

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 // @mui
 import { useTheme, styled } from '@mui/material/styles';
-import { Toolbar, Tooltip, IconButton, Typography, InputAdornment, Box, Tab, Tabs } from '@mui/material';
+import { Toolbar, Tooltip, IconButton, Typography, InputAdornment, Box, Tab, Tabs, Autocomplete, TextField } from '@mui/material';
 // components
 import Iconify from '../../../../components/Iconify';
 import InputStyle from '../../../../components/InputStyle';
@@ -24,7 +24,7 @@ UserListToolbar.propTypes = {
   onDeleteUsers: PropTypes.func,
 };
 
-export default function UserListToolbar({ numSelected, filterName, onFilterName, onDeleteUsers, handleChange, value }) {
+export default function UserListToolbar({ numSelected, filterName, onFilterName, onDeleteUsers, handleChangeObject, objects }) {
   const theme = useTheme();
 
   const isLight = theme.palette.mode === 'light';
@@ -44,7 +44,7 @@ export default function UserListToolbar({ numSelected, filterName, onFilterName,
         </Typography>
       ) : (
         <>
-        <InputStyle
+        {/* <InputStyle
           stretchStart={240}
           value={filterName}
           onChange={(event) => onFilterName(event.target.value)}
@@ -56,6 +56,13 @@ export default function UserListToolbar({ numSelected, filterName, onFilterName,
               </InputAdornment>
             ),
           }}
+        /> */}
+        <Autocomplete
+          freeSolo
+          sx={{width: 320}}
+          onChange={handleChangeObject}
+          options={objects}
+          renderInput={(params) => <TextField sx={{background: 'white', borderRadius: 1}} placeholder='Объект...' {...params} />}
         />
         </>
       )}
