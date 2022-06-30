@@ -45,7 +45,7 @@ NewForm.propTypes = {
   currentProduct: PropTypes.object,
 };
 
-export default function NewForm({ isEdit, currentProduct, expenses }) {
+export default function NewForm({ isEdit, currentProduct, bounds }) {
   const { push } = useRouter();
 
   const { enqueueSnackbar } = useSnackbar();
@@ -62,7 +62,6 @@ export default function NewForm({ isEdit, currentProduct, expenses }) {
       priceSale: currentProduct?.priceSale || 0,
       summ: currentProduct?.summ || 0,
       type: currentProduct?.type || 0,
-      initial_balance_date: currentProduct?.initial_balance_date || null,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [currentProduct]
@@ -88,7 +87,7 @@ export default function NewForm({ isEdit, currentProduct, expenses }) {
   
   const [address, setAddress] = useState();
 
-  const [alignment, setAlignment] = useState(() => []);
+  const [alignment, setAlignment] = useState(() => bounds);
 
   const handleChange = (event,newAlignment) => {
     setAlignment(newAlignment);
@@ -98,6 +97,9 @@ export default function NewForm({ isEdit, currentProduct, expenses }) {
 
   useEffect(() => {
     if (isEdit && currentProduct) {
+
+      setAlignment(() => bounds)
+
       reset(defaultValues);
     }
     if (!isEdit) {
@@ -105,6 +107,13 @@ export default function NewForm({ isEdit, currentProduct, expenses }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEdit, currentProduct]);
+
+  useEffect(() => {
+
+      setAlignment(() => bounds)
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [bounds]);
 
   const onSubmit = async () => {
     console.log(values);
@@ -156,16 +165,20 @@ export default function NewForm({ isEdit, currentProduct, expenses }) {
             <Stack spacing={3}>
               {/* <RHFTextField name="name" label="Название" /> */}
 
-              <Box sx={{display: 'flex', alignItems: 'center', mb: 2}}>
-                <Avatar sx={{mr: 2, background: '#def'}}>
-                {values?.type == 'start' ? (
-                  <Iconify icon="ant-design:arrow-up-outlined" sx={{color: '#d00'}}></Iconify>
-                ) : (
-                  <Iconify icon="ant-design:arrow-down-outlined" sx={{color: '#0d0'}}></Iconify>
-                )}
-                </Avatar>
-                <p style={{fontSize: 24}}>{values?.type == 'end' ? 'Входящий': 'Исходящий'}</p>
-              </Box>
+              {
+                isEdit && (
+                  <Box sx={{display: 'flex', alignItems: 'center', mb: 2}}>
+                    <Avatar sx={{mr: 2, background: '#def'}}>
+                    {values?.type == 'start' ? (
+                      <Iconify icon="ant-design:arrow-up-outlined" sx={{color: '#d00'}}></Iconify>
+                    ) : (
+                      <Iconify icon="ant-design:arrow-down-outlined" sx={{color: '#0d0'}}></Iconify>
+                    )}
+                    </Avatar>
+                    <p style={{fontSize: 24}}>{values?.type == 'end' ? 'Входящий': 'Исходящий'}</p>
+                  </Box>
+                )
+              }
               <RHFTextField name="description" multiline rows={2} label="Описание" />
               <RHFTextField type="number" name="summ" label="Сумма" />
               <Controller
@@ -265,7 +278,7 @@ export default function NewForm({ isEdit, currentProduct, expenses }) {
             </ToggleButtonGroup>
             {
               alignment?.map(item => (
-                <BoundItem item={item} methods={methods}></BoundItem>
+                <BoundItem item={item} methods={methods} currentItem={currentProduct?.[item]}></BoundItem>
               ))
             }
           </Stack>

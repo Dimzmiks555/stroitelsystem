@@ -28,6 +28,7 @@ export default function EcommerceProductCreate() {
   const { query } = useRouter()
   
   const [current, setCurrent] = useState({})
+  const [bounds, setBounds] = useState([])
 
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_HOST}/payment/${query.id}`)
@@ -35,6 +36,26 @@ export default function EcommerceProductCreate() {
     .then(json => {
       console.log(json)
       setCurrent(json)
+
+      if (json?.deal_id) {
+        setBounds((prev) => {
+          return [...prev, 'deal']
+        })
+      }
+
+      if (json?.object_id) {
+        setBounds((prev) => {
+          return [...prev, 'object']
+        })
+      }
+
+      if (json?.contragent_id) {
+        setBounds((prev) => {
+          return [...prev, 'contragent']
+        })
+      }
+
+
     })
   }, [])
 
@@ -52,7 +73,7 @@ export default function EcommerceProductCreate() {
             { name: '' },
           ]}
         />
-        <NewForm isEdit currentProduct={current}/>
+        <NewForm isEdit currentProduct={current} bounds={bounds}/>
       </Container>
       
     </Page>

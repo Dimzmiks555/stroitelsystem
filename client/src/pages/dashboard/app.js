@@ -21,6 +21,8 @@ import {
   AppCurrentDownload,
   AppTopInstalledCountries,
 } from '../../sections/@dashboard/general/app';
+import { PaymentWidget } from 'src/sections/@dashboard/general/PaymentWidget';
+import { ReportWidget } from 'src/sections/@dashboard/general/ReportWidget';
 
 // ----------------------------------------------------------------------
 
@@ -39,32 +41,20 @@ export default function GeneralApp() {
     <Page title="Главная">
       <Container maxWidth={themeStretch ? false : 'xl'}>
         <Grid container spacing={3}>
-          <Grid item xs={12} md={8}>
+          {/* <Grid item xs={12} md={8}>
             <AppWelcome displayName={user?.displayName} />
-          </Grid>
+          </Grid> */}
 
-          <Grid item xs={12} md={4}>
+          {/* <Grid item xs={12} md={4}>
             <AppFeatured />
+          </Grid> */}
+
+          <Grid item xs={12} md={4}>
+            <PaymentWidget></PaymentWidget>
           </Grid>
 
           <Grid item xs={12} md={4}>
-            <AppWidgetSummary
-              title="Активные пользователи"
-              percent={2.6}
-              total={18765}
-              chartColor={theme.palette.primary.main}
-              chartData={[5, 18, 12, 51, 68, 11, 39, 37, 27, 20]}
-            />
-          </Grid>
-
-          <Grid item xs={12} md={4}>
-            <AppWidgetSummary
-              title="Установки"
-              percent={0.2}
-              total={4876}
-              chartColor={theme.palette.chart.blue[0]}
-              chartData={[20, 41, 63, 33, 28, 35, 50, 46, 11, 26]}
-            />
+            <ReportWidget></ReportWidget>
           </Grid>
 
           <Grid item xs={12} md={4}>

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Contragent } from 'src/contragents/entities/contragent.entity';
+import { Deal } from 'src/deals/entities/deal.entity';
 import { CreatePaymentDto } from './dto/create-payment.dto';
 import { UpdatePaymentDto } from './dto/update-payment.dto';
 import { Payment } from './entities/payment.entity';
@@ -15,6 +16,7 @@ export class PaymentService {
 
 
   create(createPaymentDto) {
+    console.log(createPaymentDto)
     return this.paymentModel.create(createPaymentDto)
   }
 
@@ -31,7 +33,8 @@ export class PaymentService {
     return this.paymentModel.findOne({
       where: {id},
       include: [
-        {'model': Contragent}
+        {'model': Contragent},
+        {'model': Deal}
       ]
     });
   }

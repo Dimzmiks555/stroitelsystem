@@ -103,7 +103,7 @@ export const PATH_DASHBOARD = {
   payments: {
     root: path(ROOTS_DASHBOARD, '/payments'),
     list: path(ROOTS_DASHBOARD, '/payments/list'),
-    newOrder: path(ROOTS_DASHBOARD, '/payments/new'),
+    new: path(ROOTS_DASHBOARD, '/payments/new'),
   },
   contragents: {
     root: path(ROOTS_DASHBOARD, '/contragents'),

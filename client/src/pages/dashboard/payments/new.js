@@ -10,7 +10,7 @@ import Layout from '../../../layouts';
 import Page from '../../../components/Page';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 // sections
-import NewForm from '../../../sections/@dashboard/note/NewForm';
+import NewForm from '../../../sections/@dashboard/payments/NewForm';
 import { PriceWidget } from 'src/sections/@dashboard/note/Widgets/PriceWidget';
 
 // ----------------------------------------------------------------------
@@ -25,10 +25,10 @@ export default function UserCreate() {
   const { themeStretch } = useSettings();
 
   return (
-    <Page title="Создание новой записи">
+    <Page title="Создание нового платежа">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading="Создание новой записи"
+          heading="Создание нового платежа"
           links={[
             // { name: 'Dashboard', href: PATH_DASHBOARD.root },
             // { name: 'User', href: PATH_DASHBOARD.user.list },

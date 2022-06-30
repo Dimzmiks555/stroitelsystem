@@ -68,6 +68,12 @@ const navConfig = [
       //     { title: 'Аккаунт', path: PATH_DASHBOARD.user.account },
       //   ],
       // },
+      
+      {
+        title: 'Главная',
+        path: PATH_DASHBOARD.general.app,
+        icon: ICONS.dashboard,
+      },
       {
         title: 'Учёт',
         path: PATH_DASHBOARD.note.list,

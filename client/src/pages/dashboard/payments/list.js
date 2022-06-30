@@ -160,7 +160,7 @@ export default function UserList() {
             { name: '' },
           ]}
           action={
-            <NextLink href={PATH_DASHBOARD.note.new} passHref>
+            <NextLink href={PATH_DASHBOARD.payments.new} passHref>
               <Button variant="contained" startIcon={<Iconify icon={'eva:plus-fill'} />}>
                 Создать
               </Button>
@@ -203,6 +203,15 @@ export default function UserList() {
                         aria-checked={isItemSelected}
                       >
                         <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
+                            {(row?.contragent_id || row?.object_id || row?.deal_id) ? (
+                              <Avatar sx={{mr: 2, background: '#edf'}}>
+                                <Iconify icon="mdi:attachment-check" sx={{color: '#00d'}}></Iconify>
+                              </Avatar>
+                            ) : (
+                              <Avatar sx={{mr: 2, background: '#fed'}}>
+                                <Iconify icon="mdi:attachment-remove" sx={{color: '#d00'}}></Iconify>
+                              </Avatar>
+                            )}
                           <Avatar sx={{mr: 2, background: '#def'}}>
                             {row?.type == 'start' ? (
                               <Iconify icon="ant-design:arrow-up-outlined" sx={{color: '#d00'}}></Iconify>
@@ -216,7 +225,28 @@ export default function UserList() {
                         </TableCell>
                         <TableCell align="left">{row?.type == 'end' ? 'Входящий' : 'Исходящий'}</TableCell>
                         <TableCell align="left">{row?.payment_method}</TableCell>
-                        <TableCell align="left">{row?.buyer?.name}</TableCell>
+                        <TableCell align="left">
+
+                          {row?.object_id && (
+                            
+                            <NextLink href={`/dashboard/objects/${row?.object_id}`}>
+                              <a style={{display: 'block'}}>Объект № {row?.object_id}</a>
+                            </NextLink>
+                          )}
+
+                          {row?.deal_id && (
+                            <NextLink href={`/dashboard/deals/${row?.deal_id}/edit`}>
+                            <a style={{display: 'block'}}>Сделка № {row?.deal_id}</a>
+                            </NextLink>
+                          )}
+
+                          {row?.contragent_id && (
+                            <NextLink href={`/dashboard/contragents/${row?.contragent_id}/`}>
+                            <a style={{display: 'block'}}>Контрагент № {row?.contragent_id}</a>
+                            </NextLink>
+                          )}
+                        
+                        </TableCell>
                         <TableCell align="left">
                             {summ} руб.
                         </TableCell>
