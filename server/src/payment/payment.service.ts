@@ -28,7 +28,12 @@ export class PaymentService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} payment`;
+    return this.paymentModel.findOne({
+      where: {id},
+      include: [
+        {'model': Contragent}
+      ]
+    });
   }
 
   update(id, updatePaymentDto) {

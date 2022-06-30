@@ -85,6 +85,11 @@ export const PATH_DASHBOARD = {
     list: path(ROOTS_DASHBOARD, '/other_expenses/list'),
     new: path(ROOTS_DASHBOARD, '/other_expenses/new'),
   },
+  main_expenses: {
+    root: path(ROOTS_DASHBOARD, '/main_expenses'),
+    list: path(ROOTS_DASHBOARD, '/main_expenses/list'),
+    new: path(ROOTS_DASHBOARD, '/main_expenses/new'),
+  },
   avanses: {
     root: path(ROOTS_DASHBOARD, '/avanses'),
     list: path(ROOTS_DASHBOARD, '/avanses/list'),
@@ -94,6 +99,11 @@ export const PATH_DASHBOARD = {
     root: path(ROOTS_DASHBOARD, '/orders'),
     list: path(ROOTS_DASHBOARD, '/orders/list'),
     newOrder: path(ROOTS_DASHBOARD, '/orders/new'),
+  },
+  payments: {
+    root: path(ROOTS_DASHBOARD, '/payments'),
+    list: path(ROOTS_DASHBOARD, '/payments/list'),
+    newOrder: path(ROOTS_DASHBOARD, '/payments/new'),
   },
   contragents: {
     root: path(ROOTS_DASHBOARD, '/contragents'),

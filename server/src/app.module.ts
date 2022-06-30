@@ -58,9 +58,9 @@ import { ExpenseModule } from './expense/expense.module';
       username: 'root',
       password: 'root',
       database: 'stroitel_system',
-      // sync: {alter: true},
-      // synchronize: true,
-      // autoLoadModels: true,
+      sync: {alter: true},
+      synchronize: true,
+      autoLoadModels: true,
       models: [
         Order,
         Contragent,

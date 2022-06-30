@@ -28,6 +28,7 @@ const ICONS = {
   worker: getIcon('ic_worker'),
   deals: getIcon('ic_deals'),
   report: getIcon('ic_report'),
+  payment: getIcon('ic_payment'),
 };
 
 const navConfig = [
@@ -76,6 +77,11 @@ const navConfig = [
           { title: 'Списания', path: PATH_DASHBOARD.checkouts.list },
           { title: 'Покупки', path: PATH_DASHBOARD.avanses.list},
           { title: 'Авансы', path: PATH_DASHBOARD.avanses.list},
+          {
+            title: 'Прочее',
+            path: PATH_DASHBOARD.other_expenses.list,
+            icon: ICONS.ecommerce
+          },
         ],
       },
       // {
@@ -98,9 +104,14 @@ const navConfig = [
         icon: ICONS.booking
       },
       {
-        title: 'Прочее',
-        path: PATH_DASHBOARD.other_expenses.list,
-        icon: ICONS.ecommerce
+        title: 'Расходы',
+        path: PATH_DASHBOARD.main_expenses.list,
+        icon: ICONS.banking
+      },
+      {
+        title: 'Платежи',
+        path: PATH_DASHBOARD.payments.list,
+        icon: ICONS.payment
       },
       {
         title: 'Отчёты',
@@ -179,10 +190,10 @@ const navConfig = [
         path: PATH_DASHBOARD.contracts.list,
         icon: ICONS.contract
       },
-      { title: 'Реализации', 
-        path: PATH_DASHBOARD.realisations.list ,
-        icon: ICONS.one_c
-      },
+      // { title: 'Реализации', 
+      //   path: PATH_DASHBOARD.realisations.list ,
+      //   icon: ICONS.one_c
+      // },
       { title: 'Цены', 
         path: PATH_DASHBOARD.prices.list ,
         icon: ICONS.prices

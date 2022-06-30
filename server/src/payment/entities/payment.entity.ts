@@ -24,6 +24,9 @@ export class Payment extends Model {
     @Column
     type: string
 
+    @Column
+    payment_method: string
+
     @BelongsTo(() => Contragent, 'contragent_id')
     contragent: Contragent
 
