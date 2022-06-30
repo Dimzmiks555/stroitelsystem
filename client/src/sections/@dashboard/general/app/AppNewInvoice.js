@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { sentenceCase } from 'change-case';
 // @mui
 import { useTheme } from '@mui/material/styles';
@@ -32,15 +32,31 @@ import MenuPopover from '../../../../components/MenuPopover';
 export default function AppNewInvoice() {
   const theme = useTheme();
 
+  const [ orderList, setOrderList ] = useState([])
+
+  useEffect(()=> {
+
+      fetch(`${process.env.NEXT_PUBLIC_HOST}/orders?status=new`)
+      .then(res => res.json())
+      .then(json => {
+        console.log(json)
+        setOrderList(json)
+      })
+
+
+  }, [])
+
+
+
   return (
     <Card>
-      <CardHeader title="Новые заказы" sx={{ mb: 3 }} />
+      <CardHeader title="Последние заказы" sx={{ mb: 3 }} />
       <Scrollbar>
         <TableContainer sx={{ minWidth: 720 }}>
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>ID</TableCell>
+                <TableCell>Заказ</TableCell>
                 <TableCell>Категория</TableCell>
                 <TableCell>Цена</TableCell>
                 <TableCell>Статус</TableCell>
@@ -48,21 +64,17 @@ export default function AppNewInvoice() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {_appInvoices.map((row) => (
+              {orderList.map((row) => (
                 <TableRow key={row.id}>
-                  <TableCell>{`INV-${row.id}`}</TableCell>
+                  <TableCell>{row.name}</TableCell>
                   <TableCell>{row.category}</TableCell>
-                  <TableCell>{fCurrency(row.price)}</TableCell>
+                  <TableCell>{fCurrency(row.summ)}</TableCell>
                   <TableCell>
                     <Label
                       variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
-                      color={
-                        (row.status === 'in_progress' && 'warning') ||
-                        (row.status === 'out_of_date' && 'error') ||
-                        'success'
-                      }
+                      color={(row?.status === 'Создан' && 'default') || (row?.status === 'В пути' && 'secondary') || (row?.status === 'Ожидает оплаты' && 'warning') || (row?.status === 'Отменен' && 'error') || 'success'}
                     >
-                      {sentenceCase(row.status)}
+                      {row?.status}
                     </Label>
                   </TableCell>
                   <TableCell align="right">

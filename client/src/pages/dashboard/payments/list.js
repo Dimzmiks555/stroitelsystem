@@ -212,13 +212,15 @@ export default function UserList() {
                                 <Iconify icon="mdi:attachment-remove" sx={{color: '#d00'}}></Iconify>
                               </Avatar>
                             )}
-                          <Avatar sx={{mr: 2, background: '#def'}}>
                             {row?.type == 'start' ? (
-                              <Iconify icon="ant-design:arrow-up-outlined" sx={{color: '#d00'}}></Iconify>
+                              <Avatar sx={{mr: 2, background: '#faa'}}>
+                                <Iconify icon="ant-design:arrow-up-outlined" sx={{color: '#d00'}}></Iconify>
+                              </Avatar>
                             ) : (
-                              <Iconify icon="ant-design:arrow-down-outlined" sx={{color: '#0d0'}}></Iconify>
+                              <Avatar sx={{mr: 2, background: '#aea'}}>
+                                <Iconify icon="ant-design:arrow-down-outlined" sx={{color: '#0a4'}}></Iconify>
+                              </Avatar>
                             )}
-                          </Avatar>
                           <NextLink href={`/dashboard/payments/${id}/edit`}>
                               <a><Chip sx={{cursor: 'pointer'}} variant='outlined' color="primary" label={`Платеж № ${id}`}></Chip></a>
                           </NextLink>
@@ -254,7 +256,7 @@ export default function UserList() {
                         <TableCell >
                           {new Date(row?.createdAt).toLocaleDateString()}
                         </TableCell>
-                        <TableCell >
+                        <TableCell sx={{width: '25%'}}>
                           {row?.description}
                         </TableCell>
                       </TableRow>
