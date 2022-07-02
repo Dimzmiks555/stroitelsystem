@@ -153,7 +153,7 @@ export const NotesReport = () => {
   
     const handleSelectAllClick = (checked) => {
       if (checked) {
-        const newSelecteds = list.map((n) => n.id);
+        const newSelecteds = filtered.map((n) => n.id);
         setSelected(newSelecteds);
         return;
       }
