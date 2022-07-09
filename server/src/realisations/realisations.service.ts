@@ -24,7 +24,7 @@ export class RealisationsService {
     return await this.httpService.get(url, {
       params: {
         $format: 'json',
-        $top: 200,
+        $top: 400,
         $expand: 'Ответственный,Контрагент,Склад'
         // $orderby: 'Date desc',
       },
