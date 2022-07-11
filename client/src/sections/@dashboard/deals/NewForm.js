@@ -258,7 +258,7 @@ export default function NewForm({ isEdit, currentProduct }) {
                     onChange={(event, newValue) => setValue('status', newValue?.value)}
                     options={[
                       {label: 'В работе', value: 'В РАБОТЕ'},
-                      {label: 'Ожидает выставления', value: 'ОЖИДАЕТ ВЫСТАВЛЕНИЯ'},
+                      {label: 'НА ВЫСТАВЛЕНИИ', value: 'НА ВЫСТАВЛЕНИИ'},
                       {label: 'Выставлен', value: 'ВЫСТАВЛЕН'}
                     ]}
                     renderTags={(value, getTagProps) =>
@@ -382,7 +382,7 @@ export default function NewForm({ isEdit, currentProduct }) {
 
             <Chip sx={{height: 60, fontSize: 20}} color={
               currentProduct?.status == 'В РАБОТЕ' ? 'primary':
-              currentProduct?.status == 'ОЖИДАЕТ ВЫСТАВЛЕНИЯ' ? 'warning':
+              currentProduct?.status == 'НА ВЫСТАВЛЕНИИ' ? 'warning':
               currentProduct?.status == 'ВЫСТАВЛЕН' ? 'success': 'default'
             } label={currentProduct?.status}></Chip>
             

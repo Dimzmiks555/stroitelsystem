@@ -46,7 +46,9 @@ const TABLE_HEAD = [
   { id: 'company', label: 'Компания', alignRight: false },
   { id: 'start_summ', label: 'Закупка', alignRight: false },
   { id: 'end_summ', label: 'Продажа', alignRight: false },
-  { id: 'status', label: 'Статус', alignRight: false },
+  { id: 'minus_ten', label: '-10%', alignRight: false },
+  { id: 'incoming', label: 'Доход', alignRight: false },
+  // { id: 'status', label: 'Статус', alignRight: false },
 ];
 
 // ----------------------------------------------------------------------
@@ -74,7 +76,7 @@ export default function UserList() {
 
   const [filterName, setFilterName] = useState('');
 
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(100);
 
   useEffect(()=> {
 
@@ -235,6 +237,12 @@ export default function UserList() {
                             Сделка № Т-{row?.deal_number} 
                           </a>
                           </NextLink>
+                          
+                          <Chip sx={{ml: 2}} color={
+                            row?.status == 'В РАБОТЕ' ? 'primary':
+                            row?.status == 'НА ВЫСТАВЛЕНИИ' ? 'warning':
+                            row?.status == 'ВЫСТАВЛЕН' ? 'success': 'default'
+                          } label={row?.status}></Chip>
                           <p>{row?.name}</p>
                         </TableCell>
                         <TableCell align="left">
@@ -256,13 +264,14 @@ export default function UserList() {
                           backgroundColor: end_status == 'full' ? '#5d5': end_status == 'part' ? '#d55': 'none',
                           color: end_status == 'full' ? '#fff': end_status == 'part' ? '#fff': '#333'
                         }} >{row?.end_summ}</TableCell>
-                        <TableCell align="left">
-                          <Chip color={
-                            row?.status == 'В РАБОТЕ' ? 'primary':
-                            row?.status == 'ОЖИДАЕТ ВЫСТАВЛЕНИЯ' ? 'warning':
-                            row?.status == 'ВЫСТАВЛЕН' ? 'success': 'default'
-                          } label={row?.status}></Chip>
-                        </TableCell>
+                        <TableCell align="left" sx={{
+                          fontWeight: 'bold',
+                          
+                        }} >{(+row?.end_summ - (+row?.end_summ * 0.1))?.toFixed(2)}</TableCell>
+                        <TableCell align="left" sx={{
+                          fontWeight: 'bold',
+                          
+                        }} >{((+row?.end_summ - (+row?.end_summ * 0.1)) - +row?.start_summ)?.toFixed(2)}</TableCell>
                       </TableRow>
                     );
                   })}
