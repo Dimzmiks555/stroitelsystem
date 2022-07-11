@@ -43,6 +43,8 @@ import { Avanse } from './avanse/entities/avanse.entity';
 import { PriceModule } from './price/price.module';
 import { Price } from './price/entities/price.entity';
 import { ExpenseModule } from './expense/expense.module';
+import { EventModule } from './event/event.module';
+import { Event } from './event/entities/event.entity';
 
 @Module({
   imports: [
@@ -54,13 +56,14 @@ import { ExpenseModule } from './expense/expense.module';
     SequelizeModule.forRoot({
       dialect: 'mysql',
       host: 'localhost',
+      // host: '192.168.1.75',
       port: 3306,
       username: 'root',
       password: 'root',
       database: 'stroitel_system',
-      // sync: {alter: true},
-      // synchronize: true,
-      // autoLoadModels: true,
+      sync: {alter: true},
+      synchronize: true,
+      autoLoadModels: true,
       models: [
         Order,
         Contragent,
@@ -78,7 +81,8 @@ import { ExpenseModule } from './expense/expense.module';
         Payment,
         BankAccount,
         Avanse,
-        Price
+        Price,
+        Event
       ],
     }),
     ObjectsModule, 
@@ -102,6 +106,7 @@ import { ExpenseModule } from './expense/expense.module';
     AvanseModule,
     PriceModule,
     ExpenseModule,
+    EventModule,
   ],
   controllers: [AppController],
   providers: [AppService, UsersService],

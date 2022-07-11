@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { CheckoutsProductsService } from 'src/checkouts-products/checkouts-products.service';
 import { CheckoutsProduct } from 'src/checkouts-products/entities/checkouts-product.entity';
+import { EventService } from 'src/event/event.service';
 import { ObjectsModel } from 'src/objects/entities/object.entity';
 import { Person } from 'src/people/entities/person.entity';
 import { RealisationsService } from 'src/realisations/realisations.service';
@@ -19,16 +20,26 @@ export class CheckoutsService {
     private checkoutModel: typeof Checkout,
     
     @InjectModel(CheckoutsProduct)
-    private checkoutProductModel: typeof CheckoutsProduct
+    private checkoutProductModel: typeof CheckoutsProduct,
+
+    private eventService: EventService,
 
     ) {}
 
   async create(createCheckoutDto) {
-    console.log(createCheckoutDto)
 
     const realisation = await this.realisationsService.findOne(createCheckoutDto?.['Ref_Key'])
 
     const checkout = await this.checkoutModel.create(createCheckoutDto)
+
+    let eventData = {
+      type: 'CREATE',
+      entity_id: checkout?.id,
+      entity: 'checkout',
+      realData: JSON.stringify(createCheckoutDto)
+    }
+
+    let event = await this.eventService.create(eventData)
     
 
     realisation?.['Товары']?.forEach(item => {
@@ -42,6 +53,15 @@ export class CheckoutsService {
         summ_after_discount: item['Сумма'],
         checkout_id: +checkout?.id,
       }
+
+      let eventData = {
+        type: 'CREATE',
+        // entity_id: checkout?.id,
+        entity: 'checkout_product',
+        realData: JSON.stringify(product)
+      }
+  
+      let event = this.eventService.create(eventData)
 
       this.checkoutProductModel.create(product)
 

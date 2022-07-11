@@ -12,6 +12,9 @@ export class Note extends Model {
     isChecked: boolean
 
     @Column({defaultValue: false})
+    isReturn: boolean
+
+    @Column({defaultValue: false})
     isUpdatedAfterCheck: boolean
 
     @Column

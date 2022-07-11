@@ -178,7 +178,7 @@ export default function UserList() {
 
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
-              <Table>
+              <Table size="small">
                 <UserListHead
                   order={order}
                   orderBy={orderBy}
@@ -238,16 +238,26 @@ export default function UserList() {
                           </a>
                           </NextLink>
                           
-                          <Chip sx={{ml: 2}} color={
+                          <i style={{
+                            // display: 'block',
+                            fontWeight: 800,
+                            marginLeft: 20,
+                            color: row?.status == 'В РАБОТЕ' ? '#00d':
+                              row?.status == 'НА ВЫСТАВЛЕНИИ' ? '#f80':
+                              row?.status == 'ВЫСТАВЛЕН' ? '#0c3': 'default'
+                            
+                          }}  label={row?.status}>{row?.status}</i>
+                          
+                          {/* <Chip sx={{ml: 2}} color={
                             row?.status == 'В РАБОТЕ' ? 'primary':
                             row?.status == 'НА ВЫСТАВЛЕНИИ' ? 'warning':
                             row?.status == 'ВЫСТАВЛЕН' ? 'success': 'default'
-                          } label={row?.status}></Chip>
+                          } label={row?.status}></Chip> */}
                           <p>{row?.name}</p>
                         </TableCell>
                         <TableCell align="left">
                           
-                          <p style={{fontWeight: 'bold', fontSize: 14, color: '#88d'}}>{row?.seller?.name}</p>
+                          {/* <p style={{fontWeight: 'bold', fontSize: 14, color: '#88d'}}>{row?.seller?.name}</p> */}
                           Договор № {row?.contract?.contract_number} от {new Date(row?.contract?.date).toLocaleDateString()}
                           
                           {/* <p>{row?.contract?.description}</p> */}
@@ -267,11 +277,11 @@ export default function UserList() {
                         <TableCell align="left" sx={{
                           fontWeight: 'bold',
                           
-                        }} >{(+row?.end_summ - (+row?.end_summ * 0.1))?.toFixed(2)}</TableCell>
+                        }} >{(+row?.end_summ - (+row?.end_summ * 0.1))?.toFixed(0)}</TableCell>
                         <TableCell align="left" sx={{
                           fontWeight: 'bold',
                           
-                        }} >{((+row?.end_summ - (+row?.end_summ * 0.1)) - +row?.start_summ)?.toFixed(2)}</TableCell>
+                        }} >{((+row?.end_summ - (+row?.end_summ * 0.1)) - +row?.start_summ)?.toFixed(0)}</TableCell>
                       </TableRow>
                     );
                   })}

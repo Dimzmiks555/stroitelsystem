@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Contragent } from 'src/contragents/entities/contragent.entity';
+import { EventService } from 'src/event/event.service';
 import { NoteProduct } from 'src/note-products/entities/note-product.entity';
 import { ObjectsModel } from 'src/objects/entities/object.entity';
 import { Person } from 'src/people/entities/person.entity';
@@ -16,7 +17,11 @@ export class NotesService {
     private noteModel: typeof Note,
 
     @InjectModel(NoteProduct)
-    private noteProductModel: typeof NoteProduct
+    private noteProductModel: typeof NoteProduct,
+
+    private eventService: EventService,
+    
+    
 
   ){}
 
@@ -26,6 +31,15 @@ export class NotesService {
     console.log(createNoteDto)
 
     let note = await this.noteModel.create(createNoteDto)
+
+    let eventData = {
+      type: 'CREATE',
+      entity_id: note?.id,
+      entity: 'note',
+      realData: JSON.stringify(createNoteDto)
+    }
+
+    let event = await this.eventService.create(eventData)
 
     createNoteDto?.rows?.forEach(item => {
 
@@ -74,9 +88,26 @@ export class NotesService {
   }
 
   async update(id: number, updateNoteDto) {
+
+    let prevNote = await this.noteModel.findOne({
+      where: {id}
+    })
+
     let note = await this.noteModel.update(updateNoteDto, {
       where: {id}
     })
+
+    let eventData = {
+      type: 'UPDATE',
+      entity_id: id,
+      entity: 'note',
+      previousData: JSON.stringify(prevNote),
+      realData: JSON.stringify(updateNoteDto)
+    }
+
+    let event = this.eventService.create(eventData)
+
+    
 
     async function updateProduct(item, noteProductModel) {
 

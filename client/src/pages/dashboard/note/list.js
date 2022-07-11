@@ -205,11 +205,11 @@ export default function UserList() {
                         aria-checked={isItemSelected}
                       >
                         <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
-                          <NextLink href={`/dashboard/note/${id}/edit`}>
-                            <Badge  variant="dot" color={row?.isChecked ? 'success' : 'error'} anchorOrigin={{vertical: 'top',horizontal: 'right',}} >
-                              <a><Chip sx={{cursor: 'pointer'}} variant='outlined' color="primary" label={`Запись № ${id}`}></Chip></a>
-                            </Badge>
-                          </NextLink>
+                          <Badge  variant="dot" color={row?.isChecked ? 'success' : 'error'} anchorOrigin={{vertical: 'top',horizontal: 'right',}} >
+                            <NextLink href={`/dashboard/note/${id}/edit`}>
+                                <a>Запись № {id}</a>
+                            </NextLink>
+                          </Badge>
                         </TableCell>
                         <TableCell align="left">{row?.object?.name}</TableCell>
                         <TableCell align="left">{row?.seller?.name}</TableCell>

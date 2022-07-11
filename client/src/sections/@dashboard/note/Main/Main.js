@@ -174,6 +174,7 @@ export const Main = ({ setObjectModel, setValueDate, contragents, isEdit, curren
       </Stack>
     
     <div>
+      <FormControlLabel control={<Switch />} label="Возврат" />
       <RHFTextField
         multiline
         size="small"
