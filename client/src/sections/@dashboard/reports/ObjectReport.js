@@ -278,7 +278,7 @@ export const ObjectReport = () => {
                         </TableCell>
                         <TableCell sx={{fontWeight: 'bold', fontSize: 11, maxWidth: 240}} ></TableCell>
                     </TableRow>
-                    {list.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => {
+                    {list.map((row, index) => {
                         const { id, name, role, summ, company, Date: date, isVerified } = row;
                         const isItemSelected = selected.indexOf(id) !== -1;
 

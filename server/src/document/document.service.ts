@@ -1,4 +1,11 @@
-import { Body, Injectable, Req, UploadedFile, UploadedFiles, UseInterceptors } from '@nestjs/common';
+import {
+  Body,
+  Injectable,
+  Req,
+  UploadedFile,
+  UploadedFiles,
+  UseInterceptors,
+} from '@nestjs/common';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { InjectModel } from '@nestjs/sequelize';
 import { diskStorage } from 'multer';
@@ -9,22 +16,18 @@ import { Document } from './entities/document.entity';
 
 @Injectable()
 export class DocumentService {
-
   constructor(
     @InjectModel(Document)
     private documentModel: typeof Document,
-  ){}
+  ) {}
 
   create(@UploadedFile() file: Express.Multer.File, @Body() createDocumentDto) {
-    console.log(file, createDocumentDto?.order_id)
-
-    
-
+    console.log(file, createDocumentDto?.order_id);
 
     return this.documentModel.create({
       ...createDocumentDto,
-      name: file?.filename
-    })
+      name: file?.filename,
+    });
   }
 
   findAll() {

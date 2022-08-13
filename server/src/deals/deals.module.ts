@@ -7,6 +7,6 @@ import { Deal } from './entities/deal.entity';
 @Module({
   imports: [SequelizeModule.forFeature([Deal])],
   controllers: [DealsController],
-  providers: [DealsService]
+  providers: [DealsService],
 })
 export class DealsModule {}

@@ -1,36 +1,39 @@
-import { BelongsTo, Column, ForeignKey, HasMany, Model, Table } from "sequelize-typescript";
-import { Contragent } from "src/contragents/entities/contragent.entity";
-import { Document } from "src/document/entities/document.entity";
+import {
+  BelongsTo,
+  Column,
+  ForeignKey,
+  HasMany,
+  Model,
+  Table,
+} from 'sequelize-typescript';
+import { Contragent } from 'src/contragents/entities/contragent.entity';
+import { Document } from 'src/document/entities/document.entity';
 
 @Table
 export class Contract extends Model {
+  @Column
+  contract_number: string;
 
-    @Column
-    contract_number: string
+  @Column
+  date: string;
 
-    @Column
-    date: string
+  @ForeignKey(() => Contragent)
+  @Column
+  seller_id: number;
 
+  @ForeignKey(() => Contragent)
+  @Column
+  buyer_id: number;
 
-    @ForeignKey(() => Contragent)
-    @Column
-    seller_id: number
+  @Column
+  description: string;
 
-    
-    @ForeignKey(() => Contragent)
-    @Column
-    buyer_id: number
+  @BelongsTo(() => Contragent, 'seller_id')
+  seller: Contragent;
 
-    @Column
-    description: string
+  @BelongsTo(() => Contragent, 'buyer_id')
+  buyer: Contragent;
 
-    @BelongsTo(() => Contragent, 'seller_id')
-    seller: Contragent
-    
-    @BelongsTo(() => Contragent, 'buyer_id')
-    buyer: Contragent
-
-    @HasMany(() => Document)
-    files: Array<Document>
-
+  @HasMany(() => Document)
+  files: Array<Document>;
 }

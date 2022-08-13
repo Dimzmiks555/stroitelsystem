@@ -7,6 +7,6 @@ import { Document } from './entities/document.entity';
 @Module({
   imports: [SequelizeModule.forFeature([Document])],
   controllers: [DocumentController],
-  providers: [DocumentService]
+  providers: [DocumentService],
 })
 export class DocumentModule {}

@@ -1,27 +1,31 @@
-import { BelongsTo, Column, ForeignKey, Model, Table } from "sequelize-typescript";
-import { Contragent } from "src/contragents/entities/contragent.entity";
+import {
+  BelongsTo,
+  Column,
+  ForeignKey,
+  Model,
+  Table,
+} from 'sequelize-typescript';
+import { Contragent } from 'src/contragents/entities/contragent.entity';
 
 @Table
 export class Avanse extends Model {
+  @Column
+  summ: string;
 
-    @Column
-    summ: string
+  @Column
+  description: string;
 
-    @Column
-    description: string
+  @Column
+  Date: string;
 
-    @Column
-    Date: string
+  @ForeignKey(() => Contragent)
+  @Column
+  contragent_id: number;
 
-    @ForeignKey(() => Contragent)
-    @Column
-    contragent_id: number
+  @ForeignKey(() => Contragent)
+  @Column
+  object_id: number;
 
-    @ForeignKey(() => Contragent)
-    @Column
-    object_id: number
-    
-    @BelongsTo(() => Contragent, 'contragent_id')
-    contragent: Contragent
-
+  @BelongsTo(() => Contragent, 'contragent_id')
+  contragent: Contragent;
 }

@@ -7,6 +7,6 @@ import { Price } from './entities/price.entity';
 @Module({
   imports: [SequelizeModule.forFeature([Price])],
   controllers: [PriceController],
-  providers: [PriceService]
+  providers: [PriceService],
 })
 export class PriceModule {}

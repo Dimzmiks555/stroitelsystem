@@ -1,32 +1,36 @@
-import { Column, DataType, ForeignKey, Model, Table } from "sequelize-typescript";
-import { Checkout } from "src/checkouts/entities/checkout.entity";
+import {
+  Column,
+  DataType,
+  ForeignKey,
+  Model,
+  Table,
+} from 'sequelize-typescript';
+import { Checkout } from 'src/checkouts/entities/checkout.entity';
 
 @Table
 export class CheckoutsProduct extends Model {
-    @Column({type: DataType.TEXT})
-    name: string
+  @Column({ type: DataType.TEXT })
+  name: string;
 
-    @Column
-    sku: string
+  @Column
+  sku: string;
 
-    @ForeignKey(() => Checkout)
-    @Column
-    checkout_id: number
+  @ForeignKey(() => Checkout)
+  @Column
+  checkout_id: number;
 
-    @Column({type: DataType.DECIMAL(10,2)})
-    price: number
+  @Column({ type: DataType.DECIMAL(10, 2) })
+  price: number;
 
-    @Column({type: DataType.DECIMAL(10,2)})
-    price_after_discount: number
-    
-    @Column({type: DataType.DECIMAL(10,4)})
-    amount: number
-    
-    @Column({type: DataType.DECIMAL(10,2)})
-    summ: number
+  @Column({ type: DataType.DECIMAL(10, 2) })
+  price_after_discount: number;
 
-    @Column({type: DataType.DECIMAL(10,2)})
-    summ_after_discount: number
+  @Column({ type: DataType.DECIMAL(10, 4) })
+  amount: number;
 
+  @Column({ type: DataType.DECIMAL(10, 2) })
+  summ: number;
 
+  @Column({ type: DataType.DECIMAL(10, 2) })
+  summ_after_discount: number;
 }

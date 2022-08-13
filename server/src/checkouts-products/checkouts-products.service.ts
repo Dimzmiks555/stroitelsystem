@@ -6,11 +6,10 @@ import { CheckoutsProduct } from './entities/checkouts-product.entity';
 
 @Injectable()
 export class CheckoutsProductsService {
-
   constructor(
     @InjectModel(CheckoutsProduct)
-    private checkoutsProduct: typeof CheckoutsProduct
-  ){}
+    private checkoutsProduct: typeof CheckoutsProduct,
+  ) {}
 
   create(createCheckoutsProductDto) {
     return this.checkoutsProduct.create(createCheckoutsProductDto);
@@ -26,7 +25,7 @@ export class CheckoutsProductsService {
 
   update(id, updateCheckoutsProductDto) {
     return this.checkoutsProduct.update(updateCheckoutsProductDto, {
-      where: { id }
+      where: { id },
     });
   }
 

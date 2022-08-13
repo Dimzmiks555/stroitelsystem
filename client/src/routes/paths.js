@@ -127,6 +127,11 @@ export const PATH_DASHBOARD = {
     list: path(ROOTS_DASHBOARD, '/reports/list'),
     new: path(ROOTS_DASHBOARD, '/reports/new'),
   },
+  debts: {
+    root: path(ROOTS_DASHBOARD, '/debts'),
+    list: path(ROOTS_DASHBOARD, '/debts/list'),
+    new: path(ROOTS_DASHBOARD, '/debts/new'),
+  },
   realisations: {
     root: path(ROOTS_DASHBOARD, '/realisations'),
     list: path(ROOTS_DASHBOARD, '/realisations/list'),

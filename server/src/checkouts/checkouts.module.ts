@@ -10,11 +10,11 @@ import { EventModule } from 'src/event/event.module';
 
 @Module({
   imports: [
-    SequelizeModule.forFeature([Checkout, CheckoutsProduct]), 
+    SequelizeModule.forFeature([Checkout, CheckoutsProduct]),
     RealisationsModule,
-    EventModule
+    EventModule,
   ],
   controllers: [CheckoutsController],
-  providers: [CheckoutsService]
+  providers: [CheckoutsService],
 })
 export class CheckoutsModule {}

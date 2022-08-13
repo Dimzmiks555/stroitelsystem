@@ -8,6 +8,6 @@ import { Avanse } from './entities/avanse.entity';
 @Module({
   imports: [SequelizeModule.forFeature([Avanse])],
   controllers: [AvanseController],
-  providers: [AvanseService]
+  providers: [AvanseService],
 })
 export class AvanseModule {}

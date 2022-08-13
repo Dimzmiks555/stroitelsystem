@@ -7,18 +7,13 @@ import { Avanse } from './entities/avanse.entity';
 
 @Injectable()
 export class AvanseService {
-
-
   constructor(
     @InjectModel(Avanse)
     private avanseModel: typeof Avanse,
-
-
-  ){}
-
+  ) {}
 
   async create(createAvanseDto) {
-    let avanse = await this.avanseModel.create(createAvanseDto)
+    const avanse = await this.avanseModel.create(createAvanseDto);
 
     return avanse;
   }
@@ -26,24 +21,20 @@ export class AvanseService {
   async findAll(params: any) {
     return this.avanseModel.findAll({
       where: params,
-      include: [
-        {model: Contragent}
-      ]
+      include: [{ model: Contragent }],
     });
   }
 
   async findOne(id: number) {
     return this.avanseModel.findOne({
-      where: {id},
-      include: [
-        {model: Contragent}
-      ]
+      where: { id },
+      include: [{ model: Contragent }],
     });
   }
 
   async update(id: number, updateAvanseDto) {
-    return this.avanseModel.update(updateAvanseDto , {
-      where: {id},
+    return this.avanseModel.update(updateAvanseDto, {
+      where: { id },
     });
   }
 

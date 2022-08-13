@@ -7,14 +7,15 @@ import TableHead from "@mui/material/TableHead"
 import { useEffect, useState } from "react"
 import {useRouter} from 'next/router'
 import NextLink from 'next/link'
-import { Checkbox } from "@mui/material"
+import { Box, Checkbox } from "@mui/material"
 import InvoiceRow from "./InvoiceRow"
 
 
 export default function InvoiceBlock() {
 
     const [ expences, setExpences] = useState([])
-    const [ avanses, setAvanses] = useState([])
+    const [ total, setTotal] = useState(0)
+    const [ selected, setSelected] = useState([])
 
     const router = useRouter()
 
@@ -43,11 +44,35 @@ export default function InvoiceBlock() {
     
     }, [])
 
+    useEffect(()=> {
+
+        let total_notes = expences.filter(item => selected.includes(item.id))
+
+
+        let total = total_notes.reduce((prev, now) => prev + +now?.summ , 0)
+
+        setTotal(total)
+    
+    }, [selected])
+
 
 
     return (
         <Stack spacing={3} sx={{display: 'flex', flexWrap: 'wrap', width: '100%', flexDirection: 'row', justifyContent: 'space-between'}}>
-
+            <Box sx={{
+                position: 'fixed',
+                top: 10,
+                left: 'calc(50% - 100px)',
+                width: 200,
+                maxHeight: 100,
+                py: 3,
+                background: '#fff',
+                 textAlign: 'center',
+                 boxShadow: '0 7px 10px #ccc',
+                 borderRadius: 2
+            }}>
+                Итого <b>{total}</b> руб.
+            </Box>
             <Table size="small">
                 <TableHead>
                     <TableRow>
@@ -76,7 +101,7 @@ export default function InvoiceBlock() {
                 </TableHead>
                 <TableBody>
                 {expences?.map((row, index) => (
-                    <InvoiceRow key={row.id} row={row} index={index}></InvoiceRow>
+                    <InvoiceRow selected={selected} setSelected={setSelected} key={row.id} row={row} index={index}></InvoiceRow>
                 ))}
                 {/* {avanses?.map((row, index) => (
                     <InvoiceRow key={row.id} row={row} index={index}></InvoiceRow>

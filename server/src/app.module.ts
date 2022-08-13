@@ -45,6 +45,8 @@ import { Price } from './price/entities/price.entity';
 import { ExpenseModule } from './expense/expense.module';
 import { EventModule } from './event/event.module';
 import { Event } from './event/entities/event.entity';
+import { DebtModule } from './debt/debt.module';
+import { Debt } from './debt/entities/debt.entity';
 
 @Module({
   imports: [
@@ -56,39 +58,20 @@ import { Event } from './event/entities/event.entity';
     SequelizeModule.forRoot({
       dialect: 'mysql',
       // host: 'localhost',
-      host: '192.168.1.75',
+      host: '192.168.1.76',
       port: 3306,
       username: 'root',
       password: 'root',
       database: 'stroitel_system',
       // sync: {alter: true},
-      // synchronize: true,
-      // autoLoadModels: true,
-      models: [
-        Order,
-        Contragent,
-        Nomenklatura,
-        ObjectsModel,
-        Checkout,
-        CheckoutsProduct,
-        Note,
-        NoteProduct,
-        Person,
-        Document,
-        Contract,
-        Deal,
-        User,
-        Payment,
-        BankAccount,
-        Avanse,
-        Price,
-        Event
-      ],
+      synchronize: true,
+      autoLoadModels: true,
+      
     }),
-    ObjectsModule, 
-    NotesModule, 
-    ContragentsModule, 
-    TendersModule, 
+    ObjectsModule,
+    NotesModule,
+    ContragentsModule,
+    TendersModule,
     OrdersModule,
     NomenklaturaModule,
     RealisationsModule,
@@ -107,6 +90,7 @@ import { Event } from './event/entities/event.entity';
     PriceModule,
     ExpenseModule,
     EventModule,
+    DebtModule,
   ],
   controllers: [AppController],
   providers: [AppService, UsersService],

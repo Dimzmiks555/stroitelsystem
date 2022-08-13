@@ -7,6 +7,6 @@ import { NoteProduct } from './entities/note-product.entity';
 @Module({
   imports: [SequelizeModule.forFeature([NoteProduct])],
   controllers: [NoteProductsController],
-  providers: [NoteProductsService]
+  providers: [NoteProductsService],
 })
 export class NoteProductsModule {}

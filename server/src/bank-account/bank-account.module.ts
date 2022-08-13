@@ -7,6 +7,6 @@ import { BankAccount } from './entities/bank-account.entity';
 @Module({
   imports: [SequelizeModule.forFeature([BankAccount])],
   controllers: [BankAccountController],
-  providers: [BankAccountService]
+  providers: [BankAccountService],
 })
 export class BankAccountModule {}

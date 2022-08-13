@@ -7,11 +7,8 @@ import { NoteProduct } from 'src/note-products/entities/note-product.entity';
 import { EventModule } from 'src/event/event.module';
 
 @Module({
-  imports: [
-    SequelizeModule.forFeature([Note, NoteProduct]),
-    EventModule
-  ],
+  imports: [SequelizeModule.forFeature([Note, NoteProduct]), EventModule],
   controllers: [NotesController],
-  providers: [NotesService]
+  providers: [NotesService],
 })
 export class NotesModule {}

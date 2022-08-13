@@ -25,18 +25,15 @@ export class OrdersService {
   }
 
   findAll(query) {
+    const options: any = {};
 
-
-    let options: any = {}
-
-    let {status} = query
+    const { status } = query;
 
     if (status == 'new') {
-       options.status = {
-        [Op.not] : 'Завершен' 
-       }
+      options.status = {
+        [Op.not]: 'Завершен',
+      };
     }
-
 
     return this.orderModel.findAll({
       where: options,
@@ -44,7 +41,7 @@ export class OrdersService {
       include: [
         {
           model: this.contragentModel,
-          as: 'buyer'
+          as: 'buyer',
         },
         {
           model: this.contragentModel,
@@ -59,7 +56,7 @@ export class OrdersService {
       include: [
         {
           model: this.contragentModel,
-          as: 'buyer'
+          as: 'buyer',
         },
         {
           model: this.contragentModel,
@@ -70,13 +67,13 @@ export class OrdersService {
           as: 'files',
         },
       ],
-      where: {id}
+      where: { id },
     });
   }
 
   update(id: number, updateOrderDto: UpdateOrderDto) {
     return this.orderModel.update(updateOrderDto, {
-      where: {id}
+      where: { id },
     });
   }
 

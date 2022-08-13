@@ -7,6 +7,6 @@ import { Contract } from './entities/contract.entity';
 @Module({
   imports: [SequelizeModule.forFeature([Contract])],
   controllers: [ContractsController],
-  providers: [ContractsService]
+  providers: [ContractsService],
 })
 export class ContractsModule {}

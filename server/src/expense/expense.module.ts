@@ -9,6 +9,6 @@ import { ObjectsModel } from 'src/objects/entities/object.entity';
 @Module({
   imports: [SequelizeModule.forFeature([Note, Checkout, ObjectsModel])],
   controllers: [ExpenseController],
-  providers: [ExpenseService]
+  providers: [ExpenseService],
 })
 export class ExpenseModule {}

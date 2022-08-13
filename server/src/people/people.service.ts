@@ -6,11 +6,10 @@ import { Person } from './entities/person.entity';
 
 @Injectable()
 export class PeopleService {
-
   constructor(
     @InjectModel(Person)
-    private personModel: typeof Person
-  ){}
+    private personModel: typeof Person,
+  ) {}
 
   create(createPersonDto) {
     return this.personModel.create(createPersonDto);
@@ -22,13 +21,13 @@ export class PeopleService {
 
   findOne(id: number) {
     return this.personModel.findOne({
-      where: {id}
+      where: { id },
     });
   }
 
   update(id: number, updatePersonDto) {
     return this.personModel.update(updatePersonDto, {
-      where: {id}
+      where: { id },
     });
   }
 

@@ -7,7 +7,7 @@ import * as bcrypt from 'bcrypt';
 export class AuthService {
   constructor(
     private usersService: UsersService,
-    private jwtService: JwtService
+    private jwtService: JwtService,
   ) {}
 
   async validateUser(username: string, pass: string): Promise<any> {
@@ -21,16 +21,18 @@ export class AuthService {
   }
 
   async login(user: any) {
-    const payload = {firstName: user.firstName, lastName: user.lastName, username: user.username}
+    const payload = {
+      firstName: user.firstName,
+      lastName: user.lastName,
+      username: user.username,
+    };
     return {
       accessToken: this.jwtService.sign(payload),
-      user: payload
+      user: payload,
     };
   }
 
-
   async registration(data: any) {
-
     const saltOrRounds = 10;
     const hash = await bcrypt.hash(data.password, saltOrRounds);
 
@@ -39,9 +41,7 @@ export class AuthService {
     const payload = { username: user.username, sub: user.id };
     return {
       accessToken: this.jwtService.sign(payload),
-      user: payload
+      user: payload,
     };
   }
-
-  
 }

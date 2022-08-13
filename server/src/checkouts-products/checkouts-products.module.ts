@@ -8,6 +8,6 @@ import { CheckoutsProduct } from './entities/checkouts-product.entity';
 @Module({
   imports: [SequelizeModule.forFeature([CheckoutsProduct])],
   controllers: [CheckoutsProductsController],
-  providers: [CheckoutsProductsService]
+  providers: [CheckoutsProductsService],
 })
 export class CheckoutsProductsModule {}

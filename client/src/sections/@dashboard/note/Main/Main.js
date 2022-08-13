@@ -1,6 +1,6 @@
 import { DatePicker } from "@mui/lab";
 import { LoadingButton } from '@mui/lab';
-import { Card, Chip, Grid, Stack, TextField, Typography, Autocomplete, InputAdornment, Box, Switch, FormControlLabel, Table, TableRow, TableCell, TableHead, TableBody, Avatar, Alert, AlertTitle } from '@mui/material';
+import { Card, Chip, Grid, Stack, TextField, Typography, Autocomplete, InputAdornment, Box, Switch, FormControlLabel, Table, TableRow, TableCell, TableHead, TableBody, Avatar, Alert, AlertTitle, Button } from '@mui/material';
 import { useState } from "react";
 import NextLink from 'next/link';
 import { Controller } from "react-hook-form";
@@ -25,7 +25,7 @@ export const Main = ({ setObjectModel, setValueDate, contragents, isEdit, curren
   } = methods;
 
   
-
+  const router = useRouter()
 
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
@@ -39,6 +39,40 @@ export const Main = ({ setObjectModel, setValueDate, contragents, isEdit, curren
 
   const handleChangeObject = (e, newValue) => {
     setObjectModel(newValue)
+  }
+
+  const handleDeleteNote = () => {
+
+    fetch(`${process.env.NEXT_PUBLIC_HOST}/notes/${router.query.id}`, {
+      method: 'DELETE'
+    })
+    .then((res) => res.json)
+    .then((json) => {
+      console.log(json);
+      
+
+        let data = {
+            isChecked: false
+        }
+
+        
+        if (currentProduct?.isChecked) { data.isUpdatedAfterCheck = true }
+
+
+        fetch(`${process.env.NEXT_PUBLIC_HOST}/notes/${router.query?.id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+        .then((res) => res.json)
+        .then((json) => {
+            console.log(json);
+        });
+
+    });
   }
 
   
@@ -174,7 +208,17 @@ export const Main = ({ setObjectModel, setValueDate, contragents, isEdit, curren
       </Stack>
     
     <div>
-      <FormControlLabel control={<Switch />} label="Возврат" />
+      <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
+        <FormControlLabel control={<Switch />} label="Возврат" />
+
+        {currentProduct?.deletedAt ? (
+            <Button disabled onClick={handleDeleteNote} variant="contained" color="error">Удалено</Button>
+        ) : (
+            <Button onClick={handleDeleteNote} variant="contained" color="error">Удалить</Button>
+        )}
+
+        
+      </Box>
       <RHFTextField
         multiline
         size="small"

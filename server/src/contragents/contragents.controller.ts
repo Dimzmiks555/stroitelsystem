@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { ContragentsService } from './contragents.service';
 import { CreateContragentDto } from './dto/create-contragent.dto';
 import { UpdateContragentDto } from './dto/update-contragent.dto';
@@ -23,7 +31,10 @@ export class ContragentsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateContragentDto: UpdateContragentDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateContragentDto: UpdateContragentDto,
+  ) {
     return this.contragentsService.update(+id, updateContragentDto);
   }
 

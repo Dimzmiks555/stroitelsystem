@@ -6,11 +6,10 @@ import { Event } from './entities/event.entity';
 
 @Injectable()
 export class EventService {
-
   constructor(
     @InjectModel(Event)
-    private eventModel: typeof Event
-  ){}
+    private eventModel: typeof Event,
+  ) {}
 
   async create(createEventDto) {
     return await this.eventModel.create(createEventDto);

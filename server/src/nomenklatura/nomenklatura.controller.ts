@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { NomenklaturaService } from './nomenklatura.service';
 import { CreateNomenklaturaDto } from './dto/create-nomenklatura.dto';
 import { UpdateNomenklaturaDto } from './dto/update-nomenklatura.dto';
@@ -23,7 +31,10 @@ export class NomenklaturaController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateNomenklaturaDto: UpdateNomenklaturaDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateNomenklaturaDto: UpdateNomenklaturaDto,
+  ) {
     return this.nomenklaturaService.update(+id, updateNomenklaturaDto);
   }
 

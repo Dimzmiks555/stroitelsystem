@@ -10,11 +10,10 @@ import { Deal } from './entities/deal.entity';
 
 @Injectable()
 export class DealsService {
-
   constructor(
     @InjectModel(Deal)
-    private dealModel: typeof Deal
-  ){}
+    private dealModel: typeof Deal,
+  ) {}
 
   create(createDealDto: any) {
     return this.dealModel.create(createDealDto);
@@ -23,31 +22,31 @@ export class DealsService {
   findAll() {
     return this.dealModel.findAll({
       include: [
-        {model: Contract},
-        {model: Contragent, as: 'buyer'},
-        {model: Contragent, as: 'seller'},
-        {model: Payment, as: 'payments'}
+        { model: Contract },
+        { model: Contragent, as: 'buyer' },
+        { model: Contragent, as: 'seller' },
+        { model: Payment, as: 'payments' },
         // {model: Document, as: 'end_files'}
-      ]
+      ],
     });
   }
 
   findOne(id) {
     return this.dealModel.findOne({
-      where: {id},
+      where: { id },
       include: [
-        {model: Contract},
-        {model: Contragent, as: 'buyer'},
-        {model: Contragent, as: 'seller'},
-        {model: Document, as: 'end_files'},
-        {model: Document, as: 'start_files'},
-      ]
+        { model: Contract },
+        { model: Contragent, as: 'buyer' },
+        { model: Contragent, as: 'seller' },
+        { model: Document, as: 'end_files' },
+        { model: Document, as: 'start_files' },
+      ],
     });
   }
 
   update(id, updateDealDto: any) {
     return this.dealModel.update(updateDealDto, {
-      where: {id}
+      where: { id },
     });
   }
 

@@ -1,20 +1,16 @@
-import { Column, Model, Table } from "sequelize-typescript";
-
+import { Column, Model, Table } from 'sequelize-typescript';
 
 @Table
 export class Price extends Model {
+  @Column
+  name: string;
 
-    @Column
-    name: string
+  @Column
+  price: number;
 
-    @Column
-    price: number
+  @Column
+  unit: string;
 
-    @Column
-    unit: string
-
-    @Column
-    type: string
-
-
+  @Column
+  type: string;
 }

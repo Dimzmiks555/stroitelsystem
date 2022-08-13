@@ -109,9 +109,14 @@ const navConfig = [
         path: PATH_DASHBOARD.orders.list,
         icon: ICONS.booking
       },
+      // {
+      //   title: 'Расходы',
+      //   path: PATH_DASHBOARD.main_expenses.list,
+      //   icon: ICONS.banking
+      // },
       {
-        title: 'Расходы',
-        path: PATH_DASHBOARD.main_expenses.list,
+        title: 'Долги',
+        path: PATH_DASHBOARD.debts.list,
         icon: ICONS.banking
       },
       {

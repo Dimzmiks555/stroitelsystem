@@ -11,7 +11,6 @@ import { Note } from './entities/note.entity';
 
 @Injectable()
 export class NotesService {
-
   constructor(
     @InjectModel(Note)
     private noteModel: typeof Note,
@@ -20,136 +19,128 @@ export class NotesService {
     private noteProductModel: typeof NoteProduct,
 
     private eventService: EventService,
-    
-    
-
-  ){}
-
+  ) {}
 
   async create(createNoteDto) {
-    
-    console.log(createNoteDto)
+    console.log(createNoteDto);
 
-    let note = await this.noteModel.create(createNoteDto)
+    const note = await this.noteModel.create(createNoteDto);
 
-    let eventData = {
+    const eventData = {
       type: 'CREATE',
       entity_id: note?.id,
       entity: 'note',
-      realData: JSON.stringify(createNoteDto)
-    }
+      realData: JSON.stringify(createNoteDto),
+    };
 
-    let event = await this.eventService.create(eventData)
+    const event = await this.eventService.create(eventData);
 
-    createNoteDto?.rows?.forEach(item => {
+    createNoteDto?.rows?.forEach((item) => {
+      this.noteProductModel
+        .create({ ...item, note_id: note.id })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    });
 
-      this.noteProductModel.create({...item, note_id: note.id})
-      .then(res => {
-        console.log(res)
-      })
-      .catch(e => {
-        console.log(e)
-      })
-
-    })
-
-    return note
-
+    return note;
   }
 
   findAll(params: any) {
     return this.noteModel.findAll({
       where: params,
+      paranoid: false,
       include: [
-        {model: ObjectsModel},
-        {model: NoteProduct},
-        {model: Person},
-        {model: Contragent, as: 'buyer'},
-        {model: Contragent, as: 'seller'},
+        { model: ObjectsModel },
+        { model: NoteProduct },
+        { model: Person },
+        { model: Contragent, as: 'buyer' },
+        { model: Contragent, as: 'seller' },
       ],
-      order: [['id', 'desc']]
-    })
+      order: [['id', 'desc']],
+    });
   }
 
   findOne(id: number, params: any) {
-
-    console.log(params)
+    console.log(params);
 
     return this.noteModel.findOne({
-      where: { id},
+      where: { id },
+      paranoid: false,
       include: [
-        {model: ObjectsModel},
-        {model: NoteProduct},
-        {model: Person},
-        {model: Contragent, as: 'buyer'},
-        {model: Contragent, as: 'seller'},
-      ]
-    })
+        { model: ObjectsModel },
+        { model: NoteProduct },
+        { model: Person },
+        { model: Contragent, as: 'buyer' },
+        { model: Contragent, as: 'seller' },
+      ],
+    });
   }
 
   async update(id: number, updateNoteDto) {
+    const prevNote = await this.noteModel.findOne({
+      where: { id },
+    });
 
-    let prevNote = await this.noteModel.findOne({
-      where: {id}
-    })
+    const note = await this.noteModel.update(updateNoteDto, {
+      where: { id },
+      paranoid: false
+    });
 
-    let note = await this.noteModel.update(updateNoteDto, {
-      where: {id}
-    })
-
-    let eventData = {
+    const eventData = {
       type: 'UPDATE',
       entity_id: id,
       entity: 'note',
       previousData: JSON.stringify(prevNote),
-      realData: JSON.stringify(updateNoteDto)
-    }
+      realData: JSON.stringify(updateNoteDto),
+    };
 
-    let event = this.eventService.create(eventData)
-
-    
+    const event = this.eventService.create(eventData);
 
     async function updateProduct(item, noteProductModel) {
+      // let noteProduct = await noteProductModel.findOne({
+      //   where: {id: item?.id}
+      // })
 
-        // let noteProduct = await noteProductModel.findOne({
-        //   where: {id: item?.id}
-        // })
-  
-        console.log(item)
-  
-        if (item?.id) {
-          noteProductModel.update(item, {
-            where: {id: item?.id}
-          })
-          .then(res => {
-            console.log(res)
-          })
-          .catch(e => {
-            console.log(e)
-          })
-        } else {
-          noteProductModel.create({...item, note_id: id})
-          .then(res => {
-            console.log(res)
-          })
-          .catch(e => {
-            console.log(e)
-          })
-        }
+      console.log(item);
 
+      if (item?.id) {
+        noteProductModel
+          .update(item, {
+            where: { id: item?.id },
+          })
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else {
+        noteProductModel
+          .create({ ...item, note_id: id })
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
     }
 
-    updateNoteDto?.rows?.forEach(item => {
+    updateNoteDto?.rows?.forEach((item) => {
       // console.log(item)
-      updateProduct(item, this.noteProductModel)
+      updateProduct(item, this.noteProductModel);
+    });
 
-
-    })
-
-    return note
+    return note;
   }
 
   remove(id: number) {
-    return `This action removes a #${id} note`;
+    return this.noteModel.destroy({
+      where: {id}
+    });
   }
 }

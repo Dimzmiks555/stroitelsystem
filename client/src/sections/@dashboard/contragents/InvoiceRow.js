@@ -2,11 +2,25 @@ import { Checkbox, TableCell, TableRow } from "@mui/material";
 import { useState } from "react";
 import NextLink from 'next/link'
 
-export default function InvoiceRow({row, index}) {
+export default function InvoiceRow({row, index, setSelected, selected}) {
     const [checked, setChecked] = useState(false);
 
     const handleChange = (event) => {
         setChecked(event.target.checked);
+
+        if (event.target.checked) {
+            setSelected((prev) => {
+                return [...prev, +event.target.name]
+            })
+        } else {
+
+            let finded = selected.filter(item => item != +event.target.name)
+
+
+            setSelected(finded)
+        }
+
+
     };
 
 
@@ -22,10 +36,10 @@ export default function InvoiceRow({row, index}) {
         >
         
         <TableCell  sx={{fontWeight: 'bold', fontSize: 12}} >
-            <Checkbox checked={checked} onChange={handleChange}></Checkbox> {index + 1}
+            <Checkbox name={row?.id} checked={checked} onChange={handleChange}></Checkbox> {index + 1}
         </TableCell>
         <TableCell   sx={{ display: 'flex', alignItems: 'center', fontWeight: 'bold', fontSize: 12 }}>
-                {console.log(row)}
+                {/* {console.log(row)} */}
             <NextLink href={`/dashboard/note/${row.id}/edit`}>
                 {
                     row?.contragent ? (

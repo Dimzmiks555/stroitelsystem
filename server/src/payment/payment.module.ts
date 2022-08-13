@@ -6,11 +6,8 @@ import { Payment } from './entities/payment.entity';
 import { EventModule } from 'src/event/event.module';
 
 @Module({
-  imports: [
-    SequelizeModule.forFeature([Payment]),
-    EventModule
-  ],
+  imports: [SequelizeModule.forFeature([Payment]), EventModule],
   controllers: [PaymentController],
-  providers: [PaymentService]
+  providers: [PaymentService],
 })
 export class PaymentModule {}

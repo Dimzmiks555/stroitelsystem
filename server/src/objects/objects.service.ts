@@ -8,31 +8,29 @@ import { ObjectsModel } from './entities/object.entity';
 
 @Injectable()
 export class ObjectsService {
-
   constructor(
     @InjectModel(ObjectsModel)
     private objectsModel: typeof ObjectsModel,
-
   ) {}
 
   create(createObjectDto: any) {
-    return this.objectsModel.create(createObjectDto)
+    return this.objectsModel.create(createObjectDto);
   }
 
   findAll() {
-    return this.objectsModel.findAll()
+    return this.objectsModel.findAll();
   }
 
   findOne(id: number) {
     return this.objectsModel.findOne({
-      where: {id},
-      include: [Checkout, Note]
-    })
+      where: { id },
+      include: [Checkout, Note],
+    });
   }
 
   update(id: number, updateObjectDto: any) {
     return this.objectsModel.update(updateObjectDto, {
-      where: {id}
+      where: { id },
     });
   }
 

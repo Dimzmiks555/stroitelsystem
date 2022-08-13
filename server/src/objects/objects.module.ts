@@ -8,6 +8,6 @@ import { ObjectsModel } from './entities/object.entity';
 @Module({
   imports: [SequelizeModule.forFeature([ObjectsModel])],
   controllers: [ObjectsController],
-  providers: [ObjectsService]
+  providers: [ObjectsService],
 })
 export class ObjectsModule {}

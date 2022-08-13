@@ -1,63 +1,70 @@
-import { BelongsTo, Column, DataType, ForeignKey, HasMany, Model, Table } from "sequelize-typescript";
-import { Contragent } from "src/contragents/entities/contragent.entity";
-import { NoteProduct } from "src/note-products/entities/note-product.entity";
-import { ObjectsModel } from "src/objects/entities/object.entity";
-import { Person } from "src/people/entities/person.entity";
+import {
+  BelongsTo,
+  Column,
+  DataType,
+  ForeignKey,
+  HasMany,
+  Model,
+  Table,
+} from 'sequelize-typescript';
+import { Contragent } from 'src/contragents/entities/contragent.entity';
+import { NoteProduct } from 'src/note-products/entities/note-product.entity';
+import { ObjectsModel } from 'src/objects/entities/object.entity';
+import { Person } from 'src/people/entities/person.entity';
 
-@Table
+@Table({
+  paranoid: true
+})
 export class Note extends Model {
+  @Column({ defaultValue: false })
+  isChecked: boolean;
 
+  @Column({ defaultValue: false })
+  isReturn: boolean;
 
-    @Column({defaultValue: false})
-    isChecked: boolean
+  @Column({ defaultValue: false })
+  isUpdatedAfterCheck: boolean;
 
-    @Column({defaultValue: false})
-    isReturn: boolean
+  @Column
+  Date: string;
 
-    @Column({defaultValue: false})
-    isUpdatedAfterCheck: boolean
+  @Column({ type: DataType.TEXT })
+  description: string;
 
-    @Column
-    Date: string
+  @Column
+  basis: string;
 
-    @Column({type: DataType.TEXT})
-    description: string
+  @Column({ type: DataType.DECIMAL(10, 2) })
+  summ: number;
 
-    @Column
-    basis: string
+  @ForeignKey(() => Contragent)
+  @Column
+  seller_id: number;
 
-    @Column({type: DataType.DECIMAL(10,2)})
-    summ: number
+  @ForeignKey(() => Contragent)
+  @Column
+  buyer_id: number;
 
-    @ForeignKey(() => Contragent)
-    @Column
-    seller_id: number
+  @ForeignKey(() => Person)
+  @Column
+  person_id: number;
 
-    @ForeignKey(() => Contragent)
-    @Column
-    buyer_id: number
+  @ForeignKey(() => ObjectsModel)
+  @Column
+  object_id: number;
 
-    @ForeignKey(() => Person)
-    @Column
-    person_id: number
+  @BelongsTo(() => ObjectsModel)
+  object: ObjectsModel;
 
-    @ForeignKey(() => ObjectsModel)
-    @Column
-    object_id: number
+  @BelongsTo(() => Contragent, 'buyer_id')
+  buyer: Contragent;
 
-    @BelongsTo(() => ObjectsModel)
-    object: ObjectsModel
+  @BelongsTo(() => Contragent, 'seller_id')
+  seller: Contragent;
 
-    @BelongsTo(() => Contragent, 'buyer_id')
-    buyer: Contragent
-    
-    @BelongsTo(() => Contragent, 'seller_id')
-    seller: Contragent
+  @BelongsTo(() => Person, 'person_id')
+  person: Person;
 
-    @BelongsTo(() => Person, 'person_id')
-    person: Person
-
-    @HasMany(() => NoteProduct)
-    products: Array<NoteProduct>;
-
+  @HasMany(() => NoteProduct)
+  products: Array<NoteProduct>;
 }

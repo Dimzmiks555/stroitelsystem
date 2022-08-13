@@ -8,13 +8,10 @@ import { Contract } from './entities/contract.entity';
 
 @Injectable()
 export class ContractsService {
-
   constructor(
     @InjectModel(Contract)
-    private contractModel: typeof Contract
-
-  ){}
-
+    private contractModel: typeof Contract,
+  ) {}
 
   create(createContractDto: any) {
     return this.contractModel.create(createContractDto);
@@ -23,27 +20,27 @@ export class ContractsService {
   findAll() {
     return this.contractModel.findAll({
       include: [
-        {model: Contragent, as: 'buyer'},
-        {model: Contragent, as: 'seller'},
-        {model: Document},
-      ]
+        { model: Contragent, as: 'buyer' },
+        { model: Contragent, as: 'seller' },
+        { model: Document },
+      ],
     });
   }
 
   findOne(id) {
     return this.contractModel.findOne({
-      where: {id},
+      where: { id },
       include: [
-        {model: Contragent, as: 'buyer'},
-        {model: Contragent, as: 'seller'},
-        {model: Document},
-      ]
+        { model: Contragent, as: 'buyer' },
+        { model: Contragent, as: 'seller' },
+        { model: Document },
+      ],
     });
   }
 
   update(id, updateContractDto: any) {
     return this.contractModel.update(updateContractDto, {
-      where: {id}
+      where: { id },
     });
   }
 

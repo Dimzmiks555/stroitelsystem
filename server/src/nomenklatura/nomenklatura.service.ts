@@ -6,30 +6,28 @@ import { Nomenklatura } from './entities/nomenklatura.entity';
 
 @Injectable()
 export class NomenklaturaService {
-
   constructor(
     @InjectModel(Nomenklatura)
     private nomenklaturaModel: typeof Nomenklatura,
-
   ) {}
 
   create(createNomenklaturaDto) {
-    return this.nomenklaturaModel.create(createNomenklaturaDto)
+    return this.nomenklaturaModel.create(createNomenklaturaDto);
   }
 
   findAll() {
-    return this.nomenklaturaModel.findAll()
+    return this.nomenklaturaModel.findAll();
   }
 
   findOne(id: number) {
     return this.nomenklaturaModel.findOne({
-      where: {id}
-    })
+      where: { id },
+    });
   }
 
   update(id: number, updateNomenklaturaDto: any) {
     return this.nomenklaturaModel.update(updateNomenklaturaDto, {
-      where: {id}
+      where: { id },
     });
   }
 

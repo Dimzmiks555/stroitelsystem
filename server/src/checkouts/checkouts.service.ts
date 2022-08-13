@@ -12,38 +12,36 @@ import { Checkout } from './entities/checkout.entity';
 
 @Injectable()
 export class CheckoutsService {
-
   constructor(
     private realisationsService: RealisationsService,
 
     @InjectModel(Checkout)
     private checkoutModel: typeof Checkout,
-    
+
     @InjectModel(CheckoutsProduct)
     private checkoutProductModel: typeof CheckoutsProduct,
 
     private eventService: EventService,
-
-    ) {}
+  ) {}
 
   async create(createCheckoutDto) {
+    const realisation = await this.realisationsService.findOne(
+      createCheckoutDto?.['Ref_Key'],
+    );
 
-    const realisation = await this.realisationsService.findOne(createCheckoutDto?.['Ref_Key'])
+    const checkout = await this.checkoutModel.create(createCheckoutDto);
 
-    const checkout = await this.checkoutModel.create(createCheckoutDto)
-
-    let eventData = {
+    const eventData = {
       type: 'CREATE',
       entity_id: checkout?.id,
       entity: 'checkout',
-      realData: JSON.stringify(createCheckoutDto)
-    }
+      realData: JSON.stringify(createCheckoutDto),
+    };
 
-    let event = await this.eventService.create(eventData)
-    
+    const event = await this.eventService.create(eventData);
 
-    realisation?.['Товары']?.forEach(item => {
-      let product = {
+    realisation?.['Товары']?.forEach((item) => {
+      const product = {
         name: item?.['Номенклатура']?.['НаименованиеПолное'],
         sku: item?.['Номенклатура']?.['Артикул'],
         price: item['Цена'],
@@ -52,51 +50,48 @@ export class CheckoutsService {
         summ: item['Сумма'],
         summ_after_discount: item['Сумма'],
         checkout_id: +checkout?.id,
-      }
+      };
 
-      let eventData = {
+      const eventData = {
         type: 'CREATE',
         // entity_id: checkout?.id,
         entity: 'checkout_product',
-        realData: JSON.stringify(product)
-      }
-  
-      let event = this.eventService.create(eventData)
+        realData: JSON.stringify(product),
+      };
 
-      this.checkoutProductModel.create(product)
+      const event = this.eventService.create(eventData);
 
-    })
+      this.checkoutProductModel.create(product);
+    });
 
-    return checkout
-
-
+    return checkout;
   }
 
   findAll(params: any) {
     return this.checkoutModel.findAll({
       where: params,
       include: [
-        {model: CheckoutsProduct},
-        {model: ObjectsModel},
-        {model: Person},
-      ]
-    })
+        { model: CheckoutsProduct },
+        { model: ObjectsModel },
+        { model: Person },
+      ],
+    });
   }
 
   findOne(id: number) {
     return this.checkoutModel.findOne({
-      where: {id},
+      where: { id },
       include: [
-        {model: CheckoutsProduct},
-        {model: ObjectsModel},
-        {model: Person}
-      ]
-    })
+        { model: CheckoutsProduct },
+        { model: ObjectsModel },
+        { model: Person },
+      ],
+    });
   }
 
   update(id: number, updateCheckoutDto: UpdateCheckoutDto) {
     return this.checkoutModel.update(updateCheckoutDto, {
-      where: {id}
+      where: { id },
     });
   }
 

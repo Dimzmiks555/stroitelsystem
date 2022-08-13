@@ -335,10 +335,12 @@ export const NotesReport = () => {
                                       <Chip color={row?.isChecked ? 'success' : 'error'} label={index + 1}></Chip> 
                                       </TableCell>
                                       <TableCell   sx={{ display: 'flex', alignItems: 'center', fontWeight: 'bold', fontSize: 11 }}>
-                                      <NextLink href={`/dashboard/note/${id}/edit`}>
-                                          <a> Запись № {id} от {new Date(date).toLocaleDateString()}  </a>
-                                      </NextLink>
-                                          {row?.isUpdatedAfterCheck && <Chip sx={{p: 0,ml: 2, color: 'white', fontSize: 12}} color="warning" label="Изменено"></Chip>}
+                                        <NextLink href={`/dashboard/note/${id}/edit`}>
+                                            <a> Запись № {id} от {new Date(date).toLocaleDateString()}  </a>
+                                        </NextLink>
+                                          {row?.isUpdatedAfterCheck && row?.deletedAt ? <Chip sx={{p: 0,ml: 2, color: 'white', fontSize: 12}} color="error" label="Необходимо удалить"></Chip>:
+                                          row?.isUpdatedAfterCheck ? <Chip sx={{p: 0,ml: 2, color: 'white', fontSize: 12}} color="warning" label="Изменено"></Chip>:
+                                          null}
                                       </TableCell>
                                       <TableCell  sx={{fontWeight: 'bold', fontSize: 11}} colSpan={3}>
                                       {row?.object?.name}

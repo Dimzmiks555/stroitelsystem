@@ -7,6 +7,6 @@ import { Nomenklatura } from './entities/nomenklatura.entity';
 @Module({
   imports: [SequelizeModule.forFeature([Nomenklatura])],
   controllers: [NomenklaturaController],
-  providers: [NomenklaturaService]
+  providers: [NomenklaturaService],
 })
 export class NomenklaturaModule {}

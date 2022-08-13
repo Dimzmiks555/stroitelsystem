@@ -6,11 +6,10 @@ import { Price } from './entities/price.entity';
 
 @Injectable()
 export class PriceService {
-
   constructor(
     @InjectModel(Price)
-    private priceModel: typeof Price
-  ){}
+    private priceModel: typeof Price,
+  ) {}
 
   create(createPriceDto) {
     return this.priceModel.create(createPriceDto);
@@ -26,7 +25,7 @@ export class PriceService {
 
   update(id, updatePriceDto) {
     return this.priceModel.update(updatePriceDto, {
-      where: {id}
+      where: { id },
     });
   }
 

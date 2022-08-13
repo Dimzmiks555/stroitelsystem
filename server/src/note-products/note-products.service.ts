@@ -6,12 +6,10 @@ import { NoteProduct } from './entities/note-product.entity';
 
 @Injectable()
 export class NoteProductsService {
-
   constructor(
     @InjectModel(NoteProduct)
-    private noteProduct: typeof NoteProduct
-  ){}
-
+    private noteProduct: typeof NoteProduct,
+  ) {}
 
   create(createNoteProductDto: CreateNoteProductDto) {
     return 'This action adds a new noteProduct';
@@ -31,7 +29,7 @@ export class NoteProductsService {
 
   remove(id: number) {
     return this.noteProduct.destroy({
-      where: {id}
-    })
+      where: { id },
+    });
   }
 }

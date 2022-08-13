@@ -9,83 +9,68 @@ import { Payment } from './entities/payment.entity';
 
 @Injectable()
 export class PaymentService {
-
   constructor(
     @InjectModel(Payment)
     private paymentModel: typeof Payment,
 
-    private eventService: EventService
-  ){}
-
+    private eventService: EventService,
+  ) {}
 
   async create(createPaymentDto) {
+    console.log(createPaymentDto);
 
+    const payment = await this.paymentModel.create(createPaymentDto);
 
-    console.log(createPaymentDto)
-
-    let payment = await this.paymentModel.create(createPaymentDto)
-
-    let eventData = {
+    const eventData = {
       type: 'CREATE',
       entity_id: payment.id,
       entity: 'payment',
       // previousData: JSON.stringify(prevNote),
-      realData: JSON.stringify(createPaymentDto)
-    }
+      realData: JSON.stringify(createPaymentDto),
+    };
 
-    let event = this.eventService.create(eventData)
+    const event = this.eventService.create(eventData);
 
-    return payment
+    return payment;
   }
 
   findAll(query) {
-
-
-    
     return this.paymentModel.findAndCountAll({
       where: query,
-      include: [
-        {'model': Contragent}
-      ]
+      include: [{ model: Contragent }],
     });
   }
 
   findOne(id: number) {
     return this.paymentModel.findOne({
-      where: {id},
-      include: [
-        {'model': Contragent},
-        {'model': Deal}
-      ]
+      where: { id },
+      include: [{ model: Contragent }, { model: Deal }],
     });
   }
 
   async update(id, updatePaymentDto) {
+    const payment = await this.paymentModel.findOne({
+      where: { id },
+    });
 
-
-    let payment = await this.paymentModel.findOne({
-      where: {id}
-    })
-
-    let eventData = {
+    const eventData = {
       type: 'UPDATE',
       entity_id: id,
       entity: 'payment',
       previousData: JSON.stringify(payment),
-      realData: JSON.stringify(updatePaymentDto)
-    }
+      realData: JSON.stringify(updatePaymentDto),
+    };
 
-    let event = this.eventService.create(eventData)
-
+    const event = this.eventService.create(eventData);
 
     return this.paymentModel.update(updatePaymentDto, {
-      where: {id}
+      where: { id },
     });
   }
 
   remove(id) {
     return this.paymentModel.destroy({
-      where: {id}
-    })
+      where: { id },
+    });
   }
 }
