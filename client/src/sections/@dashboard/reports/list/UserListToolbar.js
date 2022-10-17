@@ -24,10 +24,14 @@ UserListToolbar.propTypes = {
   onDeleteUsers: PropTypes.func,
 };
 
-export default function UserListToolbar({ numSelected, filterName, onFilterName, onDeleteUsers, handleChangeObject, objects }) {
+export default function UserListToolbar({ selected, items, numSelected, filterName, onFilterName, onDeleteUsers, handleChangeObject, objects }) {
   const theme = useTheme();
 
   const isLight = theme.palette.mode === 'light';
+
+  let summ = items?.filter(item => selected.includes(item?.id))?.reduce((prev, now) => prev + +now?.summ, 0)
+
+  console.log(items)
 
   return (
     <RootStyle
@@ -39,9 +43,14 @@ export default function UserListToolbar({ numSelected, filterName, onFilterName,
       }}
     >
       {numSelected > 0 ? (
+        <>
         <Typography component="div" variant="subtitle1">
           {numSelected} выбрано
         </Typography>
+        <Typography component="div" variant="subtitle1">
+          Сумма {(summ)?.toFixed(2)} 
+        </Typography>
+        </>
       ) : (
         <>
         {/* <InputStyle

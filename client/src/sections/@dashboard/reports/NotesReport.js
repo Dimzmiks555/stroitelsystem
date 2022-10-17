@@ -286,6 +286,8 @@ export const NotesReport = () => {
             </Dialog>
             <Card >
               <UserListToolbar
+                  selected={selected}
+                  items={filtered}
                   numSelected={selected.length}
                   filterName={filterName}
                   sx={{displayPrint: 'none'}}
