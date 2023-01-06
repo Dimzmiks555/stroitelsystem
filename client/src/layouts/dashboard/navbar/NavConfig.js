@@ -84,7 +84,7 @@ const navConfig = [
           { title: 'Покупки', path: PATH_DASHBOARD.avanses.list},
           { title: 'Авансы', path: PATH_DASHBOARD.avanses.list},
           {
-            title: 'Прочее',
+            title: 'Аналитика по товарам',
             path: PATH_DASHBOARD.other_expenses.list,
             icon: ICONS.ecommerce
           },

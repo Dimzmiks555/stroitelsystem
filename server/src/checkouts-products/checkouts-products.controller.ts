@@ -27,6 +27,7 @@ export class CheckoutsProductsController {
     return this.checkoutsProductsService.findAll();
   }
 
+
   @Get(':id')
   findOne(@Param('id') id) {
     return this.checkoutsProductsService.findOne(+id);

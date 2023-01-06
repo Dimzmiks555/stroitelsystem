@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { NoteProductsService } from './note-products.service';
 import { CreateNoteProductDto } from './dto/create-note-product.dto';
@@ -23,6 +24,12 @@ export class NoteProductsController {
   @Get()
   findAll() {
     return this.noteProductsService.findAll();
+  }
+
+  
+  @Get('stats') 
+  stats(@Query() body) {
+    return this.noteProductsService.stats(body);
   }
 
   @Get(':id')

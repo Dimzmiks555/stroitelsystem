@@ -19,6 +19,7 @@ export class CheckoutsProductsService {
     return `This action returns all checkoutsProducts`;
   }
 
+
   findOne(id: number) {
     return `This action returns a #${id} checkoutsProduct`;
   }
