@@ -191,6 +191,11 @@ const navConfig = [
         path: PATH_DASHBOARD.people.list,
         icon: ICONS.worker
       },
+      {
+        title: 'Транспорт',
+        path: PATH_DASHBOARD?.transport?.list,
+        icon: ICONS.worker
+      },
       // {
       //   title: 'Номенклатура',
       //   path: PATH_DASHBOARD.nomenklatura.list,

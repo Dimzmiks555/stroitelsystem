@@ -47,6 +47,7 @@ import { EventModule } from './event/event.module';
 import { Event } from './event/entities/event.entity';
 import { DebtModule } from './debt/debt.module';
 import { Debt } from './debt/entities/debt.entity';
+import { TransportModule } from './transport/transport.module';
 
 @Module({
   imports: [
@@ -63,10 +64,9 @@ import { Debt } from './debt/entities/debt.entity';
       username: 'root',
       password: 'root',
       database: 'stroitel_system',
-      // sync: {alter: true},
+      // sync: { alter: true },
       synchronize: true,
       autoLoadModels: true,
-      
     }),
     ObjectsModule,
     NotesModule,
@@ -91,6 +91,7 @@ import { Debt } from './debt/entities/debt.entity';
     ExpenseModule,
     EventModule,
     DebtModule,
+    TransportModule,
   ],
   controllers: [AppController],
   providers: [AppService, UsersService],

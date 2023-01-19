@@ -100,6 +100,11 @@ export const PATH_DASHBOARD = {
     list: path(ROOTS_DASHBOARD, '/orders/list'),
     newOrder: path(ROOTS_DASHBOARD, '/orders/new'),
   },
+  transport: {
+    root: path(ROOTS_DASHBOARD, '/transports'),
+    list: path(ROOTS_DASHBOARD, '/transports/list'),
+    new: path(ROOTS_DASHBOARD, '/transports/new'),
+  },
   payments: {
     root: path(ROOTS_DASHBOARD, '/payments'),
     list: path(ROOTS_DASHBOARD, '/payments/list'),
