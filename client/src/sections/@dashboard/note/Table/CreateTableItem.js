@@ -106,14 +106,15 @@ const CreateTableItem = observer(({item, openModal, index, isEdit}) => {
                     options={list}
                     name="rating"
                     size="small"
-                    value={TableStore?.rows?.[index]?.name}
+                    value={{ label: TableStore?.rows?.[index]?.name, value: TableStore?.rows?.[index]?.name}}
                     onChange={handleChange}
                     renderInput={(params) => <TextField size="small" {...params} label='Наименование' sx={{width: 640}} />}
                 />
+                {console.log({ label: TableStore?.rows?.[index]?.name, value: TableStore?.rows?.[index]?.name})}
                 <TextField size="small" type="number" value={TableStore?.rows?.[index]?.amount} label='Кол-во' onChange={handleChangeAmount} sx={{width: '120px', ml: 2}} />
                 <TextField size="small" value={TableStore?.rows?.[index]?.edizm} label='Ед. изм' onChange={handleChangeEdizm} sx={{width: '120px', mx: 2}} />
-                <TextField size="small" type="number" value={price} label='Цена' onBlur={PriceBlur}  onChange={handleChangePrice} sx={{width: '160px', mx: 2}} />
-                <TextField size="small" type="number" value={summ} label='Сумма' onBlur={SummBlur} onChange={handleChangeSumm} sx={{width: '160px'}} />
+                <TextField size="small" type="number" value={TableStore?.rows?.[index]?.price} label='Цена' onBlur={PriceBlur}  onChange={handleChangePrice} sx={{width: '160px', mx: 2}} />
+                <TextField size="small" type="number" value={TableStore?.rows?.[index]?.summ} label='Сумма' onBlur={SummBlur} onChange={handleChangeSumm} sx={{width: '160px'}} />
                 {/* <Button sx={{ml: 2}} color="error" size="large" variant="contained"  onClick={handleDelete}>Удалить</Button> */}
                 </>
             ) : (

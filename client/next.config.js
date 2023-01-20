@@ -7,16 +7,9 @@ const withTM = require('next-transpile-modules')([
   '@fullcalendar/timegrid',
   '@fullcalendar/timeline',
 ]);
-const withPWA = require("next-pwa");
 
-module.exports = withPWA(
+module.exports = 
   withTM({
-    pwa: {
-      dest: "public",
-      register: true,
-      skipWaiting: true,
-      // disable: process.env.NODE_ENV === "development",
-    },
     swcMinify: false,
     trailingSlash: true,
     env: {
@@ -43,4 +36,4 @@ module.exports = withPWA(
       // your project has ESLint errors.
       ignoreDuringBuilds: true,
     },
-}));
+});

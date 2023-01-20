@@ -23,6 +23,7 @@ import NewNomenklatura from './Main/NewNomenklatura';
 import { Main } from './Main/Main';
 import { PriceWidget } from './Widgets/PriceWidget';
 import { WidgetController } from './Widgets/WidgetController';
+import Import from './Import/Import';
 
 // ----------------------------------------------------------------------
 
@@ -37,6 +38,10 @@ import { WidgetController } from './Widgets/WidgetController';
   
   const [objects, setObjects] = useState([]);
   const [peopleList, setPeople] = useState([]);
+
+  const [isOpenedImportModal, setIsOpenedImportModal] = useState(false);
+  const [parsedData, setParsedData] = useState([]);
+
   
   const [objectModel, setObjectModel] = useState();
 
@@ -143,6 +148,26 @@ import { WidgetController } from './Widgets/WidgetController';
     
   }
 
+  const handleInsertFromClipboard = (e) => {
+    console.log('ok')
+    navigator.clipboard.readText().then((value) => {
+
+      let clipboardData = value.trim()
+
+      let parsedData = clipboardData.split('\r\n')
+
+      parsedData = parsedData.map(row => row.split('\t'))
+
+      setParsedData(parsedData)
+
+
+    })
+    setIsOpenedImportModal(true)
+  }
+
+
+
+
 
   const onSubmit = async () => {
     try {
@@ -215,11 +240,14 @@ import { WidgetController } from './Widgets/WidgetController';
     }
   };
 
-
+  const handleCloseImportModal = () => {
+    setIsOpenedImportModal(false);
+  };
     
 
   return (
     <>
+    <Import isOpened={isOpenedImportModal} handleClose={handleCloseImportModal} data={parsedData}></Import>
     <WidgetController></WidgetController>
     <NewNomenklatura open={open} handleClose={handleClose}></NewNomenklatura>
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
@@ -248,6 +276,9 @@ import { WidgetController } from './Widgets/WidgetController';
                   </Button>
                   <Button onClick={handleAddPosition}>
                       Добавить позицию
+                  </Button>
+                  <Button onClick={handleInsertFromClipboard}>
+                      Импорт таблицы
                   </Button>
                 </ButtonGroup>
                 <CreateTable openModal={open} rows={TableStore.rows} objects={objects} isEdit={isEdit}/>

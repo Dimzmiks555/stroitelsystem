@@ -7,7 +7,7 @@ class TableStore {
     }
 
     counter = 1
-    rows = [{price: 0, summ: 0, amount: 0}]
+    rows = [{price: 0, summ: 0, amount: 0, name: ''}]
 
     setValue(index, name, value) {
         this.rows[index][name] = value
@@ -20,13 +20,13 @@ class TableStore {
 
     addPosition() {
         const gFilter = toJS(this.rows)
-        gFilter.push({price: 0, summ: 0, amount: 0})
+        gFilter.push({price: 0, summ: 0, amount: 0, name: ''})
         this.rows = gFilter
         this.counter++
         console.log(this.rows)
     }
     reset() {
-        this.rows = [{price: 0, summ: 0, amount: 0}]
+        this.rows = [{price: 0, summ: 0, amount: 0, name: ''}]
         this.counter = 1
     }
 
