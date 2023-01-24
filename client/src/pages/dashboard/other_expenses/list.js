@@ -23,6 +23,7 @@ import {
   Tab,
   TextField,
   Box,
+  Autocomplete,
 } from '@mui/material';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
@@ -55,6 +56,8 @@ export default function UserList() {
 
   const { themeStretch } = useSettings();
   const [list, setList] = useState([])
+  const [sellerId, setSellerId] = useState(null)
+  const [contragents, setContragents] = useState([])
   const [filter, setFilter] = useState(0);
   const [search, setSearch] = useState('');
   const [startDate, setStartDate] = useState(new Date(0));
@@ -62,20 +65,31 @@ export default function UserList() {
 
 
   useEffect(()=> {
-    fetch(`${process.env.NEXT_PUBLIC_HOST}/note-products/stats?order=${sortDict[filter]}&search=${search}&startDate=${startDate}&endDate=${endDate}`)
+    fetch(`${process.env.NEXT_PUBLIC_HOST}/note-products/stats?order=${sortDict[filter]}&search=${search}&startDate=${startDate}&endDate=${endDate}&seller_id=${sellerId}`)
     .then(res => res.json())
     .then(json => {
       console.log(json)
       setList(json)
     })
+    fetch(`${process.env.NEXT_PUBLIC_HOST}/contragents`)
+    .then((res) => res.json())
+    .then((json) => {
+      let list = json.map((item) => {
+        return { label: item.name, value: item.id };
+      });
 
+      setContragents(list);
+    });
 
-  }, [filter, search, startDate, endDate])
+  }, [filter, search, startDate, endDate, sellerId])
 
   const handleChange = (event, newValue) => {
     setFilter(newValue);
   };
 
+  const handleSeller = (e, option) => {
+    setSellerId(+option?.value || null)
+  }
 
   return (
     <Page title="Аналитика по товарам">
@@ -95,6 +109,14 @@ export default function UserList() {
         size="small" 
         sx={{mb:2, minWidth: 300}}
         ></TextField>
+        
+        <Autocomplete
+          size="small"
+          freeSolo
+          onChange={handleSeller}
+          options={contragents}
+          renderInput={(params) => <TextField label="Поставщик" {...params} sx={{width: '320px', mb: 4}} />}
+        />
         <Box>
           <DatePicker
             orientation="landscape"

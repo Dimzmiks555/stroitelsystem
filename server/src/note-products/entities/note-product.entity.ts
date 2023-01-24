@@ -1,4 +1,5 @@
 import {
+  BelongsTo,
   Column,
   DataType,
   ForeignKey,
@@ -27,4 +28,8 @@ export class NoteProduct extends Model {
   @ForeignKey(() => Note)
   @Column
   note_id: number;
+
+  @BelongsTo(() => Note)
+  note: Note
+
 }

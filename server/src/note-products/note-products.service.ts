@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import sequelize from 'sequelize';
 import { Op } from 'sequelize';
+import { Note } from 'src/notes/entities/note.entity';
 import { CreateNoteProductDto } from './dto/create-note-product.dto';
 import { UpdateNoteProductDto } from './dto/update-note-product.dto';
 import { NoteProduct } from './entities/note-product.entity';
@@ -25,18 +26,21 @@ export class NoteProductsService {
 
     const orderFunctions = {
       count: sequelize.fn('count', sequelize.col('name')),
-      summ: sequelize.fn('sum', sequelize.col('summ')),
+      summ: sequelize.fn('sum', sequelize.col('NoteProduct.summ')),
       amount: sequelize.fn('sum', sequelize.col('amount'))
     }
 
     let filterOptions: any = {}
+    let noteOptions: any = {}
 
-    let {order, search, startDate, endDate} = body
+    let {order, search, startDate, endDate, seller_id} = body
 
     if (!order) {order = 'summ'}
     if (search) {filterOptions.name = {
       [Op.substring]: search
     }}
+
+    if (seller_id && seller_id != 'null') {noteOptions.seller_id = seller_id}
 
 
     function isValidDate(dateObject){
@@ -59,6 +63,9 @@ export class NoteProductsService {
         [orderFunctions.summ, 'total_summ'],
       ],
       group: 'name',
+      include: [
+        {model: Note, where: noteOptions}
+      ],
       order: [[orderFunctions[order], 'DESC']],
       where: filterOptions
     });
