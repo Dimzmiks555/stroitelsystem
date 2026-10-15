@@ -30,13 +30,14 @@ export default function EcommerceProductCreate() {
   const [current, setCurrent] = useState({})
 
   useEffect(() => {
+    if (!query.id) return;
     fetch(`${process.env.NEXT_PUBLIC_HOST}/notes/${query.id}`)
     .then(res => res.json())
     .then(json => {
       console.log(json)
       setCurrent(json)
     })
-  }, [])
+  }, [query.id])
 
   return (
     <Page title="Новая запись">

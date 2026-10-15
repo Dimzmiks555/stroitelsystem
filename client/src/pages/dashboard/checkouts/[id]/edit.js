@@ -36,13 +36,14 @@ export default function UserEdit() {
   const { id } = query;
 
   useEffect(() => {
+    if (!id) return;
     fetch(`${process.env.NEXT_PUBLIC_HOST}/checkouts/${id}`)
     .then(res => res.json())
     .then(json => {
       console.log(json)
       setCurrentOrder(json)
     })
-  }, [])
+  }, [id])
 
   return (
     <Page title={`Списание № ${id}`}>

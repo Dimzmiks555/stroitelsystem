@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 // form
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { styled } from '@mui/material/styles';
 import { Typography, Stack } from '@mui/material';

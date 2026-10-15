@@ -68,6 +68,10 @@ function AuthProvider({ children }) {
 
   useEffect(() => {
     const initialize = async () => {
+      if (process.env.NEXT_PUBLIC_DEMO_MODE === '1') {
+        dispatch({type: 'INITIALIZE', payload: {isAuthenticated: true, user: {id: 1, firstName: 'Демо', lastName: 'Пользователь', displayName: 'Демо Пользователь', role: 'admin', email: 'demo@example.com'}}});
+        return;
+      }
       try {
         const accessToken = window.localStorage.getItem('accessToken');
         

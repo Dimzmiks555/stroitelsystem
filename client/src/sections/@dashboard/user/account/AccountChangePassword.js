@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 import { useSnackbar } from 'notistack';
 // form
-import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 // @mui
 import { Stack, Card } from '@mui/material';

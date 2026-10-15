@@ -55,8 +55,8 @@ export const NewPrice = ({isEdit, priceModel}) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-        <Stack p={2} spacing={3} direction="row">
-            <TextField label="Наименование" {...register("name")}/>
+        <Stack p={2} spacing={3} direction={{xs: "column", md: "row"}}>
+            <TextField sx={{flex: 1, minWidth: {md: 480}}} multiline label="Наименование" {...register("name")}/>
             <TextField type="number" label="Цена" {...register("price")}/>
             <TextField label="Ед. из" {...register("unit")}/>
             {!isEdit ?

@@ -6,7 +6,7 @@ import { PlanPremiumIcon } from "src/assets";
 
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
-import PaymentBlock from "./paymentBlock/paymentBlock";
+import PaymentBlock from "./paymentBlock/PaymentBlock";
 
 export default function EndData({setValue, currentUser, values, contragents}) {
 

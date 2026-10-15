@@ -1,0 +1,10 @@
+Stroitelsystem demo
+Domain: https://stroitelsystem.evmrussia.ru
+Server: boss@192.168.0.150, /opt/apps/stroitelsystem
+Start/update: docker compose up -d --build
+Logs: docker compose logs --tail=100 web
+Proxy: existing /opt/apps/doverie/Caddyfile, doverie-caddy-1 container
+Network: doverie_default, alias stroitelsystem-web:3000
+Data: src/demo/data.json, 541 records. Read-only /api/demo API.
+NEXT_PUBLIC_DEMO_MODE=1 enables demo identity; no production database or credentials.
+Caddy blocks non-read HTTP methods and requests are not sent to the original NestJS backend.

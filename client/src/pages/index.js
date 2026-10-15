@@ -34,7 +34,7 @@ export default function HomePage() {
 
   if (typeof window !== 'undefined') {
     
-    router.push('/auth/login')
+    router.push(process.env.NEXT_PUBLIC_DEMO_MODE === '1' ? '/dashboard/app' : '/auth/login')
 
   }
 

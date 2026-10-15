@@ -36,6 +36,7 @@ export default function EcommerceProductCreate() {
   const [expenses, setExpenses] = useState([])
 
   useEffect(() => {
+    if (!id) return;
     fetch(`${process.env.NEXT_PUBLIC_HOST}/objects/${id}`)
     .then(res => res.json())
     .then(json => {
@@ -47,20 +48,20 @@ export default function EcommerceProductCreate() {
 
       setCurrentObject(json)
 
-      setExpenses((prevState) => ([...prevState, ...json?.checkouts, ...json?.notes]))
+      setExpenses((prevState) => ([ ...(json.checkouts || []), ...(json.notes || [])]))
       console.log(expenses)
       console.log(json)
     })
     
-  }, [])
+  }, [id])
 
   const { themeStretch } = useSettings();
 
   return (
-    <Page title="Добавить объект">
+    <Page title={currentObject.name || "Объект"}>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading="Добавить объект"
+          heading={currentObject.name || "Объект"}
           links={[
             // { name: 'Dashboard', href: PATH_DASHBOARD.root },
             // {

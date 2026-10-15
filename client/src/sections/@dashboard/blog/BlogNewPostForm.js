@@ -4,7 +4,7 @@ import { useSnackbar } from 'notistack';
 // next
 import { useRouter } from 'next/router';
 // form
-import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, Controller } from 'react-hook-form';
 // @mui
 import { LoadingButton } from '@mui/lab';

@@ -1,0 +1,5 @@
+Локальный просмотр stroitelsystem
+Запуск: NEXT_TELEMETRY_DISABLED=1 NODE_OPTIONS=--openssl-legacy-provider npm run dev -- --hostname 127.0.0.1 --port 3013
+Адрес: http://127.0.0.1:3013/dashboard/app/
+.env.local включает демовход и локальный API. Пять тестовых заказов, остальные списки пустые.
+Сохранение в демо-API запрещено. Сервер NestJS и MySQL не запущены.

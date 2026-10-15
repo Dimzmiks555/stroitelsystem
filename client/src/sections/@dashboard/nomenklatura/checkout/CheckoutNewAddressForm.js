@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 // form
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { Box, Stack, Dialog, Button, Divider, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 import { LoadingButton } from '@mui/lab';

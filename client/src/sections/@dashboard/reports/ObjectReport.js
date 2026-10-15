@@ -92,7 +92,7 @@ export const ObjectReport = () => {
       .then(res => res.json())
       .then(json => {
         console.log(json)
-        setList(json?.expenses)
+        setList(json?.expenses || [])
         setData(json)
       })
 
@@ -173,7 +173,7 @@ export const ObjectReport = () => {
 
     
     const handleChangeObject = (e, newValue) => {
-      setObjectId(newValue.value)
+      setObjectId(newValue?.value || 1)
     }
 
 

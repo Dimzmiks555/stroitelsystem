@@ -2,7 +2,7 @@ import * as Yup from 'yup';
 import { useState } from 'react';
 // form
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { Stack, IconButton, InputAdornment, Alert } from '@mui/material';
 import { LoadingButton } from '@mui/lab';

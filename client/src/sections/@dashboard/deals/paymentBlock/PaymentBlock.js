@@ -10,6 +10,7 @@ export default function PaymentBlock({dealSumm, dealId, type, contragents}) {
     const [ isAdding, setIsAdding ] = useState(false)
     
     useEffect(() => {
+        if (!dealId) {setPayments([]);setStatus('none');return;}
         fetch(`${process.env.NEXT_PUBLIC_HOST}/payment?deal_id=${dealId}&type=${type}`)
         .then(res => res.json())
         .then(json => {
@@ -26,9 +27,9 @@ export default function PaymentBlock({dealSumm, dealId, type, contragents}) {
                 setStatus('part')
             } 
 
-            setPayments(json?.rows)
+            setPayments(json?.rows || [])
         });
-    }, [dealSumm])
+    }, [dealSumm, dealId, type])
 
 
     return (

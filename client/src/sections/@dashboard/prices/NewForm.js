@@ -5,7 +5,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 // form
 import { useForm, Controller } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { styled } from '@mui/material/styles';
 import { Card, Chip, Grid, Stack, TextField, Typography, Autocomplete, InputAdornment, Box, Switch, FormControlLabel, Table, TableRow, TableCell, TableHead, TableBody, Avatar, Alert, AlertTitle } from '@mui/material';
@@ -115,7 +115,7 @@ import { Main } from './Main/Main';
   useEffect(() => {
     if (isEdit && currentProduct) {
       setValueDate(new Date(currentProduct?.Date))
-      TableStore.setRows(currentProduct?.products)
+      TableStore.setRows(currentProduct?.products || [])
       reset(defaultValues);
     }
     if (!isEdit) {

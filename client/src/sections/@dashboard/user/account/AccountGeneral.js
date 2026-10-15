@@ -3,7 +3,7 @@ import { useSnackbar } from 'notistack';
 import { useCallback } from 'react';
 // form
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { Box, Grid, Card, Stack, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';

@@ -78,26 +78,13 @@ export default function UserList() {
 
   const [rowsPerPage, setRowsPerPage] = useState(25);
 
-  useEffect(()=> {
-
-    if (tab === 0) {
-      fetch(`${process.env.NEXT_PUBLIC_HOST}/orders?status=new`)
-      .then(res => res.json())
-      .then(json => {
-        console.log(json)
-        setOrderList(json)
-      })
-    } else {
-      fetch(`${process.env.NEXT_PUBLIC_HOST}/orders?status=all`)
-      .then(res => res.json())
-      .then(json => {
-        console.log(json)
-        setOrderList(json)
-      })
-    }
-
-
-  }, [tab])
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch(`${process.env.NEXT_PUBLIC_HOST}/orders?status=${tab === 0 ? 'new' : 'all'}`, {signal: controller.signal})
+      .then(res => res.json()).then(setOrderList)
+      .catch(error => {if (error.name !== 'AbortError') console.error(error);});
+    return () => controller.abort();
+  }, [tab]);
 
   const handleRequestSort = (property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -154,6 +141,8 @@ export default function UserList() {
 
   const handleTab = (event, newValue) => {
     setTab(newValue);
+    setPage(0);
+    setSelected([]);
   };
 
 

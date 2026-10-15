@@ -1,0 +1,16 @@
+name: stroitelsystem
+services:
+  web:
+    build: .
+    restart: unless-stopped
+    networks:
+      edge:
+        aliases: [stroitelsystem-web]
+    logging:
+      options:
+        max-size: 10m
+        max-file: '3'
+networks:
+  edge:
+    external: true
+    name: doverie_default

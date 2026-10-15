@@ -40,6 +40,7 @@ export default function GeneralApp() {
   return (
     <Page title="Главная">
       <Container maxWidth={themeStretch ? false : 'xl'}>
+        <p style={{marginBottom: 24}}>Локальная демоверсия · тестовые данные · сохранение отключено</p>
         <Grid container spacing={3}>
           {/* <Grid item xs={12} md={8}>
             <AppWelcome displayName={user?.displayName} />

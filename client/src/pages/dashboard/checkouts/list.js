@@ -206,7 +206,7 @@ export default function UserList() {
                 />
                 <TableBody>
                   {realisationsList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { id, Number, role, status, company,  createdAt, isVerified } = row;
+                    const { id, name, Number, role, status, company,  createdAt, isVerified } = row;
                     const isItemSelected = selected.indexOf(name) !== -1;
 
                     return (

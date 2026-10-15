@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 // form
-import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 // @mui
 import { Stack } from '@mui/material';

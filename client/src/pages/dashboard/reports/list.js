@@ -44,10 +44,7 @@ export default function UserList() {
             <TabList onChange={handleChange} centered>
               <Tab label="Записи" value="1"/>
               <Tab label="Реализации" value="2"/>
-              <Tab label="Покупки" value="3"/>
-              <Tab label="Контрагенты" value="4"/>
               <Tab label="Объекты" value="5"/>
-              <Tab label="Итоги" value="6"/>
             </TabList>
           </Card>
         </Box>
